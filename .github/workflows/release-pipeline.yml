@@ -1,0 +1,71 @@
+name: leerness.com pipeline
+
+# 수동 실행(중요 업데이트 시) 또는 leerness 릴리스 후 repository_dispatch 로 트리거.
+# 트리거 정책: "중요 업데이트 큐레이션" — curate.cjs 가 important 미게시 건만 선별.
+on:
+  workflow_dispatch:
+    inputs:
+      render_limit:
+        description: '렌더/업로드할 최대 영상 수(쿼터 보호)'
+        default: '4'
+      skip_upload:
+        description: 'YouTube 업로드 건너뛰기(true/false)'
+        default: 'false'
+  repository_dispatch:
+    types: [leerness-release]
+
+permissions:
+  contents: write   # published.json 커밋백
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: CHANGELOG 가져오기 (leerness 레포 raw)
+        run: curl -fsSL https://raw.githubusercontent.com/gugu9999gu/leerness/main/CHANGELOG.md -o CHANGELOG.source.md
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 파싱 + 큐레이션
+        run: |
+          node pipeline/parse-changelog.cjs --changelog ./CHANGELOG.source.md
+          node pipeline/curate.cjs --limit ${{ github.event.inputs.render_limit || '4' }}
+
+      - name: Astro 빌드
+        run: npm run site:build
+
+      - name: Cloudflare Pages 배포
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler pages deploy dist --project-name leerness-site
+
+      - name: Remotion 숏츠 렌더 (KO+EN)
+        run: node pipeline/render-shorts.cjs --limit ${{ github.event.inputs.render_limit || '4' }}
+
+      - name: YouTube 업로드
+        if: ${{ github.event.inputs.skip_upload != 'true' }}
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: |
+          printf 'YOUTUBE_CLIENT_ID=%s\nYOUTUBE_CLIENT_SECRET=%s\nYOUTUBE_REFRESH_TOKEN=%s\n' "$YOUTUBE_CLIENT_ID" "$YOUTUBE_CLIENT_SECRET" "$YOUTUBE_REFRESH_TOKEN" > .env
+          node pipeline/upload-youtube.cjs --limit ${{ github.event.inputs.render_limit || '4' }}
+          rm -f .env
+
+      - name: 게시 원장(published.json) 커밋백
+        run: |
+          git config user.name "leerness-bot"
+          git config user.email "noreply@leerness.com"
+          git add data/published.json || true
+          git commit -m "chore: update published.json [skip ci]" || echo "변경 없음"
+          git push || echo "push 생략"

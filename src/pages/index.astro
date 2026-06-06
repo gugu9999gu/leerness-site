@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import data from '../../data/releases.json';
+
+const releases = data.releases || [];
+const latest = releases[0] || {};
+const recent = releases.slice(0, 6);
+// 안정화(데이터무결성/보안/호환성) 하이라이트
+const stable = releases.filter(r => ['data-integrity', 'security', 'compat'].includes(r.category)).slice(0, 5);
+const total = data.count || releases.length;
+const importantCount = releases.filter(r => r.important).length;
+const badgeClass = (c) => ['security','data-integrity','feature','compat','performance','consistency','refactor','fix'].includes(c) ? c : 'fix';
+---
+<Base title="leerness — AI 에이전트 프로젝트 매니지먼트 CLI">
+  <section class="hero">
+    <h1>AI 에이전트를 위한<br /><span class="grad">프로젝트 매니지먼트 CLI</span></h1>
+    <p class="tag">핸드오프 · 자기검증 감사 · 시크릿 스캔 · 한글 인코딩 · 게으름 감지 — 0 의존성, 오프라인 우선, MCP 85 도구.</p>
+    <div class="install"><span class="pfx">$ </span>npm i -g leerness</div>
+    <div class="cta">
+      <a class="btn primary" href="/changelog">패치노트 보기 →</a>
+      <a class="btn ghost" href="https://github.com/gugu9999gu/leerness" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">v{latest.version || '—'}</div><div class="l">최신 버전</div></div>
+      <div class="stat"><div class="n">{total}</div><div class="l">릴리스</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">의존성</div></div>
+      <div class="stat"><div class="n">85</div><div class="l">MCP 도구</div></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>leerness 란?</h2>
+    <p class="sub">AI 코딩 에이전트(Claude Code, Cursor, Windsurf 등)가 세션 간 컨텍스트를 잃지 않고, 거짓 완료를 방지하며, 한글 인코딩·시크릿·일관성을 자동 검증하도록 돕는 단일 CLI.</p>
+    <div class="rel" style="cursor:default">
+      <div class="title">🤝 핸드오프 — 세션 시작 시 컨텍스트 자동 로드, 종료 시 인수인계 생성</div>
+      <div class="summ">progress-tracker · decisions · lessons · rules 를 읽어 다음 에이전트가 이어받음</div>
+    </div>
+    <div class="rel" style="cursor:default">
+      <div class="title">🔍 자기검증 — 거짓 완료/게으름 감지 + 증거 기반 게이트</div>
+      <div class="summ">done 인데 evidence 없음 · 테스트 미실행 · 추적 안 된 TODO 자동 점검</div>
+    </div>
+    <div class="rel" style="cursor:default">
+      <div class="title">🔐 보안·인코딩 — 시크릿 스캔 + 한글 UTF-8/BOM/CRLF 검사</div>
+      <div class="summ">하드코딩 시크릿·gitignore 정합·셸 스크립트 인코딩 위험 자동 탐지</div>
+    </div>
+  </section>
+
+  <section id="latest">
+    <h2>최근 릴리스</h2>
+    <p class="sub">CHANGELOG 자동 동기화 · 총 {total}개 중 중요 업데이트 {importantCount}건</p>
+    {recent.map(r => (
+      <a class="rel" href={`/changelog/${r.version}`}>
+        <div class="top">
+          <span class="ver">v{r.version}</span>
+          <span class={`badge ${badgeClass(r.category)}`}>{r.categoryKo}{r.important ? ' ★' : ''}</span>
+          <span class="date">{r.date}</span>
+        </div>
+        <div class="title">{r.title}</div>
+        {r.summary && <div class="summ">{r.summary}</div>}
+      </a>
+    ))}
+    <p style="margin-top:14px"><a href="/changelog">전체 패치노트 →</a></p>
+  </section>
+
+  {stable.length > 0 && (
+    <section id="stable">
+      <h2>안정화 하이라이트</h2>
+      <p class="sub">데이터 무결성 · 보안 · 호환성 — 핵심 안정화 업데이트</p>
+      {stable.map(r => (
+        <a class="rel" href={`/changelog/${r.version}`}>
+          <div class="top">
+            <span class="ver">v{r.version}</span>
+            <span class={`badge ${badgeClass(r.category)}`}>{r.categoryKo}</span>
+            <span class="date">{r.date}</span>
+          </div>
+          <div class="title">{r.title}</div>
+        </a>
+      ))}
+    </section>
+  )}
+</Base>

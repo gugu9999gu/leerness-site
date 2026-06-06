@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+const { title = 'leerness', desc = 'AI 에이전트를 위한 프로젝트 매니지먼트 CLI — 핸드오프 · 감사 · 시크릿 스캔 · 인코딩 · 게으름 감지' } = Astro.props;
+const year = 2026;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0a0b0f" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235eead4'/%3E%3Ctext x='16' y='23' font-size='20' font-family='monospace' font-weight='bold' text-anchor='middle' fill='%2304201b'%3El%3C/text%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap">
+        <a href="/" class="brand">leerness<span class="dot">.</span></a>
+        <nav class="links">
+          <a href="/#about">소개</a>
+          <a href="/changelog">패치노트</a>
+          <a href="/#stable">안정화</a>
+          <a href="https://www.npmjs.com/package/leerness" target="_blank" rel="noopener">npm</a>
+          <a href="https://github.com/gugu9999gu/leerness" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer>
+      <div class="wrap">
+        <div>© {year} leerness · MIT · 0 dependencies · offline-first</div>
+        <div><a href="https://www.npmjs.com/package/leerness">npm i -g leerness</a></div>
+      </div>
+    </footer>
+  </body>
+</html>

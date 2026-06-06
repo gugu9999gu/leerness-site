@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import data from '../../../data/releases.json';
+
+export function getStaticPaths() {
+  const releases = data.releases || [];
+  return releases.map(r => ({ params: { version: r.version }, props: { r } }));
+}
+const { r } = Astro.props;
+const badgeClass = (c) => ['security','data-integrity','feature','compat','performance','consistency','refactor','fix'].includes(c) ? c : 'fix';
+---
+<Base title={`v${r.version} — leerness 패치노트`} desc={r.summary || r.title}>
+  <section class="detail">
+    <p><a class="back" href="/changelog">← 패치노트</a></p>
+    <div class="top" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px">
+      <span class={`badge ${badgeClass(r.category)}`}>{r.categoryKo}{r.important ? ' ★' : ''}</span>
+      <span class="date" style="font-family:var(--mono);color:var(--fg-faint)">{r.date}</span>
+    </div>
+    <h1 style="margin-top:10px">v{r.version}</h1>
+    <p style="font-size:18px;color:var(--fg);margin:4px 0 6px">{r.title}</p>
+    {r.summary && <p style="color:var(--fg-dim)">{r.summary}</p>}
+    {r.highlights && r.highlights.length > 0 && (
+      <div style="margin-top:22px">
+        <h2 style="font-size:16px">핵심 변경</h2>
+        {r.highlights.map(h => <div class="hl">{h}</div>)}
+      </div>
+    )}
+    <p style="margin-top:26px"><a class="back" href={`https://github.com/gugu9999gu/leerness/releases/tag/v${r.version}`} target="_blank" rel="noopener">GitHub 릴리스 v{r.version} →</a></p>
+  </section>
+</Base>

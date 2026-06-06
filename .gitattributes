@@ -1,0 +1,6 @@
+# BOM 없는 UTF-8 + LF 라인엔딩 강제 (leerness encoding-policy 일치)
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.mov binary

@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import data from '../../../data/releases.json';
+
+const releases = data.releases || [];
+const badgeClass = (c) => ['security','data-integrity','feature','compat','performance','consistency','refactor','fix'].includes(c) ? c : 'fix';
+// 일자별 그룹
+const byDate = {};
+for (const r of releases) { (byDate[r.date] = byDate[r.date] || []).push(r); }
+const dates = Object.keys(byDate).sort().reverse();
+---
+<Base title="패치노트 — leerness" desc="leerness 전체 버전별·일자별 패치노트">
+  <section>
+    <h2>패치노트</h2>
+    <p class="sub">총 {releases.length}개 릴리스 · CHANGELOG 자동 동기화 · 일자별</p>
+    {dates.map(d => (
+      <div style="margin-bottom:26px">
+        <div style="font-family:var(--mono);color:var(--fg-faint);font-size:13px;margin:8px 0">{d}</div>
+        {byDate[d].map(r => (
+          <a class="rel" href={`/changelog/${r.version}`}>
+            <div class="top">
+              <span class="ver">v{r.version}</span>
+              <span class={`badge ${badgeClass(r.category)}`}>{r.categoryKo}{r.important ? ' ★' : ''}</span>
+            </div>
+            <div class="title">{r.title}</div>
+          </a>
+        ))}
+      </div>
+    ))}
+  </section>
+</Base>
