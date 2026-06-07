@@ -3,6 +3,9 @@ name: leerness.com pipeline
 # 수동 실행(중요 업데이트 시) 또는 leerness 릴리스 후 repository_dispatch 로 트리거.
 # 트리거 정책: "중요 업데이트 큐레이션" — curate.cjs 가 important 미게시 건만 선별.
 on:
+  # 매일 자동: 사이트만 최신 CHANGELOG 로 재빌드+배포(영상은 쿼터 보호로 제외 — 수동/릴리스 트리거에서만)
+  schedule:
+    - cron: '0 18 * * *'   # 매일 03:00 KST (UTC 18:00)
   workflow_dispatch:
     inputs:
       render_limit:
@@ -49,10 +52,11 @@ jobs:
         run: npx wrangler pages deploy dist --project-name leerness-site
 
       - name: Remotion 숏츠 렌더 (KO+EN)
+        if: ${{ github.event_name != 'schedule' }}
         run: node pipeline/render-shorts.cjs --limit ${{ github.event.inputs.render_limit || '4' }}
 
       - name: YouTube 업로드
-        if: ${{ github.event.inputs.skip_upload != 'true' }}
+        if: ${{ github.event_name != 'schedule' && github.event.inputs.skip_upload != 'true' }}
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
@@ -63,6 +67,7 @@ jobs:
           rm -f .env
 
       - name: 게시 원장(published.json) 커밋백
+        if: ${{ github.event_name != 'schedule' }}
         run: |
           git config user.name "leerness-bot"
           git config user.email "noreply@leerness.com"
