@@ -41,10 +41,15 @@ function main() {
     const outFile = path.join(outDir, `${r.version}-${it.lang}.mp4`);
     console.log(`▶ render ${r.version} [${it.lang}] → ${path.relative(root, outFile)}`);
     if (dry) { rendered.push({ ...it, file: outFile, dry: true }); continue; }
-    const propsArg = `--props=${JSON.stringify(props)}`;
-    const res = spawnSync('npx', ['remotion', 'render', 'video/src/index.ts', 'ReleaseShort', outFile, propsArg], {
-      cwd: root, stdio: 'inherit', shell: process.platform === 'win32',
+    // 1.9.x 교훈(Windows): ① --props 는 인라인 JSON 대신 파일 경로(Remotion 권장, 셸 이스케이핑 회피)
+    //   ② Node20+ 는 shell:false 로 .cmd 실행 불가 → shell:true + 'npx'. 인자(경로/플래그)에 공백·따옴표 없어 셸 안전.
+    const propsFile = path.join(outDir, `props-${r.version}-${it.lang}.json`).replace(/\\/g, '/');
+    fs.writeFileSync(propsFile, JSON.stringify(props));
+    const out = outFile.replace(/\\/g, '/');
+    const res = spawnSync('npx', ['remotion', 'render', 'video/src/index.ts', 'ReleaseShort', out, `--props=${propsFile}`], {
+      cwd: root, stdio: 'inherit', shell: true,
     });
+    try { fs.unlinkSync(propsFile); } catch {}
     if (res.status !== 0) { console.error(`✗ render 실패: ${r.version} [${it.lang}]`); continue; }
     rendered.push({ version: r.version, lang: it.lang, title: it.title, summary: props.summary, file: outFile });
   }
