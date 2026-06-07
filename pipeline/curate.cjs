@@ -34,12 +34,16 @@ function main() {
 
   // important + 아직 한/영 둘 다 게시 안 된 릴리스 (양언어 정책)
   const langs = ['ko', 'en'];
+  // 주요/대규모/안정화 = 영상으로 알릴만한 카테고리 → 유튜브 전체공개. 그 외(소소한 fix/refactor/consistency) → unlisted.
+  const MAJOR_CATEGORIES = new Set(['security', 'data-integrity', 'compat', 'performance', 'feature']);
   const queue = [];
   for (const r of (rel.releases || [])) {
     if (!r.important) continue;
+    const major = MAJOR_CATEGORIES.has(r.category);
+    const privacy = major ? 'public' : 'unlisted';
     for (const lang of langs) {
       if (publishedSet.has(`${r.version}:${lang}`)) continue;
-      queue.push({ version: r.version, lang, date: r.date, title: r.title, summary: r.summary, highlights: r.highlights, category: r.category, categoryKo: r.categoryKo, categoryEn: r.categoryEn });
+      queue.push({ version: r.version, lang, date: r.date, title: r.title, summary: r.summary, highlights: r.highlights, category: r.category, categoryKo: r.categoryKo, categoryEn: r.categoryEn, major, privacy });
     }
   }
   // 최신 우선 + limit (YouTube 쿼터 1600u/업로드, 기본 10k/일 보호)

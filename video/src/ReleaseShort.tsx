@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, Sequence, interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from 'remotion';
+import { AbsoluteFill, Sequence, Audio, staticFile, interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from 'remotion';
 import { COPY, plainFor, SCENES, type Lang } from './copy';
 
 export interface ReleaseShortProps {
@@ -131,8 +131,15 @@ export const ReleaseShort: React.FC<ReleaseShortProps> = (props) => {
   let cur = 0; const at = (s: number) => { const f = cur; cur += F(s); return f; };
   const hook = at(SCENES.hook), whatIs = at(SCENES.whatIs), benefits = at(SCENES.benefits), update = at(SCENES.update), cta = at(SCENES.cta);
 
+  const totalFrames = cur;
   return (
     <AbsoluteFill style={{ background: '#0a0b0f' }}>
+      {/* 무료(CC0 자체생성) BGM — 전체 길이, 인트로 페이드인 + 끝 페이드아웃(볼륨 덕킹) */}
+      <Audio src={staticFile('bgm.wav')} volume={(f) => interpolate(f, [0, F(1), totalFrames - F(2), totalFrames], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })} />
+      {/* 섹션 전환 효과음(각 씬 시작) */}
+      {[hook, whatIs, benefits, update, cta].map((from, i) => (
+        <Sequence key={i} from={from} durationInFrames={F(0.2)} name={`sfx-${i}`}><Audio src={staticFile('sfx-pop.wav')} volume={0.5} /></Sequence>
+      ))}
       <Sequence from={hook} durationInFrames={F(SCENES.hook)} name="hook">
         <Scene accent={accent}><HookScene tagline={c.tagline} version={version} accent={accent} /></Scene>
       </Sequence>

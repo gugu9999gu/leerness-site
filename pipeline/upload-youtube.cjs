@@ -48,6 +48,8 @@ async function getAccessToken(env) {
 const PRIVACY = (() => { const i = process.argv.indexOf('--privacy'); const v = i >= 0 ? process.argv[i + 1] : 'public'; return ['public', 'unlisted', 'private'].includes(v) ? v : 'public'; })();  // 1차 검토용 --privacy unlisted 지원
 
 function meta(item) {
+  // per-item privacy(주요 업데이트=public) 우선, 없으면 전역 --privacy(기본 public).
+  const itemPrivacy = ['public', 'unlisted', 'private'].includes(item.privacy) ? item.privacy : PRIVACY;
   const ko = item.lang === 'ko';
   const title = `leerness v${item.version} — ${item.title}`.slice(0, 100);
   const desc = [
@@ -60,7 +62,7 @@ function meta(item) {
     '',
     '#leerness #AI #devtools #CLI #Shorts',
   ].join('\n').slice(0, 5000);
-  return { snippet: { title, description: desc, tags: ['leerness', 'AI', 'devtools', 'CLI'], categoryId: '28', defaultLanguage: item.lang }, status: { privacyStatus: PRIVACY, selfDeclaredMadeForKids: false } };
+  return { snippet: { title, description: desc, tags: ['leerness', 'AI', 'devtools', 'CLI'], categoryId: '28', defaultLanguage: item.lang }, status: { privacyStatus: itemPrivacy, selfDeclaredMadeForKids: false } };
 }
 
 // resumable upload: 1) 세션 시작 2) 파일 PUT
