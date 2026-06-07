@@ -2,7 +2,7 @@ import { Composition } from 'remotion';
 import { ReleaseShort } from './ReleaseShort';
 import { TOTAL_SECONDS } from './copy';
 
-const FPS = 30;
+const FPS = 60;  // YouTube Shorts 60fps (고프레임 부드러운 모션). 컴포지션은 fps-비의존(useVideoConfig().fps)이라 길이/타이밍 불변.
 
 export const RemotionRoot: React.FC = () => {
   return (
