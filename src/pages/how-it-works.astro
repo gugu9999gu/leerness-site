@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+
+// 비개발자도 이해하는 leerness 기능 설명 (정적 — leerness 배포 시 GitHub Actions 가 사이트 재빌드하며 함께 반영)
+const capabilities = [
+  {
+    icon: '🧠', color: 'var(--accent)', name: '기억 · 핸드오프',
+    plain: 'AI가 하던 일을 잊지 않게 작업 맥락(무엇을·왜·어디까지)을 기록해요.',
+    detail: '세션이 끊기거나 다른 AI로 바뀌어도, 다음 AI가 "지금까지 뭘 했고 다음에 뭘 해야 하는지"를 그대로 이어받습니다. 사람이 매번 처음부터 설명할 필요가 없어요.',
+  },
+  {
+    icon: '✅', color: 'var(--feat)', name: '자기검증 · 거짓 완료 방지',
+    plain: 'AI가 "다 했어요"라고 해도 증거로 진짜인지 확인해요.',
+    detail: '테스트를 실제로 돌렸는지, 끝냈다는 작업에 근거가 있는지 자동 점검합니다. 안 한 걸 했다고 넘어가는 일을 막아줘요.',
+  },
+  {
+    icon: '🔐', color: 'var(--sec)', name: '보안 · 한글 보호',
+    plain: '비밀번호·API키 유출과 한글 깨짐을 미리 막아요.',
+    detail: '코드에 실수로 들어간 비밀키를 찾아내고, 한글이 깨지는 인코딩 문제를 사전에 잡습니다. 사고가 나기 전에 경고해요.',
+  },
+];
+
+const orchestration = [
+  {
+    icon: '🎯', name: '오케스트레이션', tagline: '여러 AI를 한 번에 조율',
+    plain: '한 가지 일을 여러 AI에게 동시에 시켜 가장 좋은 결과를 고르거나, 큰 일을 잘게 나눠 여러 AI에게 나눠 맡깁니다.',
+    example: '예: "이 기능 만들어줘"를 4개 AI가 각자 풀고 → 가장 나은 답을 자동 선택',
+  },
+  {
+    icon: '👥', name: '에이전트 팀', tagline: '역할별 팀 구성',
+    plain: '"보안 검토팀", "성능 점검팀"처럼 역할과 담당 AI를 묶어 팀을 만들고, 정해진 시점(매 배포 등)에 자동으로 일하게 예약해요.',
+    example: '예: 매 배포마다 "보안팀"이 자동으로 코드를 점검',
+  },
+  {
+    icon: '🎭', name: '페르소나', tagline: '여러 전문가 시각',
+    plain: '같은 코드를 보안 전문가·성능 전문가·사용성 전문가 시각으로 각각 리뷰합니다. 한 관점이 놓치는 걸 다른 관점이 잡아줘요.',
+    example: '예: 한 파일을 3명의 전문가가 동시에 다른 각도로 검토',
+  },
+  {
+    icon: '📌', name: '자동화 룰', tagline: '한 번 말하면 영구 적용',
+    plain: '"매 배포마다 패치노트 써줘" 같은 규칙을 한 번 말하면 영구 등록됩니다. 이후 매번 자동으로 챙기고, 안 지켜졌으면 알려줘요.',
+    example: '예: "매 커밋마다 테스트 돌려줘" → 매번 자동 확인',
+  },
+];
+
+const steps = [
+  { n: 1, t: '요청 분석', d: '무엇을 원하는지 정확히 파악' },
+  { n: 2, t: '계획 수립', d: '할 일을 단계로 나눔' },
+  { n: 3, t: '업무 분배', d: '각 AI에게 맞는 일 배정' },
+  { n: 4, t: 'AI 작업', d: '각자 맡은 일 + 자체 검증' },
+  { n: 5, t: '메인 검수', d: '메인 AI가 결과를 교차 검증' },
+  { n: 6, t: '마감 · 인계', d: '기록 + 다음 단계 추천' },
+];
+---
+<Base title="leerness가 해주는 일 — 쉽게 보는 기능 안내" desc="오케스트레이션·에이전트 팀·페르소나·자동화 룰·검증을 비개발자도 이해하기 쉽게">
+  <section class="hero" style="padding:70px 0 40px">
+    <h1 style="font-size:clamp(30px,6vw,52px)">leerness가 <span class="grad">해주는 일</span></h1>
+    <p class="tag">AI가 코딩하다 <b>맥락을 잃거나</b>, <b>안 한 걸 했다고 하거나</b>, <b>비밀키를 흘리는</b> 문제를 — leerness가 자동으로 챙겨 막아줍니다. 전문용어 없이 쉽게 풀어볼게요.</p>
+  </section>
+
+  <section>
+    <h2>기본기 — 항상 챙기는 3가지</h2>
+    <p class="sub">설치만 하면 AI 작업에 늘 적용되는 핵심</p>
+    {capabilities.map(c => (
+      <div class="rel" style="cursor:default">
+        <div class="top"><span style={`font-size:26px`}>{c.icon}</span> <span class="title" style={`color:${c.color};font-weight:800`}>{c.name}</span></div>
+        <div class="title" style="margin-top:8px">{c.plain}</div>
+        <div class="summ">{c.detail}</div>
+      </div>
+    ))}
+  </section>
+
+  <section>
+    <h2>협업 — 여러 AI를 똑똑하게</h2>
+    <p class="sub">혼자가 아니라 여러 AI가 협업하도록 조율하는 기능들</p>
+    {orchestration.map(o => (
+      <div class="rel" style="cursor:default">
+        <div class="top"><span style="font-size:26px">{o.icon}</span> <span class="title" style="font-weight:800;font-size:18px">{o.name}</span> <span class="badge feature">{o.tagline}</span></div>
+        <div class="title" style="margin-top:8px">{o.plain}</div>
+        <div class="summ" style="color:var(--accent)">{o.example}</div>
+      </div>
+    ))}
+  </section>
+
+  <section>
+    <h2>어떻게 동작하나 — 6단계</h2>
+    <p class="sub">leerness는 모든 작업을 이 흐름으로 진행해 빠짐·실수를 막아요</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+      {steps.map(s => (
+        <div class="rel" style="cursor:default;margin:0">
+          <div style="font-family:var(--mono);color:var(--accent);font-weight:800;font-size:22px">{s.n}</div>
+          <div class="title" style="margin-top:4px;font-weight:700">{s.t}</div>
+          <div class="summ">{s.d}</div>
+        </div>
+      ))}
+    </div>
+    <p class="sub" style="margin-top:16px">3·4·5단계가 바로 <b>"여러 AI에게 일을 나눠 맡기고(분배) → 각자 하고 → 메인 AI가 다시 검수"</b>하는 협업 흐름입니다.</p>
+  </section>
+
+  <section style="text-align:center">
+    <h2>지금 시작하기</h2>
+    <div class="install"><span class="pfx">$ </span>npm i -g leerness</div>
+    <p class="sub" style="margin-top:16px"><a href="/changelog">최근 업데이트 보기 →</a> · <a href="https://github.com/gugu9999gu/leerness" target="_blank" rel="noopener">GitHub</a></p>
+  </section>
+</Base>
