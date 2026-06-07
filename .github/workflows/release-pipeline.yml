@@ -51,23 +51,24 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx wrangler pages deploy dist --project-name leerness-site
 
+      # schedule(매일): 백로그 소량 드립(limit 3, 쿼터보호). 멱등 — 이미 게시된 건 자동 스킵. dispatch: 입력값.
       - name: Remotion 숏츠 렌더 (KO+EN)
-        if: ${{ github.event_name != 'schedule' }}
-        run: node pipeline/render-shorts.cjs --limit ${{ github.event.inputs.render_limit || '4' }}
+        run: node pipeline/render-shorts.cjs --limit ${{ github.event_name == 'schedule' && '3' || github.event.inputs.render_limit || '4' }}
 
-      - name: YouTube 업로드
-        if: ${{ github.event_name != 'schedule' && github.event.inputs.skip_upload != 'true' }}
+      - name: YouTube 업로드 (멱등 · privacy 변수)
+        if: ${{ github.event.inputs.skip_upload != 'true' }}
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          # 공개로 전환하려면 레포 변수 LEERNESS_VIDEO_PRIVACY=public 설정 (기본 unlisted)
+          PRIVACY: ${{ vars.LEERNESS_VIDEO_PRIVACY || 'unlisted' }}
         run: |
           printf 'YOUTUBE_CLIENT_ID=%s\nYOUTUBE_CLIENT_SECRET=%s\nYOUTUBE_REFRESH_TOKEN=%s\n' "$YOUTUBE_CLIENT_ID" "$YOUTUBE_CLIENT_SECRET" "$YOUTUBE_REFRESH_TOKEN" > .env
-          node pipeline/upload-youtube.cjs --limit ${{ github.event.inputs.render_limit || '4' }}
+          node pipeline/upload-youtube.cjs --limit ${{ github.event_name == 'schedule' && '3' || github.event.inputs.render_limit || '4' }} --privacy "$PRIVACY"
           rm -f .env
 
       - name: 게시 원장(published.json) 커밋백
-        if: ${{ github.event_name != 'schedule' }}
         run: |
           git config user.name "leerness-bot"
           git config user.email "noreply@leerness.com"

@@ -93,12 +93,16 @@ async function main() {
   }
   const root = path.resolve(__dirname, '..');
   const rendered = JSON.parse(fs.readFileSync(path.join(root, 'data', 'rendered.json'), 'utf8'));
-  const items = (rendered.items || []).filter(i => fs.existsSync(i.file)).slice(0, parseLimit(arg('--limit', '6'), 6));
-  if (!items.length) { console.log('업로드할 렌더 파일 없음 (data/rendered.json)'); return; }
-
-  const token = await getAccessToken(env);
   const publishedPath = path.join(root, 'data', 'published.json');
   let published = { videos: [] }; try { published = JSON.parse(fs.readFileSync(publishedPath, 'utf8')); } catch {}
+  // 1.9.x: 멱등 — 이미 게시된 version+lang 은 스킵(재실행/cron 드립 안전, 중복 업로드 방지)
+  const publishedSet = new Set((published.videos || []).map(v => `${v.version}:${v.lang}`));
+  const items = (rendered.items || [])
+    .filter(i => fs.existsSync(i.file) && !publishedSet.has(`${i.version}:${i.lang}`))
+    .slice(0, parseLimit(arg('--limit', '6'), 6));
+  if (!items.length) { console.log('업로드할 신규 렌더 없음 (모두 게시됨 또는 파일 없음)'); return; }
+
+  const token = await getAccessToken(env);
   for (const it of items) {
     try {
       console.log(`▶ upload ${it.version} [${it.lang}] ${path.basename(it.file)}`);
