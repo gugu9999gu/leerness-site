@@ -11,6 +11,8 @@ export interface ReleaseShortProps {
   categoryKo: string;
   categoryEn: string;
   lang: Lang;
+  // 1.9.x: 버전별 sub-agent 생성 고유 카피(있으면 update 씬에 사용, 없으면 카테고리 평이 메시지)
+  script?: { hook: string; what: string; benefit: string } | null;
 }
 
 const FONT = '"Pretendard", -apple-system, "Segoe UI", system-ui, sans-serif';
@@ -144,7 +146,7 @@ export const ReleaseShort: React.FC<ReleaseShortProps> = (props) => {
       </Sequence>
 
       <Sequence from={update} durationInFrames={F(SCENES.update)} name="update">
-        <Scene accent={accent}><Brand version={version} accent={accent} /><UpdateScene label={c.updateLabel} version={version} h={plain.h} s={plain.s} accent={accent} /></Scene>
+        <Scene accent={accent}><Brand version={version} accent={accent} /><UpdateScene label={c.updateLabel} version={version} script={props.script} h={plain.h} s={plain.s} accent={accent} /></Scene>
       </Sequence>
 
       <Sequence from={cta} durationInFrames={F(SCENES.cta)} name="cta">
@@ -210,13 +212,27 @@ const BenefitRow: React.FC<{ it: { icon: string; title: string; desc: string }; 
   );
 };
 
-const UpdateScene: React.FC<{ label: string; version: string; h: string; s: string; accent: string }> = ({ label, version, h, s, accent }) => {
+const UpdateScene: React.FC<{ label: string; version: string; script?: { hook: string; what: string; benefit: string } | null; h: string; s: string; accent: string }> = ({ label, version, script, h, s, accent }) => {
   const e = useEnter(2);
+  const what = useEnter(8);   // 본문 약간 늦게
+  // 버전별 고유 카피(script) 있으면 hook/what/benefit, 없으면 카테고리 평이 메시지(h/s)
   return (
     <div style={{ transform: `translateY(${e.y}px)`, opacity: e.opacity, textAlign: 'center', width: '100%' }}>
-      <div style={{ display: 'inline-block', fontFamily: MONO, color: accent, fontSize: 34, fontWeight: 700, padding: '8px 22px', border: `2px solid ${accent}55`, borderRadius: 12, marginBottom: 34 }}>{label} · v{version}</div>
-      <MultiLine text={h} style={{ fontSize: 72, fontWeight: 800, lineHeight: 1.25, letterSpacing: -1 }} />
-      <MultiLine text={s} style={{ fontSize: 42, color: '#9aa0ad', marginTop: 24, lineHeight: 1.45 }} />
+      <div style={{ display: 'inline-block', fontFamily: MONO, color: accent, fontSize: 32, fontWeight: 700, padding: '8px 22px', border: `2px solid ${accent}55`, borderRadius: 12, marginBottom: 36 }}>{label} · v{version}</div>
+      {script ? (
+        <>
+          <MultiLine text={script.hook} style={{ fontSize: 46, fontWeight: 700, color: accent, lineHeight: 1.35, marginBottom: 28 }} />
+          <div style={{ transform: `translateY(${what.y}px)`, opacity: what.opacity }}>
+            <MultiLine text={script.what} style={{ fontSize: 56, fontWeight: 800, lineHeight: 1.35, letterSpacing: -0.5 }} />
+            <MultiLine text={script.benefit} style={{ fontSize: 38, color: '#9aa0ad', marginTop: 24, lineHeight: 1.45 }} />
+          </div>
+        </>
+      ) : (
+        <>
+          <MultiLine text={h} style={{ fontSize: 72, fontWeight: 800, lineHeight: 1.25, letterSpacing: -1 }} />
+          <MultiLine text={s} style={{ fontSize: 42, color: '#9aa0ad', marginTop: 24, lineHeight: 1.45 }} />
+        </>
+      )}
     </div>
   );
 };

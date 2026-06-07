@@ -29,14 +29,17 @@ function main() {
   fs.mkdirSync(outDir, { recursive: true });
   const rel = JSON.parse(fs.readFileSync(path.join(root, 'data', 'releases.json'), 'utf8'));
   const byVer = Object.fromEntries((rel.releases || []).map(r => [r.version, r]));
+  // 버전별 sub-agent 생성 고유 카피(있으면 update 씬에 사용)
+  let scripts = {}; try { scripts = (JSON.parse(fs.readFileSync(path.join(root, 'data', 'video-scripts.json'), 'utf8')).byVersion) || {}; } catch {}
 
   const rendered = [];
   for (const it of items) {
     const r = byVer[it.version] || it;
+    const script = (scripts[r.version] && scripts[r.version][it.lang]) || null;
     const props = {
       version: r.version, date: r.date, title: it.title, summary: it.summary || r.summary,
       highlights: (it.highlights || r.highlights || []).slice(0, 3),
-      categoryKo: r.categoryKo, categoryEn: r.categoryEn, lang: it.lang,
+      categoryKo: r.categoryKo, categoryEn: r.categoryEn, lang: it.lang, script,
     };
     const outFile = path.join(outDir, `${r.version}-${it.lang}.mp4`);
     console.log(`▶ render ${r.version} [${it.lang}] → ${path.relative(root, outFile)}`);

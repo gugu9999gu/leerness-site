@@ -1,0 +1,22 @@
+{
+  "generated": "2026-06-07",
+  "note": "버전별 비개발자 친화 숏츠 카피 (Workflow sub-agent 생성). render-shorts 가 version+lang 으로 조회.",
+  "byVersion": {
+    "1.9.412": {
+      "ko": { "hook": "분명 그 폴더를 골랐는데 왜 딴 데를 보지?", "what": "이제 원하는 폴더를 직접 지정하면 그 폴더를 정확히 봐줘요", "benefit": "헷갈림 없이 내가 가리킨 곳을 그대로 확인해요" },
+      "en": { "hook": "You picked that folder, so why check another?", "what": "Point it at the folder you want — it reads exactly that one now", "benefit": "No more mix-ups; it looks where you told it to" }
+    },
+    "1.9.410": {
+      "ko": { "hook": "한 글자 잘못 쳤다고 프로그램이 꺼진 적 있나요?", "what": "이제 명령어를 잘못 입력해도 멈추지 않고 차분히 알려줘요", "benefit": "작업이 날아갈 걱정 없이 끝까지 안심하고 써요" },
+      "en": { "hook": "One typo and the whole app dies. Sound familiar?", "what": "A wrong command won't crash it now — it just tells you nicely", "benefit": "No more lost work. Keep going with peace of mind" }
+    },
+    "1.9.409": {
+      "ko": { "hook": "고치려다 망가뜨리던 그 버그, 이제 끝!", "what": "자동 정리가 실행 파일을 건드려 멈추게 하던 문제를 막았어요", "benefit": "작업이 갑자기 멈추는 일 없이 매끄럽게 굴러가요" },
+      "en": { "hook": "The fix that used to break things? Fixed for real.", "what": "Auto-cleanup no longer touches the files that run your tasks", "benefit": "Your work keeps running smoothly — no surprise breakdowns" }
+    },
+    "1.9.408": {
+      "ko": { "hook": "메모장으로 만든 파일이 안 깔린다고요?", "what": "윈도우에서 만든 파일도 이제 한 번에 정상 설치돼요", "benefit": "어떤 컴퓨터에서 만들었든 막힘 없이 그냥 됩니다" },
+      "en": { "hook": "Made it on Windows? It just wouldn't install.", "what": "Files made on any computer now install perfectly the first time", "benefit": "No more failed setups, wherever the file came from" }
+    }
+  }
+}

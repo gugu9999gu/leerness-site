@@ -50,5 +50,5 @@ export const plainFor = (category: string, lang: Lang) => {
 };
 
 // 씬 길이(초) — 컴포지션과 Root 가 공유(총 길이/프레임 윈도우 동기화)
-export const SCENES = { hook: 2.6, whatIs: 3.2, benefits: 5.4, update: 3.2, cta: 3.4 } as const;
+export const SCENES = { hook: 2.6, whatIs: 3.2, benefits: 5.4, update: 4.4, cta: 3.4 } as const;
 export const TOTAL_SECONDS = Object.values(SCENES).reduce((a, b) => a + b, 0);
