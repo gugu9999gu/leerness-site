@@ -54,7 +54,18 @@ function main() {
     });
     try { fs.unlinkSync(propsFile); } catch {}
     if (res.status !== 0) { console.error(`✗ render 실패: ${r.version} [${it.lang}]`); continue; }
-    rendered.push({ version: r.version, lang: it.lang, title: it.title, summary: props.summary, file: outFile, privacy: it.privacy || null, major: !!it.major, categoryKo: r.categoryKo, categoryEn: r.categoryEn });
+    // UR-0163: 대표 썸네일 still — whatIs 씬(브랜드+한줄가치+안내스트립) 프레임. upload-youtube 가 thumbnails.set 으로 사용.
+    let thumb = null;
+    try {
+      const thumbFile = path.join(outDir, `${r.version}-${it.lang}-thumb.png`);
+      const pf2 = path.join(outDir, `props-thumb-${r.version}-${it.lang}.json`).replace(/\\/g, '/');
+      fs.writeFileSync(pf2, JSON.stringify(props));
+      const tr = spawnSync('npx', ['remotion', 'still', 'video/src/index.ts', 'ReleaseShort', thumbFile.replace(/\\/g, '/'), '--frame=190', `--props=${pf2}`], { cwd: root, stdio: 'inherit', shell: true });
+      try { fs.unlinkSync(pf2); } catch {}
+      if (tr.status === 0 && fs.existsSync(thumbFile)) thumb = thumbFile;
+      else console.error(`  ⚠ 썸네일 렌더 실패(계속): ${r.version} [${it.lang}]`);
+    } catch (e) { console.error('  ⚠ 썸네일 예외(계속): ' + e.message); }
+    rendered.push({ version: r.version, lang: it.lang, title: it.title, summary: props.summary, file: outFile, thumb, privacy: it.privacy || null, major: !!it.major, categoryKo: r.categoryKo, categoryEn: r.categoryEn });
   }
   fs.writeFileSync(path.join(root, 'data', 'rendered.json'), JSON.stringify({ generated: new Date().toISOString().slice(0, 10), items: rendered }, null, 2) + '\n');
   console.log(`✓ 렌더 ${rendered.length}/${items.length} → data/rendered.json`);

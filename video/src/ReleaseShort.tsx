@@ -60,6 +60,10 @@ const Scene: React.FC<{ accent: string; children: React.ReactNode }> = ({ accent
   <AbsoluteFill style={{ fontFamily: FONT, color: '#e7e9ee' }}>
     <MovingBackground accent={accent} />
     <AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', padding: 96 }}>{children}</AbsoluteFill>
+    {/* UR-0164: 상시 안내 스트립 (모든 씬 하단 고정) — 언어중립(브랜드+URL)이라 ko/en 혼용 없음. */}
+    <div style={{ position: 'absolute', bottom: 56, left: 0, right: 0, textAlign: 'center', fontFamily: MONO, fontSize: 26, color: '#7c828f', letterSpacing: 0.5 }}>
+      leerness<span style={{ color: accent }}>.</span>&nbsp;&nbsp;·&nbsp;&nbsp;leerness.com
+    </div>
   </AbsoluteFill>
 );
 

@@ -112,6 +112,18 @@ function uploadVideo(accessToken, metadata, filePath) {
   });
 }
 
+// UR-0163: 커스텀 썸네일 업로드 (thumbnails.set, media upload). 채널 인증 필요 시 403 → 호출부에서 graceful 처리.
+function setThumbnail(accessToken, videoId, filePath) {
+  return new Promise((resolve, reject) => {
+    const img = fs.readFileSync(filePath);
+    const req = https.request({
+      hostname: 'www.googleapis.com', path: `/upload/youtube/v3/thumbnails/set?videoId=${videoId}&uploadType=media`, method: 'POST',
+      headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'image/png', 'Content-Length': img.length },
+    }, res => { let d = ''; res.on('data', c => d += c); res.on('end', () => { if (res.statusCode === 200) resolve(true); else reject(new Error('status ' + res.statusCode + ': ' + d.slice(0, 150))); }); });
+    req.on('error', reject); req.write(img); req.end();
+  });
+}
+
 async function main() {
   const env = loadEnv();
   for (const k of ['YOUTUBE_CLIENT_ID', 'YOUTUBE_CLIENT_SECRET', 'YOUTUBE_REFRESH_TOKEN']) {
@@ -134,6 +146,11 @@ async function main() {
       console.log(`▶ upload ${it.version} [${it.lang}] ${path.basename(it.file)}`);
       const id = await uploadVideo(token, meta(it), it.file);
       console.log(`  ✓ https://youtube.com/shorts/${id}`);
+      // UR-0163: 커스텀 썸네일 설정(best-effort) — 채널 미인증 시 403 가능, 실패해도 업로드는 유지.
+      if (it.thumb && fs.existsSync(it.thumb)) {
+        try { await setThumbnail(token, id, it.thumb); console.log('  ✓ 썸네일 설정됨'); }
+        catch (e) { console.error(`  ⚠ 썸네일 설정 실패(계속, 채널 인증 필요할 수 있음): ${e.message}`); }
+      }
       published.videos.push({ version: it.version, lang: it.lang, youtubeId: id, at: new Date().toISOString().slice(0, 10) });
     } catch (e) { console.error(`  ✗ 실패: ${e.message}`); }
   }
