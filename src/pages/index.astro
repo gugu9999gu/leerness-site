@@ -29,8 +29,20 @@ const badgeClass = (c) => ['security','data-integrity','feature','compat','perfo
     </div>
   </section>
 
+  <section id="plain">
+    <h2>쉽게 말하면 🙂</h2>
+    <p class="sub">개발을 몰라도 괜찮아요. <b>AI에게 코딩을 시키면 똑똑하지만, 가끔 하던 걸 깜빡하거나 "다 했어요"라고만 하고 실제로는 안 끝낸 경우</b>가 있어요. leerness는 그 AI 옆에서 일을 <b>꼼꼼히 챙겨주는 비서</b>예요 — 직접 코딩하진 않고, AI가 실수 없이 일하도록 돕습니다.</p>
+    <div class="plain-grid">
+      <div class="pcard"><div class="pico">🧠</div><div class="pt">하던 일을 기억해요</div><div class="ps">대화가 끊기거나 다음 날 다시 시켜도, 어디까지 했는지 잊지 않고 이어가요.</div></div>
+      <div class="pcard"><div class="pico">✅</div><div class="pt">"다 했어요"를 확인해요</div><div class="ps">정말 끝났는지 증거(테스트·결과)로 점검해서, 안 끝난 걸 끝났다고 말하지 못하게 해요.</div></div>
+      <div class="pcard"><div class="pico">🛡️</div><div class="pt">사고를 미리 막아요</div><div class="ps">비밀번호 유출, 한글 깨짐 같은 흔한 실수를 일을 마치기 전에 자동으로 잡아줘요.</div></div>
+      <div class="pcard"><div class="pico">🤝</div><div class="pt">다음 사람에게 넘겨줘요</div><div class="ps">다른 AI 도구나 동료가 이어받을 때, 무엇을 왜 했는지 정리해 깔끔하게 인계해요.</div></div>
+    </div>
+    <p class="sub" style="margin-top:18px">한 줄 요약: <b>AI가 만든 결과를 믿을 수 있게, 기억·확인·안전을 자동으로 챙겨주는 도구.</b></p>
+  </section>
+
   <section id="about">
-    <h2>leerness 란?</h2>
+    <h2>leerness 란? <span style="font-size:.6em;color:#9aa0ad">(개발자용)</span></h2>
     <p class="sub">AI 코딩 에이전트(Claude Code, Cursor, Codex 등)는 코드를 잘 쓰지만 <b>기억하지 못하고, 증거 없이 "완료"를 선언</b>합니다. leerness 는 그 위에 얹는 <b>운영 레이어</b> — 프로젝트 상태를 <code>.harness/</code> 파일로 영속화하고 CLI · MCP 도구로 노출합니다. <b>leerness 자체는 LLM 을 호출하거나 코드를 실행하지 않습니다.</b></p>
     <div class="rel" style="cursor:default">
       <div class="title">🤝 핸드오프 — 세션 시작 시 컨텍스트 자동 로드, 종료 시 인수인계 생성</div>

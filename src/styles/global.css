@@ -87,3 +87,10 @@ section .sub { color: var(--fg-dim); font-size: 14px; margin-bottom: 24px; }
 footer { border-top: 1px solid var(--border); padding: 36px 0; margin-top: 40px; color: var(--fg-faint); font-size: 13px; }
 footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 footer a { color: var(--fg-dim); }
+
+/* UR-0159: 비개발자 친화 "쉽게 말하면" 섹션 */
+.plain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.pcard { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.pcard .pico { font-size: 30px; line-height: 1; margin-bottom: 10px; }
+.pcard .pt { font-weight: 700; color: var(--fg); font-size: 16px; margin-bottom: 6px; }
+.pcard .ps { color: var(--fg-dim); font-size: 14px; line-height: 1.5; }
