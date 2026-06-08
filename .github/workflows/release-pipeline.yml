@@ -47,6 +47,9 @@ jobs:
         run: npx astro build
 
       - name: Cloudflare Pages 배포
+        # CF 토큰 인증 실패(코드 10000, 토큰 만료/스코프)가 영상 렌더·업로드까지 막지 않도록 non-blocking.
+        #   사이트 배포가 실패해도 영상 파이프라인은 독립 진행. CF 토큰은 레포 시크릿 CLOUDFLARE_API_KEY 갱신 필요.
+        continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
