@@ -32,13 +32,14 @@ function main() {
   const published = load(publishedPath, { videos: [] });   // [{version, lang, youtubeId, at}]
   const publishedSet = new Set((published.videos || []).map(v => `${v.version}:${v.lang}`));
 
-  // UR-0158 (사용자 정책): 영상은 "알릴만한 이슈"(대규모 업데이트/안정화/마일스톤/보안 등)일 때만 그 내용으로 생성.
-  //   newsworthy = 핵심 카테고리(보안/데이터무결성/호환/성능) OR 주요 마커(안정화/Stable/대규모/major/마일스톤/🎉/🛡).
+  // UR-0158 (사용자 정책): 영상은 "알릴만한 이슈"(큰 업데이트/안정화 버전/마일스톤 등)일 때만 그 내용으로 생성.
+  //   newsworthy = 명시적 주요 마커(안정화/Stable/대규모/major/마일스톤/milestone/🎉/🛡) — 영상 가치는 릴리스 작성자가 마커로 판단(의도적).
+  //   category 자동(보안/성능 등 모든 패치)은 과거 사소한 패치까지 대량 큐잉되어 제외 — 진짜 알릴만한 보안/안정화는 작성자가 🛡/안정화 마커로 표기.
   //   routine(fix/refactor/chore/소소한 feature)은 영상 미생성(큐 제외) — 일부공개도 X. 모든 큐 항목은 newsworthy → 전체공개(public).
   const langs = ['ko', 'en'];
-  const CORE_PUBLIC = new Set(['security', 'data-integrity', 'compat', 'performance']);
+  // 마커는 제목(title)에 의도적으로 표기됨 — summary/highlights 의 기술적 언급(예: 'milestone 파서')에 부분일치하는 오탐 방지 위해 title 한정.
   const MAJOR_MARK = /안정화|stable|대규모|major|마일스톤|milestone|🎉|🛡️|🛡/i;
-  const isNewsworthy = (r) => CORE_PUBLIC.has(r.category) || MAJOR_MARK.test(`${r.title || ''} ${r.summary || ''} ${(r.highlights || []).join(' ')}`);
+  const isNewsworthy = (r) => MAJOR_MARK.test(r.title || '');
   const queue = [];
   let skippedRoutine = 0;
   for (const r of (rel.releases || [])) {
