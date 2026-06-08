@@ -31,8 +31,13 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: CHANGELOG 가져오기 (leerness 레포 raw)
-        run: curl -fsSL https://raw.githubusercontent.com/gugu9999gu/leerness/main/CHANGELOG.md -o CHANGELOG.source.md
+      - name: CHANGELOG 가져오기 (leerness 레포 — API raw, CDN 캐시 우회)
+        # UR-0165: raw.githubusercontent 는 ~5분 CDN 캐시라 방금 배포한 신규 버전이 누락될 수 있음(플래그십 릴리스 영상 지연).
+        #   GitHub API contents(raw) 는 캐시-프레시 → 최신 CHANGELOG 보장. 실패 시 캐시버스트 raw 로 폴백.
+        run: |
+          curl -fsSL -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.raw" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/gugu9999gu/leerness/contents/CHANGELOG.md" -o CHANGELOG.source.md \
+            || curl -fsSL "https://raw.githubusercontent.com/gugu9999gu/leerness/main/CHANGELOG.md?cb=$(date +%s)" -o CHANGELOG.source.md
+          head -1 CHANGELOG.source.md
 
       - name: 의존성 설치
         run: npm ci
