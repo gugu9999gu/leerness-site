@@ -86,8 +86,12 @@ function parseChangelog(text) {
 
 function main() {
   const here = __dirname;
-  const changelogPath = path.resolve(here, arg('--changelog', path.join('..', '..', 'leerness-pkg', 'CHANGELOG.md')));
-  const outPath = path.resolve(here, arg('--out', path.join('..', 'data', 'releases.json')));
+  // 명시적 --changelog/--out 은 CWD 기준(표준 CLI 동작) — CI 가 repo 루트에 받은 CHANGELOG.source.md 를 찾을 수 있게.
+  //   기본값(미지정)만 스크립트 디렉토리(pipeline/) 기준(로컬: ../../leerness-pkg/CHANGELOG.md).
+  const clArg = arg('--changelog', null);
+  const outArg = arg('--out', null);
+  const changelogPath = clArg ? path.resolve(process.cwd(), clArg) : path.resolve(here, '..', '..', 'leerness-pkg', 'CHANGELOG.md');
+  const outPath = outArg ? path.resolve(process.cwd(), outArg) : path.resolve(here, '..', 'data', 'releases.json');
   if (!fs.existsSync(changelogPath)) {
     console.error(`✗ CHANGELOG 없음: ${changelogPath}`);
     process.exit(1);
