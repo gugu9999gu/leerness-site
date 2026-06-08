@@ -54,7 +54,7 @@ function main() {
     });
     try { fs.unlinkSync(propsFile); } catch {}
     if (res.status !== 0) { console.error(`✗ render 실패: ${r.version} [${it.lang}]`); continue; }
-    rendered.push({ version: r.version, lang: it.lang, title: it.title, summary: props.summary, file: outFile, privacy: it.privacy || null, major: !!it.major });
+    rendered.push({ version: r.version, lang: it.lang, title: it.title, summary: props.summary, file: outFile, privacy: it.privacy || null, major: !!it.major, categoryKo: r.categoryKo, categoryEn: r.categoryEn });
   }
   fs.writeFileSync(path.join(root, 'data', 'rendered.json'), JSON.stringify({ generated: new Date().toISOString().slice(0, 10), items: rendered }, null, 2) + '\n');
   console.log(`✓ 렌더 ${rendered.length}/${items.length} → data/rendered.json`);
