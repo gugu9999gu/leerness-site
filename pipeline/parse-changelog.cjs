@@ -24,7 +24,9 @@ function normalize(text) {
 }
 
 // 제목/요약으로 카테고리 추론 (큐레이션 important 판정에 사용)
+// UR-0166: '안정화/Stable/대규모/마일스톤/🎉/🛡' 마커는 최우선 'stable'(중요) 카테고리 — 이전엔 매칭 룰이 없어 안정 minor(1.10.0)가 default 'fix'(important=false)로 분류돼 영상 큐·사이트 중요표시에서 누락됐음.
 const CATEGORY_RULES = [
+  { key: 'stable', ko: '안정화', en: 'Stable', re: /안정화|stable|대규모|마일스톤|milestone|🎉|🛡️|🛡/i, important: true },
   { key: 'security', ko: '보안', en: 'Security', re: /보안|시크릿|secret|취약|권한경계|injection|크래시|crash|FN|FP/i, important: true },
   { key: 'data-integrity', ko: '데이터무결성', en: 'Data integrity', re: /데이터\s*무결성|injection|lost-update|동시|손상|무결성|data integrity/i, important: true },
   { key: 'feature', ko: '신기능', en: 'Feature', re: /신기능|추가|feature|지원|도입|새/i, important: true },
