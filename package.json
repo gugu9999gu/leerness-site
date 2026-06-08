@@ -17,6 +17,7 @@
     "pipeline": "node pipeline/parse-changelog.cjs && node pipeline/curate.cjs && npm run site:build"
   },
   "dependencies": {
+    "@remotion/google-fonts": "^4.0.473",
     "astro": "^4.16.0"
   },
   "devDependencies": {

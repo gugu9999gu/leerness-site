@@ -50,19 +50,43 @@ const PRIVACY = (() => { const i = process.argv.indexOf('--privacy'); const v = 
 function meta(item) {
   // per-item privacy(주요 업데이트=public) 우선, 없으면 전역 --privacy(기본 public).
   const itemPrivacy = ['public', 'unlisted', 'private'].includes(item.privacy) ? item.privacy : PRIVACY;
+  // UR-0149: 영상 언어(ko/en)에 맞춰 제목·설명을 완전 분리 — 한국어 CHANGELOG 원문(item.title/summary)이
+  //   영어 영상에 혼입되던 문제 차단. ko 만 한국어 원문 사용, en 은 영어 카테고리/문구로 구성.
   const ko = item.lang === 'ko';
-  const title = `leerness v${item.version} — ${item.title}`.slice(0, 100);
-  const desc = [
-    ko ? `leerness ${item.version} 업데이트` : `leerness ${item.version} update`,
+  const catKo = item.categoryKo || '업데이트';
+  const catEn = item.categoryEn || 'Update';
+  const title = (ko
+    ? `leerness v${item.version} — ${item.title || catKo}`
+    : `leerness v${item.version} — ${catEn}`
+  ).slice(0, 100);
+  // 캡션/설명: 영상 내용(릴리스 소개)을 해당 언어로 설명.
+  const lines = ko ? [
+    `leerness ${item.version} 업데이트 · ${catKo}`,
     item.summary || '',
     '',
-    ko ? '설치: npm i -g leerness' : 'Install: npm i -g leerness',
+    '이 영상은 leerness 의 이번 업데이트와 핵심 기능을 1분 안에 소개합니다.',
+    'leerness 는 AI 코딩 에이전트를 위한 운영 레이어 — 기억·인수인계·검증·감사·보안을 자동으로 챙겨줍니다.',
+    '',
+    '설치: npm i -g leerness',
+    'https://leerness.com',
+    'https://github.com/gugu9999gu/leerness',
+    '',
+    '#leerness #AI #개발도구 #CLI #Shorts',
+  ] : [
+    `leerness ${item.version} update · ${catEn}`,
+    '',
+    `This short introduces what's new in leerness ${item.version} and its key features in under a minute.`,
+    'leerness is an operating layer for AI coding agents — memory, handoff, verification, audit, and security, automatically.',
+    '',
+    'Install: npm i -g leerness',
     'https://leerness.com',
     'https://github.com/gugu9999gu/leerness',
     '',
     '#leerness #AI #devtools #CLI #Shorts',
-  ].join('\n').slice(0, 5000);
-  return { snippet: { title, description: desc, tags: ['leerness', 'AI', 'devtools', 'CLI'], categoryId: '28', defaultLanguage: item.lang }, status: { privacyStatus: itemPrivacy, selfDeclaredMadeForKids: false } };
+  ];
+  const desc = lines.join('\n').slice(0, 5000);
+  const tags = ko ? ['leerness', 'AI', '개발도구', 'CLI', 'AI코딩'] : ['leerness', 'AI', 'devtools', 'CLI', 'coding'];
+  return { snippet: { title, description: desc, tags, categoryId: '28', defaultLanguage: item.lang, defaultAudioLanguage: item.lang }, status: { privacyStatus: itemPrivacy, selfDeclaredMadeForKids: false } };
 }
 
 // resumable upload: 1) 세션 시작 2) 파일 PUT

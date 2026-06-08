@@ -1,6 +1,10 @@
 import React from 'react';
 import { AbsoluteFill, Sequence, Audio, staticFile, interpolate, spring, useCurrentFrame, useVideoConfig, Easing } from 'remotion';
+import { loadFont as loadKR } from '@remotion/google-fonts/NotoSansKR';
 import { COPY, plainFor, SCENES, type Lang } from './copy';
+
+// UR-0148: 한글 폰트 실제 로드(delayRender 자동 연동) — CI headless Chromium 에 한글 폰트 부재로 깨지던(tofu □) 문제 차단.
+const { fontFamily: KR } = loadKR();
 
 export interface ReleaseShortProps {
   version: string;
@@ -15,8 +19,8 @@ export interface ReleaseShortProps {
   script?: { hook: string; what: string; benefit: string } | null;
 }
 
-const FONT = '"Pretendard", -apple-system, "Segoe UI", system-ui, sans-serif';
-const MONO = 'ui-monospace, "JetBrains Mono", "Cascadia Code", Consolas, monospace';
+const FONT = `${KR}, "Pretendard", -apple-system, "Segoe UI", system-ui, sans-serif`;
+const MONO = `ui-monospace, "JetBrains Mono", "Cascadia Code", Consolas, ${KR}, monospace`;
 
 // ── 모션 헬퍼 ──────────────────────────────────────────
 const useEnter = (delay = 0, damping = 20) => {
