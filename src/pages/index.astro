@@ -11,10 +11,10 @@ const total = data.count || releases.length;
 const importantCount = releases.filter(r => r.important).length;
 const badgeClass = (c) => ['security','data-integrity','feature','compat','performance','consistency','refactor','fix'].includes(c) ? c : 'fix';
 ---
-<Base title="leerness — AI 에이전트 프로젝트 매니지먼트 CLI">
+<Base title="leerness — AI 코딩 에이전트를 위한 운영 레이어">
   <section class="hero">
-    <h1>AI 에이전트를 위한<br /><span class="grad">프로젝트 매니지먼트 CLI</span></h1>
-    <p class="tag">핸드오프 · 자기검증 감사 · 시크릿 스캔 · 한글 인코딩 · 게으름 감지 — 0 의존성, 오프라인 우선, MCP 85 도구.</p>
+    <h1>AI 코딩 에이전트를 위한<br /><span class="grad">운영 레이어 (operating layer)</span></h1>
+    <p class="tag">기억 · 인수인계 · 검증 · 감사 · 보안 가드를 <code>.harness/</code> 에 영속화 — 코드를 대신 쓰지 않고, 어떤 에이전트 위에도 얹는 공통 운영 계층. 0 의존성 · offline-first · MCP 85 도구.</p>
     <div class="install"><span class="pfx">$ </span>npm i -g leerness</div>
     <div class="cta">
       <a class="btn primary" href="/how-it-works">leerness가 해주는 일 →</a>
@@ -31,7 +31,7 @@ const badgeClass = (c) => ['security','data-integrity','feature','compat','perfo
 
   <section id="about">
     <h2>leerness 란?</h2>
-    <p class="sub">AI 코딩 에이전트(Claude Code, Cursor, Windsurf 등)가 세션 간 컨텍스트를 잃지 않고, 거짓 완료를 방지하며, 한글 인코딩·시크릿·일관성을 자동 검증하도록 돕는 단일 CLI.</p>
+    <p class="sub">AI 코딩 에이전트(Claude Code, Cursor, Codex 등)는 코드를 잘 쓰지만 <b>기억하지 못하고, 증거 없이 "완료"를 선언</b>합니다. leerness 는 그 위에 얹는 <b>운영 레이어</b> — 프로젝트 상태를 <code>.harness/</code> 파일로 영속화하고 CLI · MCP 도구로 노출합니다. <b>leerness 자체는 LLM 을 호출하거나 코드를 실행하지 않습니다.</b></p>
     <div class="rel" style="cursor:default">
       <div class="title">🤝 핸드오프 — 세션 시작 시 컨텍스트 자동 로드, 종료 시 인수인계 생성</div>
       <div class="summ">progress-tracker · decisions · lessons · rules 를 읽어 다음 에이전트가 이어받음</div>

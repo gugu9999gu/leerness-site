@@ -34,12 +34,16 @@ function main() {
 
   // important + 아직 한/영 둘 다 게시 안 된 릴리스 (양언어 정책)
   const langs = ['ko', 'en'];
-  // 주요/대규모/안정화 = 영상으로 알릴만한 카테고리 → 유튜브 전체공개. 그 외(소소한 fix/refactor/consistency) → unlisted.
-  const MAJOR_CATEGORIES = new Set(['security', 'data-integrity', 'compat', 'performance', 'feature']);
+  // 주요/대규모/안정화 = 영상으로 알릴만한 → 유튜브 전체공개. 그 외(소소한 fix/refactor/feature·consistency) → unlisted.
+  //  핵심 카테고리(보안/데이터무결성/호환/성능)는 항상 public. feature 는 "주요 마커"(안정화/Stable/대규모/major/🎉) 있을 때만 public —
+  //  README 배너 같은 소소한 feature 까지 전체공개되던 과확장 방지(사용자 의도: 주요/대규모/안정화만 전체공개).
+  const CORE_PUBLIC = new Set(['security', 'data-integrity', 'compat', 'performance']);
+  const MAJOR_MARK = /안정화|stable|대규모|major|마일스톤|milestone|🎉|🛡️|🛡/i;
   const queue = [];
   for (const r of (rel.releases || [])) {
     if (!r.important) continue;
-    const major = MAJOR_CATEGORIES.has(r.category);
+    const text = `${r.title || ''} ${r.summary || ''} ${(r.highlights || []).join(' ')}`;
+    const major = CORE_PUBLIC.has(r.category) || MAJOR_MARK.test(text);
     const privacy = major ? 'public' : 'unlisted';
     for (const lang of langs) {
       if (publishedSet.has(`${r.version}:${lang}`)) continue;
