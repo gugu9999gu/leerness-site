@@ -43,7 +43,8 @@ jobs:
           node pipeline/curate.cjs --limit ${{ github.event.inputs.render_limit || '4' }}
 
       - name: Astro 빌드
-        run: npm run site:build
+        # 파싱+큐레이션 단계에서 이미 releases.json 생성됨 — site:build 는 parse 를 기본경로(CI 엔 없는 leerness-pkg)로 재실행하므로 astro build 만 수행.
+        run: npx astro build
 
       - name: Cloudflare Pages 배포
         env:
