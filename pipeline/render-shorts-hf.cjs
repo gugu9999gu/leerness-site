@@ -142,7 +142,8 @@ function pickReleases() {
   }
   // curate 큐 우선, 없으면 최신 important
   const q = load(path.join(ROOT, 'data', 'video-queue.json'), null);
-  if (q && Array.isArray(q.queue) && q.queue.length) return q.queue;
+  const queued = q && (Array.isArray(q.items) ? q.items : (Array.isArray(q.queue) ? q.queue : null));  // 16th 버그헌트 F5: curate 는 'items' 키로 씀(이전엔 'queue' 만 봐서 큐레이션 무시되고 항상 fallback)
+  if (queued && queued.length) return queued;
   const rel = load(path.join(ROOT, 'data', 'releases.json'), { releases: [] }).releases || [];
   return rel.filter(r => r.important).slice(0, parseInt(arg('--limit', '3'), 10) || 3);
 }
@@ -184,8 +185,10 @@ function main() {
   }
   // rendered.json (정본 — upload-youtube/verify-video 가 읽는 표준 경로). render-shorts.cjs 의 drop-in 대체.
   const out = { generated: '', engine: 'hyperframes', items: rendered };
-  if (!HAS('--check-only')) fs.writeFileSync(path.join(ROOT, 'data', 'rendered.json'), JSON.stringify(out, null, 2) + '\n');
-  fs.writeFileSync(path.join(ROOT, 'data', 'rendered-hf.json'), JSON.stringify(out, null, 2) + '\n');
+  if (!HAS('--check-only')) {  // 16th 버그헌트 F8: check-only 시엔 rendered.json/rendered-hf.json 둘 다 쓰지 않음(file 없는 checkOnly 항목이 이후 verify --rendered 를 깨뜨리던 문제)
+    fs.writeFileSync(path.join(ROOT, 'data', 'rendered.json'), JSON.stringify(out, null, 2) + '\n');
+    fs.writeFileSync(path.join(ROOT, 'data', 'rendered-hf.json'), JSON.stringify(out, null, 2) + '\n');
+  }
   console.log(`\n${HAS('--check-only') ? 'lint' : '렌더'} 완료: ${rendered.length}건 → data/rendered.json`);
 }
 

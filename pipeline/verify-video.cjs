@@ -48,6 +48,7 @@ function analyzeWav(file) {
   if (fmt.bits !== 16) return { ok: true, reason: 'non-16bit (RMS 생략)', duration: 0, rms: 1, peak: 1, fmt };
   const end = Math.min(dataOff + dataLen, buf.length);
   const n = Math.floor((end - dataOff) / 2);
+  if (n === 0) return { ok: false, reason: '오디오 데이터 없음(빈 WAV)', fmt };  // 16th 버그헌트 F7: 빈 16bit WAV 가 게이트 false-pass 하던 것 차단(duration:0 이 length 체크를 건너뛰던 문제)
   const duration = n / fmt.channels / fmt.sampleRate;
   let sumSq = 0, peak = 0;
   const step = Math.max(1, Math.floor(n / 200000)); // 큰 파일은 샘플링(최대 ~20만)

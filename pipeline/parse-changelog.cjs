@@ -46,7 +46,9 @@ function classify(title, summary) {
 function cleanVideoHighlight(s, max = 40) {
   let t = String(s || '');
   const bold = t.match(/\*\*\s*([^*]+?)\s*\*\*/);      // 볼드 리드 우선(없으면 콜론/대시 앞부분)
-  t = bold ? bold[1] : t.split(/:\s|—|\s-\s/)[0];
+  t = bold ? bold[1] : t;
+  t = t.replace(/^[^\p{L}\p{N}]+/u, '');               // 16th 버그헌트 F6: 선행 이모지/대시/괄호 noise 제거 — 제목 '🎉 — 실제제목' 이 split[0]='🎉 '→빈문자열 되던 것 차단
+  if (!bold) t = t.split(/:\s|—|\s-\s/)[0];
   t = t.replace(/\([^)]*(?:[A-Za-z]{1,3}-\d|\d+\.\d+)[^)]*\)/g, ' ');  // 추적코드(UR-/CV-/R-)·버전 든 괄호만 제거 — 설명 괄호('생각하고 코딩' 등)는 보존(UR-0038)
   t = t.replace(/\b\d+\.\d+(?:\.\d+)?\b/g, ' ');       // 버전 번호
   t = t.replace(/[\[\]【】`*#>~|]/g, ' ');             // 마크다운/대괄호
