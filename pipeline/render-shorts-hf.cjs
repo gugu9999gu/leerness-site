@@ -92,7 +92,7 @@ function buildHtml(rel, lang) {
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0a0b0e; }
       body { font-family: "Noto Sans KR", sans-serif; color: #e7e9ee; }
-      .mono, [style*="mono"] { font-family: "JetBrains Mono", monospace; }
+      .mono, [style*="mono"] { font-family: "JetBrains Mono", "Noto Sans KR", monospace; }  /* 한글 fallback — JetBrains Mono 엔 한글 글리프 없어 '이번 업데이트' 배지가 안 보였음(Phase 3 폴리시) */
       .scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 80px; }
       .center { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
       .brandsm { position: absolute; top: 90px; left: 0; right: 0; text-align: center; font-family: "JetBrains Mono", monospace; font-size: 36px; font-weight: 700; color: #e7e9ee; }
@@ -166,11 +166,21 @@ function main() {
       const r = cp.spawnSync(`npx hyperframes render -f ${fps} -o ${JSON.stringify(outFile)}`, { cwd: HF, encoding: 'utf8', shell: true, timeout: 600000 });
       const ok = r.status === 0 && fs.existsSync(path.join(HF, outFile));
       console.log(`  ${ok ? '✓' : '✗'} ${rel.version}/${lang} render → ${outFile}`);
-      rendered.push({ version: rel.version, lang, file: path.relative(ROOT, path.join(HF, outFile)).replace(/\\/g, '/'), title: rel.title, summary: rel.summary, categoryKo: rel.categoryKo, categoryEn: rel.categoryEn, ok });
+      // 썸네일: update 씬(릴리스별 내용) 프레임 추출 — upload-youtube 가 it.thumb 사용. ffmpeg 필요(CI).
+      let thumb = null;
+      if (ok) {
+        const thumbAbs = path.join(HF, 'out', `${rel.version}-${lang}.jpg`);
+        const tr = cp.spawnSync(`ffmpeg -y -ss 12.5 -i ${JSON.stringify(outFile)} -frames:v 1 -q:v 2 ${JSON.stringify(path.join('out', `${rel.version}-${lang}.jpg`))}`, { cwd: HF, encoding: 'utf8', shell: true, timeout: 60000 });
+        if (tr.status === 0 && fs.existsSync(thumbAbs)) thumb = path.relative(ROOT, thumbAbs).replace(/\\/g, '/');
+      }
+      rendered.push({ version: rel.version, lang, file: path.relative(ROOT, path.join(HF, outFile)).replace(/\\/g, '/'), thumb, title: rel.title, summary: rel.summary, categoryKo: rel.categoryKo, categoryEn: rel.categoryEn, major: !!rel.important, ok });
     }
   }
-  fs.writeFileSync(path.join(ROOT, 'data', 'rendered-hf.json'), JSON.stringify({ generated: '', engine: 'hyperframes', items: rendered }, null, 2) + '\n');
-  console.log(`\n${HAS('--check-only') ? 'lint/validate' : '렌더'} 완료: ${rendered.length}건 → data/rendered-hf.json`);
+  // rendered.json (정본 — upload-youtube/verify-video 가 읽는 표준 경로). render-shorts.cjs 의 drop-in 대체.
+  const out = { generated: '', engine: 'hyperframes', items: rendered };
+  if (!HAS('--check-only')) fs.writeFileSync(path.join(ROOT, 'data', 'rendered.json'), JSON.stringify(out, null, 2) + '\n');
+  fs.writeFileSync(path.join(ROOT, 'data', 'rendered-hf.json'), JSON.stringify(out, null, 2) + '\n');
+  console.log(`\n${HAS('--check-only') ? 'lint' : '렌더'} 완료: ${rendered.length}건 → data/rendered.json`);
 }
 
 if (require.main === module) main();
