@@ -22,32 +22,32 @@ const HAS = (n) => process.argv.includes(n);
 const load = (p, d) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } };
 const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// 씬 길이(초) — copy.ts SCENES 와 동기화
-const SC = { hook: 1.6, whatIs: 3.2, benefits: 5.4, update: 4.4, cta: 3.4 };
+// 씬 길이(초) — 인트로 간소화(hook/whatIs 단축) + update(문제→해소 모션)에 시간 배분
+const SC = { hook: 1.3, whatIs: 2.2, benefits: 4.6, update: 6.2, cta: 3.0 };
 const T = { hook: 0 };
 T.whatIs = T.hook + SC.hook; T.benefits = T.whatIs + SC.whatIs; T.update = T.benefits + SC.benefits; T.cta = T.update + SC.update;
 const TOTAL = Object.values(SC).reduce((a, b) => a + b, 0);
 
 // 비개발자 친화 정적 카피(copy.ts 미러)
 const COPY = {
-  ko: { tagline: 'AI 코딩 에이전트를 위한 작업 관리 비서', whatIs: 'AI가 코딩하다 빠뜨리거나 잊지 않도록 맥락·검증·보안을 자동으로 챙겨줘요',
+  ko: { tagline: 'AI 코딩 에이전트를 위한 작업 관리 비서', whatIs: 'AI 코딩의 빠뜨림·거짓완료·실수를 자동으로 막아줘요',
     benefits: [['맥락을 기억해요', '세션이 끊겨도 하던 작업을 이어가요'], ['거짓 완료를 막아요', "'다 했어요'를 증거로 자동 검증해요"], ['실수를 예방해요', '비밀키 유출·한글 깨짐을 미리 막아요']],
     updateLabel: '이번 업데이트', ctaTop: '지금 무료로 시작하세요' },
-  en: { tagline: 'A work-manager for your AI coding agent', whatIs: 'Keeps your AI from missing or forgetting things — context, checks, and security, automatically',
+  en: { tagline: 'A work-manager for your AI coding agent', whatIs: 'Stops your AI from missing, faking done, or slipping up',
     benefits: [['Remembers context', 'Picks up where it left off across sessions'], ['Stops fake "done"', 'Verifies completion with real evidence'], ['Prevents mistakes', 'Blocks secret leaks & encoding breakage']],
     updateLabel: "What's new", ctaTop: 'Start free now' },
 };
-// 카테고리 → accent + 평이 테마(h)
+// 카테고리 → accent + 해결(ko/en) + 문제(probKo/probEn) — update 씬의 "문제→해소" 모션용
 const CAT = {
-  security: { a: '#fbbf24', ko: '보안이 더 강해졌어요', en: 'Stronger security' },
-  'data-integrity': { a: '#f472b6', ko: '데이터가 더 안전해졌어요', en: 'Safer data' },
-  feature: { a: '#34d399', ko: '새로운 기능이 생겼어요', en: 'New feature added' },
-  compat: { a: '#5eead4', ko: '호환성이 좋아졌어요', en: 'Better compatibility' },
-  consistency: { a: '#818cf8', ko: '더 매끄럽게 다듬었어요', en: 'More polished' },
-  performance: { a: '#f59e0b', ko: '더 빨라졌어요', en: 'Faster now' },
-  stable: { a: '#22d3ee', ko: '안정판이 나왔어요', en: 'Stable release' },
-  refactor: { a: '#94a3b8', ko: '내부를 더 탄탄하게', en: 'Sturdier inside' },
-  fix: { a: '#94a3b8', ko: '안정성을 높였어요', en: 'More stable' },
+  security: { a: '#fbbf24', ko: '보안이 더 강해졌어요', en: 'Stronger security', probKo: '비밀키가 코드에 새던 위험', probEn: 'Secrets leaking into code' },
+  'data-integrity': { a: '#f472b6', ko: '데이터가 더 안전해졌어요', en: 'Safer data', probKo: '기록이 깨지거나 덮어써지던 문제', probEn: 'Records corrupting or overwriting' },
+  feature: { a: '#34d399', ko: '새로운 기능이 생겼어요', en: 'New feature added', probKo: '그동안 없던 기능', probEn: 'A capability that was missing' },
+  compat: { a: '#5eead4', ko: '호환성이 좋아졌어요', en: 'Better compatibility', probKo: '환경마다 깨지던 호환성', probEn: 'Breaking across environments' },
+  consistency: { a: '#818cf8', ko: '더 매끄럽게 다듬었어요', en: 'More polished', probKo: '들쭉날쭉하던 동작', probEn: 'Inconsistent behavior' },
+  performance: { a: '#f59e0b', ko: '더 빨라졌어요', en: 'Faster now', probKo: '느리던 처리 속도', probEn: 'Slow processing' },
+  stable: { a: '#22d3ee', ko: '안정판이 나왔어요', en: 'Stable release', probKo: '흩어져 있던 자잘한 이슈들', probEn: 'Scattered small issues' },
+  refactor: { a: '#94a3b8', ko: '내부를 더 탄탄하게', en: 'Sturdier inside', probKo: '비대해진 내부 구조', probEn: 'Bloated internals' },
+  fix: { a: '#94a3b8', ko: '안정성을 높였어요', en: 'More stable', probKo: '불안정하던 동작', probEn: 'Unstable behavior' },
 };
 
 function clip(start, dur, track, inner, extra = '') {
@@ -58,6 +58,7 @@ function clip(start, dur, track, inner, extra = '') {
 function buildHtml(rel, lang) {
   const c = COPY[lang]; const cat = CAT[rel.category] || CAT.fix; const accent = cat.a;
   const theme = lang === 'ko' ? cat.ko : cat.en;
+  const prob = lang === 'ko' ? (cat.probKo || '') : (cat.probEn || '');
   const headline = lang === 'ko' ? (rel.titlePlain || rel.title || '') : (rel.title || rel.titlePlain || '');
   const hls = (rel.videoHighlights || []).slice(0, 3);
   const ver = rel.version;
@@ -74,8 +75,8 @@ function buildHtml(rel, lang) {
     clip(T.whatIs, SC.whatIs, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div id="whatis" style="font-size:56px;font-weight:700;line-height:1.4;color:#e7e9ee;max-width:920px">${esc(c.whatIs)}</div></div>`),
     // benefits
     clip(T.benefits, SC.benefits, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div style="display:flex;flex-direction:column;gap:48px">${benefitsHtml}</div></div>`),
-    // update (릴리스별 — 복붙 탈피 핵심)
-    clip(T.update, SC.update, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div id="ulabel" class="mono" style="display:inline-block;color:${accent};font-size:34px;font-weight:700;padding:8px 24px;border:2px solid ${accent}55;border-radius:12px">${esc(c.updateLabel)} · v${esc(ver)}</div><div id="utheme" style="font-size:38px;color:${accent};font-weight:700;margin-top:28px">${esc(theme)}</div><div id="uhead" style="font-size:${headline.length > 26 ? 52 : 62}px;font-weight:800;line-height:1.25;color:#fff;margin-top:14px;max-width:980px">${esc(headline)}</div>${hlHtml}</div>`),
+    // update (릴리스별 — 문제→해소 모션 시각화: ✕문제 → ↓ → ✓해결 → 헤드라인 → 적용 하이라이트)
+    clip(T.update, SC.update, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div id="ulabel" class="mono" style="display:inline-block;color:${accent};font-size:32px;font-weight:700;padding:8px 24px;border:2px solid ${accent}55;border-radius:12px">${esc(c.updateLabel)} · v${esc(ver)}</div><div id="uprob" style="margin-top:30px;font-size:40px;color:#8a909c;font-weight:700"><span style="color:#ef4444">✕</span> ${esc(prob)}</div><div id="uarrow" style="font-size:56px;color:${accent};line-height:1;margin:8px 0;font-weight:900">↓</div><div id="utheme" style="font-size:46px;color:${accent};font-weight:800"><span style="color:#34d399">✓</span> ${esc(theme)}</div><div id="uhead" style="font-size:${headline.length > 26 ? 46 : 54}px;font-weight:800;line-height:1.25;color:#fff;margin-top:14px;max-width:980px">${esc(headline)}</div>${hlHtml}</div>`),
     // cta
     clip(T.cta, SC.cta, 2, `<div class="center"><div id="ctatop" style="font-size:52px;color:#e7e9ee;font-weight:700">${esc(c.ctaTop)}</div><div id="ctacmd" style="margin-top:36px;background:#13151c;border:2px solid ${accent};border-radius:18px;padding:30px 40px;font-family:mono;font-size:46px;color:${accent}">npm i -g leerness</div><div id="ctasite" style="margin-top:44px;font-size:56px;font-weight:800;color:#fff">leerness.com</div></div>`),
   ].join('\n      ');
@@ -105,6 +106,7 @@ function buildHtml(rel, lang) {
       <!-- BGM (CC0 자체생성, track 0) + 섹션 효과음 (track 1) — id 필수(없으면 렌더 무음) -->
       <audio id="bgm" class="clip" data-start="0" data-duration="${TOTAL}" data-track-index="0" data-volume="0.5" src="assets/bgm.wav"></audio>
       ${[T.whatIs, T.benefits, T.update, T.cta].map((s, i) => `<audio id="sfx${i}" class="clip" data-start="${s}" data-duration="0.2" data-track-index="1" data-volume="0.45" src="assets/sfx-pop.wav"></audio>`).join('\n      ')}
+      <audio id="sfxsolve" class="clip" data-start="${(T.update + 2.0).toFixed(2)}" data-duration="0.2" data-track-index="1" data-volume="0.55" src="assets/sfx-pop.wav"></audio>
       ${scenes}
     </div>
     <script>
@@ -116,9 +118,11 @@ function buildHtml(rel, lang) {
         .from("#whatis", { opacity: 0, y: 30, duration: 0.6, ease }, ${T.whatIs + 0.2})
         .from(".brow", { opacity: 0, x: -40, duration: 0.5, stagger: 0.3, ease }, ${T.benefits + 0.2})
         .from("#ulabel", { opacity: 0, y: -20, duration: 0.4, ease }, ${T.update + 0.1})
-        .from("#utheme", { opacity: 0, duration: 0.4, ease }, ${T.update + 0.4})
-        .from("#uhead", { opacity: 0, y: 24, duration: 0.5, ease }, ${T.update + 0.6})
-        .from(".hl", { opacity: 0, x: -24, duration: 0.4, stagger: 0.25, ease }, ${T.update + 1.1})
+        .from("#uprob", { opacity: 0, y: 16, duration: 0.45, ease }, ${T.update + 0.6})
+        .from("#uarrow", { opacity: 0, y: -24, duration: 0.4, ease: "back.out(2)" }, ${T.update + 1.5})
+        .from("#utheme", { opacity: 0, scale: 0.75, duration: 0.5, ease: "back.out(1.6)" }, ${T.update + 2.0})
+        .from("#uhead", { opacity: 0, y: 24, duration: 0.5, ease }, ${T.update + 2.6})
+        .from(".hl", { opacity: 0, x: -24, duration: 0.4, stagger: 0.25, ease }, ${T.update + 3.2})
         .from("#ctatop", { opacity: 0, y: 20, duration: 0.4, ease }, ${T.cta + 0.1})
         .from("#ctacmd", { opacity: 0, scale: 0.9, duration: 0.4, ease }, ${T.cta + 0.4})
         .from("#ctasite", { opacity: 0, y: 20, duration: 0.4, ease }, ${T.cta + 0.8});
