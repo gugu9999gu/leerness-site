@@ -2,7 +2,7 @@
   "name": "leerness-site",
   "version": "0.1.0",
   "private": true,
-  "description": "leerness.com — 소개/패치노트/안정화버전 사이트(Astro→Cloudflare Pages) + Remotion 숏츠 자동생성·YouTube 배포 파이프라인",
+  "description": "leerness.com — 소개/패치노트/안정화버전 사이트(Astro→Cloudflare Pages) + HyperFrames 숏츠 자동생성·YouTube 배포 파이프라인",
   "type": "module",
   "scripts": {
     "parse": "node pipeline/parse-changelog.cjs",
@@ -11,18 +11,15 @@
     "site:dev": "astro dev",
     "site:build": "node pipeline/parse-changelog.cjs && astro build",
     "site:deploy": "wrangler pages deploy dist --project-name leerness-site",
-    "video:studio": "remotion studio video/src/index.ts",
-    "video:render": "node pipeline/render-shorts.cjs",
+    "video:render": "node pipeline/render-shorts-hf.cjs",
+    "video:verify": "node pipeline/verify-video.cjs",
     "upload": "node pipeline/upload-youtube.cjs",
     "pipeline": "node pipeline/parse-changelog.cjs && node pipeline/curate.cjs && npm run site:build"
   },
   "dependencies": {
-    "@remotion/google-fonts": "^4.0.473",
     "astro": "^4.16.0"
   },
   "devDependencies": {
-    "@remotion/cli": "^4.0.0",
-    "remotion": "^4.0.0",
     "wrangler": "^3.80.0"
   },
   "engines": {
