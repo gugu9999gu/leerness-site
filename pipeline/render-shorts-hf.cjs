@@ -59,6 +59,8 @@ function buildHtml(rel, lang) {
   const c = COPY[lang]; const cat = CAT[rel.category] || CAT.fix; const accent = cat.a;
   const theme = lang === 'ko' ? cat.ko : cat.en;
   const prob = lang === 'ko' ? (cat.probKo || '') : (cat.probEn || '');
+  const beforeL = lang === 'ko' ? '이전' : 'Before';  // 유니코드 기호(✕/✓/↓) 대신 텍스트 라벨 — CI Chrome 폰트에 기호 글리프가 없어 안 보였음
+  const afterL = lang === 'ko' ? '이제' : 'Now';
   const headline = lang === 'ko' ? (rel.titlePlain || rel.title || '') : (rel.title || rel.titlePlain || '');
   const hls = (rel.videoHighlights || []).slice(0, 3);
   const ver = rel.version;
@@ -75,8 +77,8 @@ function buildHtml(rel, lang) {
     clip(T.whatIs, SC.whatIs, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div id="whatis" style="font-size:56px;font-weight:700;line-height:1.4;color:#e7e9ee;max-width:920px">${esc(c.whatIs)}</div></div>`),
     // benefits
     clip(T.benefits, SC.benefits, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div style="display:flex;flex-direction:column;gap:48px">${benefitsHtml}</div></div>`),
-    // update (릴리스별 — 문제→해소 모션 시각화: ✕문제 → ↓ → ✓해결 → 헤드라인 → 적용 하이라이트)
-    clip(T.update, SC.update, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div id="ulabel" class="mono" style="display:inline-block;color:${accent};font-size:32px;font-weight:700;padding:8px 24px;border:2px solid ${accent}55;border-radius:12px">${esc(c.updateLabel)} · v${esc(ver)}</div><div id="uprob" style="margin-top:30px;font-size:40px;color:#8a909c;font-weight:700"><span style="color:#ef4444">✕</span> ${esc(prob)}</div><div id="uarrow" style="font-size:56px;color:${accent};line-height:1;margin:8px 0;font-weight:900">↓</div><div id="utheme" style="font-size:46px;color:${accent};font-weight:800"><span style="color:#34d399">✓</span> ${esc(theme)}</div><div id="uhead" style="font-size:${headline.length > 26 ? 46 : 54}px;font-weight:800;line-height:1.25;color:#fff;margin-top:14px;max-width:980px">${esc(headline)}</div>${hlHtml}</div>`),
+    // update (릴리스별 — 문제→해소 모션: '이전'문제(dim) → CSS삼각형 화살표 → '이제'해결(accent) → 헤드라인 → 적용 하이라이트)
+    clip(T.update, SC.update, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div id="ulabel" class="mono" style="display:inline-block;color:${accent};font-size:32px;font-weight:700;padding:8px 24px;border:2px solid ${accent}55;border-radius:12px">${esc(c.updateLabel)} · v${esc(ver)}</div><div id="uprob" style="margin-top:30px;font-size:38px;color:#9aa0ad;font-weight:700"><span style="color:#ef4444;font-weight:800">${beforeL}</span> ${esc(prob)}</div><div id="uarrow" style="width:0;height:0;border-left:22px solid transparent;border-right:22px solid transparent;border-top:28px solid ${accent};margin:18px 0"></div><div id="utheme" style="font-size:46px;color:${accent};font-weight:800"><span style="color:#34d399">${afterL}</span> ${esc(theme)}</div><div id="uhead" style="font-size:${headline.length > 26 ? 46 : 54}px;font-weight:800;line-height:1.25;color:#fff;margin-top:14px;max-width:980px">${esc(headline)}</div>${hlHtml}</div>`),
     // cta
     clip(T.cta, SC.cta, 2, `<div class="center"><div id="ctatop" style="font-size:52px;color:#e7e9ee;font-weight:700">${esc(c.ctaTop)}</div><div id="ctacmd" style="margin-top:36px;background:#13151c;border:2px solid ${accent};border-radius:18px;padding:30px 40px;font-family:mono;font-size:46px;color:${accent}">npm i -g leerness</div><div id="ctasite" style="margin-top:44px;font-size:56px;font-weight:800;color:#fff">leerness.com</div></div>`),
   ].join('\n      ');
@@ -117,12 +119,12 @@ function buildHtml(rel, lang) {
         .from("#hookv", { opacity: 0, scale: 0.8, duration: 0.4, ease }, ${T.hook + 0.3})
         .from("#whatis", { opacity: 0, y: 30, duration: 0.6, ease }, ${T.whatIs + 0.2})
         .from(".brow", { opacity: 0, x: -40, duration: 0.5, stagger: 0.3, ease }, ${T.benefits + 0.2})
-        .from("#ulabel", { opacity: 0, y: -20, duration: 0.4, ease }, ${T.update + 0.1})
-        .from("#uprob", { opacity: 0, y: 16, duration: 0.45, ease }, ${T.update + 0.6})
-        .from("#uarrow", { opacity: 0, y: -24, duration: 0.4, ease: "back.out(2)" }, ${T.update + 1.5})
-        .from("#utheme", { opacity: 0, scale: 0.75, duration: 0.5, ease: "back.out(1.6)" }, ${T.update + 2.0})
-        .from("#uhead", { opacity: 0, y: 24, duration: 0.5, ease }, ${T.update + 2.6})
-        .from(".hl", { opacity: 0, x: -24, duration: 0.4, stagger: 0.25, ease }, ${T.update + 3.2})
+        .fromTo("#ulabel", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease }, ${T.update + 0.1})
+        .fromTo("#uprob", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease }, ${T.update + 0.6})
+        .fromTo("#uarrow", { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(2)" }, ${T.update + 1.5})
+        .fromTo("#utheme", { opacity: 0, scale: 0.75 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, ${T.update + 2.0})
+        .fromTo("#uhead", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease }, ${T.update + 2.6})
+        .fromTo(".hl", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.25, ease }, ${T.update + 3.2})
         .from("#ctatop", { opacity: 0, y: 20, duration: 0.4, ease }, ${T.cta + 0.1})
         .from("#ctacmd", { opacity: 0, scale: 0.9, duration: 0.4, ease }, ${T.cta + 0.4})
         .from("#ctasite", { opacity: 0, y: 20, duration: 0.4, ease }, ${T.cta + 0.8});
