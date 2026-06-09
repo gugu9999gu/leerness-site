@@ -39,6 +39,8 @@ function main() {
     const props = {
       version: r.version, date: r.date, title: it.title, summary: it.summary || r.summary,
       highlights: (it.highlights || r.highlights || []).slice(0, 3),
+      titlePlain: r.titlePlain || '',                       // UR-0023 Phase 1: 릴리스별 평이 헤드라인
+      videoHighlights: (r.videoHighlights || []).slice(0, 3), // UR-0023 Phase 1: 릴리스별 실제 변경(복붙 탈피)
       categoryKo: r.categoryKo, categoryEn: r.categoryEn, lang: it.lang, script,
     };
     const outFile = path.join(outDir, `${r.version}-${it.lang}.mp4`);

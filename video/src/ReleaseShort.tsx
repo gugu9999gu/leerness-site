@@ -17,6 +17,9 @@ export interface ReleaseShortProps {
   lang: Lang;
   // 1.9.x: 버전별 sub-agent 생성 고유 카피(있으면 update 씬에 사용, 없으면 카테고리 평이 메시지)
   script?: { hook: string; what: string; benefit: string } | null;
+  // UR-0023 Phase 1 (복붙 탈피): 릴리스별 평이 헤드라인 + 실제 변경 하이라이트 (parse-changelog 생성)
+  titlePlain?: string;
+  videoHighlights?: string[];
 }
 
 const FONT = `${KR}, "Pretendard", -apple-system, "Segoe UI", system-ui, sans-serif`;
@@ -161,7 +164,7 @@ export const ReleaseShort: React.FC<ReleaseShortProps> = (props) => {
       </Sequence>
 
       <Sequence from={update} durationInFrames={F(SCENES.update)} name="update">
-        <Scene accent={accent}><Brand version={version} accent={accent} /><UpdateScene label={c.updateLabel} version={version} script={props.script} h={plain.h} s={plain.s} accent={accent} /></Scene>
+        <Scene accent={accent}><Brand version={version} accent={accent} /><UpdateScene label={c.updateLabel} version={version} script={props.script} h={plain.h} s={plain.s} headline={props.titlePlain} highlights={props.videoHighlights} accent={accent} /></Scene>
       </Sequence>
 
       <Sequence from={cta} durationInFrames={F(SCENES.cta)} name="cta">
@@ -227,10 +230,13 @@ const BenefitRow: React.FC<{ it: { icon: string; title: string; desc: string }; 
   );
 };
 
-const UpdateScene: React.FC<{ label: string; version: string; script?: { hook: string; what: string; benefit: string } | null; h: string; s: string; accent: string }> = ({ label, version, script, h, s, accent }) => {
+const UpdateScene: React.FC<{ label: string; version: string; script?: { hook: string; what: string; benefit: string } | null; h: string; s: string; headline?: string; highlights?: string[]; accent: string }> = ({ label, version, script, h, s, headline, highlights, accent }) => {
   const e = useEnter(2);
   const what = useEnter(8);   // 본문 약간 늦게
-  // 버전별 고유 카피(script) 있으면 hook/what/benefit, 없으면 카테고리 평이 메시지(h/s)
+  // UR-0023 Phase 1 (복붙 탈피): 우선순위 — ① 버전별 고유 카피(script) ② 릴리스별 헤드라인+실제 변경 하이라이트 ③ 카테고리 평이 메시지(fallback)
+  const hls = (highlights || []).filter(Boolean).slice(0, 3);
+  const rich = !script && (!!headline || hls.length > 0);
+  const headSize = headline && headline.length > 26 ? 50 : 60;
   return (
     <div style={{ transform: `translateY(${e.y}px)`, opacity: e.opacity, textAlign: 'center', width: '100%' }}>
       <div style={{ display: 'inline-block', fontFamily: MONO, color: accent, fontSize: 32, fontWeight: 700, padding: '8px 22px', border: `2px solid ${accent}55`, borderRadius: 12, marginBottom: 36 }}>{label} · v{version}</div>
@@ -241,6 +247,24 @@ const UpdateScene: React.FC<{ label: string; version: string; script?: { hook: s
             <MultiLine text={script.what} style={{ fontSize: 56, fontWeight: 800, lineHeight: 1.35, letterSpacing: -0.5 }} />
             <MultiLine text={script.benefit} style={{ fontSize: 38, color: '#9aa0ad', marginTop: 24, lineHeight: 1.45 }} />
           </div>
+        </>
+      ) : rich ? (
+        <>
+          {/* 카테고리 테마(감성 프레이밍) 한 줄 — 작게 */}
+          <div style={{ fontSize: 34, color: accent, fontWeight: 700, marginBottom: 18 }}>{h}</div>
+          {/* 릴리스별 헤드라인 — 크게 (복붙 탈피의 핵심: 매 영상 고유) */}
+          <MultiLine text={headline || s} style={{ fontSize: headSize, fontWeight: 800, lineHeight: 1.28, letterSpacing: -0.5, color: '#e7e9ee' }} />
+          {/* 이번 릴리스의 실제 변경 — 리스트 */}
+          {hls.length > 0 ? (
+            <div style={{ transform: `translateY(${what.y}px)`, opacity: what.opacity, marginTop: 30, display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'center' }}>
+              {hls.map((hl, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 12, fontSize: 34, color: '#c7ccd6', maxWidth: 940, lineHeight: 1.3 }}>
+                  <span style={{ color: accent, fontWeight: 800, fontSize: 30 }}>▸</span>
+                  <span>{hl}</span>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </>
       ) : (
         <>

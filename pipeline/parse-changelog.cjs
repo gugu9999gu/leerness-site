@@ -42,6 +42,21 @@ function classify(title, summary) {
   return { key: 'fix', ko: '수정', en: 'Fix', important: false };
 }
 
+// 영상 캡션용 정제(UR-0023 Phase 1): **볼드 리드**(평이 요약) 우선 추출 → 마크다운/이모지/추적코드/버전 제거.
+function cleanVideoHighlight(s, max = 40) {
+  let t = String(s || '');
+  const bold = t.match(/\*\*\s*([^*]+?)\s*\*\*/);      // 볼드 리드 우선(없으면 콜론/대시 앞부분)
+  t = bold ? bold[1] : t.split(/:\s|—|\s-\s/)[0];
+  t = t.replace(/\([^)]*\)/g, ' ');                    // 괄호(추적코드 UR-xxxx 등) 통째 제거
+  t = t.replace(/\b\d+\.\d+(?:\.\d+)?\b/g, ' ');       // 버전 번호
+  t = t.replace(/[\[\]【】`*#>~|]/g, ' ');             // 마크다운/대괄호
+  t = t.replace(/[^\p{Script=Hangul}A-Za-z0-9\s./+\-]/gu, ' ');  // 한글/영문/숫자/일부기호만, 이모지·특수 → 공백
+  t = t.replace(/\s+/g, ' ').replace(/^[\s/.\-]+/, '').trim();
+  t = t.replace(/^(안정화\s*\/?\s*Stable( hotfix)?|Stable( hotfix)?|안정화)\s+/i, '').trim();  // 릴리스 라벨 접두어 제거(헤드라인 가독)
+  if (t.length > max) t = t.slice(0, max).replace(/\s+\S*$/, '').trim();
+  return t;
+}
+
 function parseChangelog(text) {
   const md = normalize(text);
   const releases = [];
@@ -68,15 +83,25 @@ function parseChangelog(text) {
     const sm = body.match(/\*\*([^*]+)\*\*/);
     const summary = sm ? sm[1].replace(/^[🔌🧭⚡🛡🔒🔐🪟🐚🚦🔧⭐✅🎉\s]+/u, '').trim() : '';
     // 하이라이트: '### 구현' 또는 '- ' 불릿 상위 3개 (영상 캡션용)
-    const bullets = (body.match(/^[-•]\s+.+$/gm) || []).map(b => b.replace(/^[-•]\s+/, '').replace(/`/g, '').trim()).filter(Boolean);
-    const highlights = bullets.slice(0, 3);
+    const rawBullets = (body.match(/^[-•]\s+.+$/gm) || []).map(b => b.replace(/^[-•]\s+/, '').trim()).filter(Boolean);
+    const highlights = rawBullets.map(b => b.replace(/`/g, '').trim()).slice(0, 3);
+    // 영상용 정제 하이라이트(릴리스별 실제 변경 — 복붙 탈피, UR-0023 Phase 1):
+    //   불릿의 **볼드 리드** 우선 추출 → (UR-xxxx)/버전/이모지/마크다운 제거 → 첫 구절 ≤34자. 검증/메타 불릿 제외.
+    const videoHighlights = rawBullets
+      .filter(b => /\*\*[^*]{2,40}\*\*/.test(b))  // 짧은(2~40자) 볼드 리드 불릿 = 큐레이션된 변경 하이라이트(장문 prose/동작변경 노트 제외)
+      .filter(b => !/^(selftest|e2e|patch|회귀|검증|verified|npmgate|배포정책)/i.test(b.replace(/[*\s]/g, '')))
+      .map(b => cleanVideoHighlight(b))  // 주의: .map(fn) 은 (요소,index,배열) 전달 → max=index 로 잘림. 명시 래핑 필수.
+      .filter(t => t.length >= 4)
+      .slice(0, 3);
     const cat = classify(title, summary);
     releases.push({
       version: ver,
       date,
       title: title.replace(/`/g, ''),
+      titlePlain: cleanVideoHighlight(title, 60),
       summary,
       highlights,
+      videoHighlights,
       category: cat.key,
       categoryKo: cat.ko,
       categoryEn: cat.en,
