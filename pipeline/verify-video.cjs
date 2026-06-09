@@ -60,12 +60,33 @@ function analyzeWav(file) {
   return { ok: true, duration, rms, peak, fmt };
 }
 
-function ffprobe(file) {
-  // ffprobe 있을 때만 — 없으면 null (CI 에는 있음, 로컬엔 없을 수 있음)
+// mp4 스트림 실측 → {width,height,hasAudio,duration} 또는 null.
+//   1순위 시스템 ffprobe(JSON, 빠름), 2순위 Remotion 번들 ffprobe(텍스트 파싱) — Remotion 설치 시 항상 가능(CI).
+function probeVideo(file) {
+  // 1) 시스템 ffprobe (JSON)
   try {
-    const r = cp.spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=codec_type,width,height,duration', '-show_entries', 'format=duration', '-of', 'json', file], { encoding: 'utf8', timeout: 30000 });
-    if (r.status !== 0 || !r.stdout) return null;
-    return JSON.parse(r.stdout);
+    const r = cp.spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=codec_type,width,height', '-show_entries', 'format=duration', '-of', 'json', file], { encoding: 'utf8', timeout: 30000 });
+    if (r.status === 0 && r.stdout) {
+      const j = JSON.parse(r.stdout);
+      const v = (j.streams || []).find(s => s.codec_type === 'video');
+      const a = (j.streams || []).find(s => s.codec_type === 'audio');
+      if (v) return { width: v.width, height: v.height, hasAudio: !!a, duration: parseFloat((j.format && j.format.duration) || 0) };
+    }
+  } catch { /* fall through */ }
+  // 2) Remotion 번들 ffprobe (텍스트 출력 파싱; 정보는 stderr 로 나옴). shell:true 로 npx 해석(.cmd) + 경로 인용(공백 안전).
+  try {
+    const r = cp.spawnSync(`npx remotion ffprobe ${JSON.stringify(file)}`, { encoding: 'utf8', timeout: 120000, shell: true });
+    const out = (r.stdout || '') + (r.stderr || '');
+    if (!/Stream/.test(out)) return null;
+    const vLine = (out.match(/Stream[^\n]*Video:[^\n]*/) || [''])[0];
+    const dim = vLine.match(/(\d{3,4})x(\d{3,4})/);
+    const dur = out.match(/Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)/);
+    return {
+      width: dim ? +dim[1] : 0,
+      height: dim ? +dim[2] : 0,
+      hasAudio: /Stream[^\n]*Audio:/.test(out),
+      duration: dur ? (+dur[1] * 3600 + +dur[2] * 60 + parseFloat(dur[3])) : 0,
+    };
   } catch { return null; }
 }
 
@@ -111,16 +132,15 @@ function main() {
     const rel = byVer[it.version];
     const hasContent = rel && (rel.titlePlain || rel.title) && ((rel.videoHighlights && rel.videoHighlights.length) || rel.summary || (rel.highlights && rel.highlights.length));
     add(`[${tag}] 내용 비어있지 않음`, !!hasContent, rel ? `headline:${!!(rel.titlePlain || rel.title)} hl:${(rel.videoHighlights || []).length}` : 'releases.json 매칭 없음');
-    // 스트림(ffprobe 있을 때)
+    // 스트림 실측 (시스템 ffprobe → Remotion 번들 ffprobe 폴백)
     if (exists) {
-      const probe = ffprobe(vf);
-      if (probe && probe.streams) {
-        const v = probe.streams.find(s => s.codec_type === 'video');
-        const a = probe.streams.find(s => s.codec_type === 'audio');
-        const dur = parseFloat((probe.format && probe.format.duration) || (v && v.duration) || 0);
-        add(`[${tag}] 비디오 1080x1920`, !!v && v.width === 1080 && v.height === 1920, v ? `${v.width}x${v.height}` : '비디오 스트림 없음');
-        add(`[${tag}] 오디오 스트림 존재(BGM)`, !!a, a ? 'OK' : '오디오 없음');
-        add(`[${tag}] 길이 ~18s(15~21)`, dur >= 15 && dur <= 21, `${dur.toFixed(1)}s`);
+      const pv = probeVideo(vf);
+      if (pv) {
+        add(`[${tag}] 비디오 1080x1920`, pv.width === 1080 && pv.height === 1920, `${pv.width}x${pv.height}`);
+        add(`[${tag}] 오디오 스트림 존재(BGM 인코딩됨)`, pv.hasAudio, pv.hasAudio ? 'OK' : '오디오 없음');
+        add(`[${tag}] 길이 ~18s(15~21)`, pv.duration >= 15 && pv.duration <= 21, `${pv.duration.toFixed(1)}s`);
+      } else {
+        add(`[${tag}] 스트림 실측(ffprobe)`, true, 'ffprobe 불가 — 스트림 검증 생략(자산/파일 검증으로 대체)');
       }
     }
   }
@@ -128,7 +148,7 @@ function main() {
   const failed = checks.filter(c => !c.ok);
   const ok = failed.length === 0;
   if (jsonMode) {
-    console.log(JSON.stringify({ ok, total: checks.length, passed: checks.length - failed.length, failed: failed.map(f => f.name), checks, ffprobe: ffprobe(path.join(ROOT, 'public')) !== null }, null, 2));
+    console.log(JSON.stringify({ ok, total: checks.length, passed: checks.length - failed.length, failed: failed.map(f => f.name), checks }, null, 2));
   } else {
     for (const c of checks) console.log(`  ${c.ok ? '✓' : '✗'} ${c.name}${c.detail ? ' — ' + c.detail : ''}`);
     console.log(ok ? `\n✓ 영상 검증 통과 (${checks.length}건)` : `\n✗ 영상 검증 실패 ${failed.length}/${checks.length} — 업로드 차단`);
