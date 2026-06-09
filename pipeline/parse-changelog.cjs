@@ -47,10 +47,10 @@ function cleanVideoHighlight(s, max = 40) {
   let t = String(s || '');
   const bold = t.match(/\*\*\s*([^*]+?)\s*\*\*/);      // 볼드 리드 우선(없으면 콜론/대시 앞부분)
   t = bold ? bold[1] : t.split(/:\s|—|\s-\s/)[0];
-  t = t.replace(/\([^)]*\)/g, ' ');                    // 괄호(추적코드 UR-xxxx 등) 통째 제거
+  t = t.replace(/\([^)]*(?:[A-Za-z]{1,3}-\d|\d+\.\d+)[^)]*\)/g, ' ');  // 추적코드(UR-/CV-/R-)·버전 든 괄호만 제거 — 설명 괄호('생각하고 코딩' 등)는 보존(UR-0038)
   t = t.replace(/\b\d+\.\d+(?:\.\d+)?\b/g, ' ');       // 버전 번호
   t = t.replace(/[\[\]【】`*#>~|]/g, ' ');             // 마크다운/대괄호
-  t = t.replace(/[^\p{Script=Hangul}A-Za-z0-9\s./+\-]/gu, ' ');  // 한글/영문/숫자/일부기호만, 이모지·특수 → 공백
+  t = t.replace(/[^\p{Script=Hangul}A-Za-z0-9\s.·/+\-]/gu, ' ');  // 한글/영문/숫자/·(중점 U+00B7)/일부기호만, 이모지·특수 → 공백
   t = t.replace(/\s+/g, ' ').replace(/^[\s/.\-]+/, '').trim();
   t = t.replace(/^(안정화\s*\/?\s*Stable( hotfix)?|Stable( hotfix)?|안정화)\s+/i, '').trim();  // 릴리스 라벨 접두어 제거(헤드라인 가독)
   if (t.length > max) t = t.slice(0, max).replace(/\s+\S*$/, '').trim();
