@@ -64,6 +64,10 @@ jobs:
       - name: Remotion 숏츠 렌더 (KO+EN)
         run: node pipeline/render-shorts.cjs --limit ${{ github.event_name == 'schedule' && '3' || github.event.inputs.render_limit || '4' }}
 
+      # UR-0029: 업로드 전 품질 게이트 — 내용(복붙 아님)·BGM·효과음(무음/클리핑)·mp4 스트림(1080x1920·오디오·길이) 검증. FAIL 시 exit 1 로 업로드 차단.
+      - name: 영상 검증 (content·BGM·효과음·스트림)
+        run: node pipeline/verify-video.cjs --limit ${{ github.event_name == 'schedule' && '3' || github.event.inputs.render_limit || '4' }}
+
       - name: YouTube 업로드 (멱등 · privacy 변수)
         if: ${{ github.event.inputs.skip_upload != 'true' }}
         env:
