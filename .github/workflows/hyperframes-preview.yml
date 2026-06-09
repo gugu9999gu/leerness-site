@@ -48,10 +48,24 @@ jobs:
       - name: 영상 검증 (content·BGM·효과음·스트림 — hyperframes 산출물)
         run: node pipeline/verify-video.cjs --rendered data/rendered-hf.json --limit 8
 
-      - name: MP4 아티팩트 업로드 (다운로드해 품질 확인)
+      - name: 프레임 추출 (한글 폰트/레이아웃 시각 검증용 PNG)
+        if: always()
+        run: |
+          mkdir -p video-hf/frames
+          for mp4 in video-hf/out/*.mp4; do
+            [ -f "$mp4" ] || continue
+            base=$(basename "$mp4" .mp4)
+            ffmpeg -y -ss 12.5 -i "$mp4" -frames:v 1 "video-hf/frames/${base}-update.png" 2>/dev/null || true   # update 씬(릴리스별 내용)
+            ffmpeg -y -ss 7.0  -i "$mp4" -frames:v 1 "video-hf/frames/${base}-benefits.png" 2>/dev/null || true  # benefits 씬(한글)
+          done
+          ls -la video-hf/frames || true
+
+      - name: MP4 + 프레임 아티팩트 업로드 (다운로드해 품질 확인)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: hyperframes-mp4
-          path: video-hf/out/*.mp4
+          path: |
+            video-hf/out/*.mp4
+            video-hf/frames/*.png
           if-no-files-found: warn
