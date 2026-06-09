@@ -28,3 +28,9 @@ Thumbs.db
 
 # Cloudflare
 .wrangler/
+
+# hyperframes 생성물(UR-0034)
+video-hf/index.html
+video-hf/out/
+video-hf/assets/*.wav
+data/rendered-hf.json

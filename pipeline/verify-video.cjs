@@ -113,7 +113,8 @@ function main() {
   }
 
   // 3+4. 렌더 결과 + 내용
-  const rendered = load(path.join(ROOT, 'data', 'rendered.json'), { items: [] });
+  const renderedFile = arg('--rendered', 'data/rendered.json');  // hyperframes 경로는 --rendered data/rendered-hf.json
+  const rendered = load(path.resolve(ROOT, renderedFile), { items: [] });
   const byVer = Object.fromEntries((load(path.join(ROOT, 'data', 'releases.json'), { releases: [] }).releases || []).map(r => [r.version, r]));
   const items = (rendered.items || []).slice(0, limit);
   // 빈 큐(게시할 중요 릴리스 없음)는 정상 — BGM/효과음 자산만 검증하고 통과(false-fail 방지). 렌더 자체 실패는 render-shorts 단계가 잡음.
