@@ -49,6 +49,12 @@ const CAT = {
   refactor: { a: '#94a3b8', ko: '내부를 더 탄탄하게', en: 'Sturdier inside', probKo: '비대해진 내부 구조', probEn: 'Bloated internals' },
   fix: { a: '#94a3b8', ko: '안정성을 높였어요', en: 'More stable', probKo: '불안정하던 동작', probEn: 'Unstable behavior' },
 };
+// 카테고리 짧은 태그(hook 칩 — 글리프 안전 텍스트). 영상 시각 다양화(UR-0044): 카테고리별 배경 색조 + 칩으로 한눈에 구분.
+const CAT_TAG = {
+  security: ['보안', 'Security'], 'data-integrity': ['데이터', 'Data'], feature: ['새 기능', 'Feature'],
+  compat: ['호환성', 'Compatibility'], consistency: ['일관성', 'Consistency'], performance: ['성능', 'Performance'],
+  stable: ['안정판', 'Stable'], refactor: ['내부 개선', 'Internals'], fix: ['안정성', 'Stability'],
+};
 
 function clip(start, dur, track, inner, extra = '') {
   return `<div class="clip scene" data-start="${start}" data-duration="${dur}" data-track-index="${track}" style="${extra}">${inner}</div>`;
@@ -57,6 +63,7 @@ function clip(start, dur, track, inner, extra = '') {
 // 릴리스+언어 → 완전한 HyperFrames HTML 컴포지션 (1080x1920 세로)
 function buildHtml(rel, lang) {
   const c = COPY[lang]; const cat = CAT[rel.category] || CAT.fix; const accent = cat.a;
+  const catTag = (CAT_TAG[rel.category] || CAT_TAG.fix)[lang === 'ko' ? 0 : 1];
   const theme = lang === 'ko' ? cat.ko : cat.en;
   const prob = lang === 'ko' ? (cat.probKo || '') : (cat.probEn || '');
   const beforeL = lang === 'ko' ? '이전' : 'Before';  // 유니코드 기호(✕/✓/↓) 대신 텍스트 라벨 — CI Chrome 폰트에 기호 글리프가 없어 안 보였음
@@ -72,7 +79,7 @@ function buildHtml(rel, lang) {
 
   const scenes = [
     // hook
-    clip(T.hook, SC.hook, 2, `<div class="center"><div id="brand" style="font-size:120px;font-weight:900;letter-spacing:-3px;color:#fff">leerness</div><div id="hookv" style="margin-top:30px;padding:12px 30px;border:2px solid ${accent};border-radius:999px;color:${accent};font-family:mono;font-size:42px;font-weight:700">v${esc(ver)}</div></div>`),
+    clip(T.hook, SC.hook, 2, `<div class="center"><div id="brand" style="font-size:120px;font-weight:900;letter-spacing:-3px;color:#fff">leerness</div><div id="hookv" style="margin-top:30px;padding:12px 30px;border:2px solid ${accent};border-radius:999px;color:${accent};font-family:mono;font-size:42px;font-weight:700">v${esc(ver)}</div><div id="hookcat" style="margin-top:26px;display:inline-block;padding:9px 26px;border-radius:999px;background:${accent};color:#0a0b0e;font-size:32px;font-weight:800">${esc(catTag)}</div></div>`),
     // whatIs
     clip(T.whatIs, SC.whatIs, 2, `<div class="center"><div class="brandsm">leerness <span style="color:#5c6270">v${esc(ver)}</span></div><div id="whatis" style="font-size:56px;font-weight:700;line-height:1.4;color:#e7e9ee;max-width:920px">${esc(c.whatIs)}</div></div>`),
     // benefits
@@ -93,7 +100,7 @@ function buildHtml(rel, lang) {
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0a0b0e; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: radial-gradient(circle at 50% 26%, ${accent}1f, #0a0b0e 60%), #0a0b0e; }  /* 카테고리별 배경 색조(accent ~12%) — 시각 다양화 */
       body { font-family: "Noto Sans KR", sans-serif; color: #e7e9ee; }
       .mono, [style*="mono"] { font-family: "JetBrains Mono", "Noto Sans KR", monospace; }  /* 한글 fallback — JetBrains Mono 엔 한글 글리프 없어 '이번 업데이트' 배지가 안 보였음(Phase 3 폴리시) */
       .scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 80px; }
@@ -117,6 +124,7 @@ function buildHtml(rel, lang) {
       const ease = "power2.out";
       tl.from("#brand", { opacity: 0, y: -40, duration: 0.5, ease }, ${T.hook})
         .from("#hookv", { opacity: 0, scale: 0.8, duration: 0.4, ease }, ${T.hook + 0.3})
+        .from("#hookcat", { opacity: 0, scale: 0.8, duration: 0.3, ease: "back.out(1.6)" }, ${T.hook + 0.55})
         .from("#whatis", { opacity: 0, y: 30, duration: 0.6, ease }, ${T.whatIs + 0.2})
         .from(".brow", { opacity: 0, x: -40, duration: 0.5, stagger: 0.3, ease }, ${T.benefits + 0.2})
         .fromTo("#ulabel", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease }, ${T.update + 0.1})
