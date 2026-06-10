@@ -57,6 +57,7 @@ jobs:
             base=$(basename "$mp4" .mp4)
             ffmpeg -y -ss 12.5 -i "$mp4" -frames:v 1 "video-hf/frames/${base}-update.png" 2>/dev/null || true   # update 씬(릴리스별 내용)
             ffmpeg -y -ss 7.0  -i "$mp4" -frames:v 1 "video-hf/frames/${base}-benefits.png" 2>/dev/null || true  # benefits 씬(한글)
+            ffmpeg -y -ss 0.9  -i "$mp4" -frames:v 1 "video-hf/frames/${base}-hook.png" 2>/dev/null || true      # hook 씬(카테고리 칩, UR-0044)
           done
           ls -la video-hf/frames || true
 
