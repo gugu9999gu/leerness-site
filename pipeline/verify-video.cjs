@@ -140,7 +140,7 @@ function main() {
       if (pv) {
         add(`[${tag}] 비디오 1080x1920`, pv.width === 1080 && pv.height === 1920, `${pv.width}x${pv.height}`);
         add(`[${tag}] 오디오 스트림 존재(BGM 인코딩됨)`, pv.hasAudio, pv.hasAudio ? 'OK' : '오디오 없음');
-        add(`[${tag}] 길이 ~18s(15~21)`, pv.duration >= 15 && pv.duration <= 21, `${pv.duration.toFixed(1)}s`);
+        add(`[${tag}] 길이 12~22s (UR-0050 변주 구성별 12.6~17.2s)`, pv.duration >= 12 && pv.duration <= 22, `${pv.duration.toFixed(1)}s`);
       } else {
         add(`[${tag}] 스트림 실측(ffprobe)`, true, 'ffprobe 불가 — 스트림 검증 생략(자산/파일 검증으로 대체)');
       }
