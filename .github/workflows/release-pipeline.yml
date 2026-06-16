@@ -54,14 +54,20 @@ jobs:
         # 파싱+큐레이션 단계에서 이미 releases.json 생성됨 — site:build 는 parse 를 기본경로(CI 엔 없는 leerness-pkg)로 재실행하므로 astro build 만 수행.
         run: npx astro build
 
-      - name: Cloudflare Pages 배포
-        # CF 토큰 인증 실패(코드 10000, 토큰 만료/스코프)가 영상 렌더·업로드까지 막지 않도록 non-blocking.
-        #   사이트 배포가 실패해도 영상 파이프라인은 독립 진행. CF 토큰은 레포 시크릿 CLOUDFLARE_API_KEY 갱신 필요.
-        continue-on-error: true
+      - name: Cloudflare Pages 배포 (production = --branch main)
+        # 근본원인 수정(2026-06-16): --branch 누락 시 wrangler 가 CI(detached HEAD)에서 production 브랜치
+        #   추론에 실패해 preview(<hash>.leerness-site.pages.dev)로만 배포됨 → leerness.com(production) 이
+        #   옛 배포(1.27.2)에 동결됐는데 continue-on-error 가 'success' 로 silent 마스킹(green-but-stale).
+        #   --branch=main 으로 production 배포 강제 + continue-on-error 제거 → 배포 실패를 run 실패로 가시화.
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: npx wrangler pages deploy dist --project-name leerness-site
+        run: npx wrangler pages deploy dist --project-name leerness-site --branch=main --commit-dirty=true
+
+      - name: 배포 검증 (production 이 최신 버전 노출 — CDN 재시도)
+        # preview 동결 재발 방지: 방금 빌드한 releases.json 최신 버전이 live production(leerness.com)에
+        #   실제 노출되는지 CDN 전파를 감안해 재시도 확인. 불일치 시 exit 1 로 run 실패(정직성: green-but-stale 차단).
+        run: node pipeline/verify-deploy.cjs --url https://leerness.com
 
       # schedule(매일): 백로그 소량 드립(limit 3, 쿼터보호). 멱등 — 이미 게시된 건 자동 스킵. dispatch: 입력값.
       # UR-0034 컷오버: Remotion → HyperFrames. render-shorts-hf 가 data/rendered.json(썸네일 포함) 을 생성 → verify-video/upload 가 그대로 사용.
