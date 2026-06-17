@@ -32,7 +32,9 @@ function expectedVersion() {
     console.error(`✗ releases.json 없음: ${relPath} (--expect <version> 로 명시 가능)`);
     process.exit(2);
   }
-  const data = JSON.parse(fs.readFileSync(relPath, 'utf8'));
+  let data;
+  try { data = JSON.parse(fs.readFileSync(relPath, 'utf8')); }
+  catch (e) { console.error(`✗ releases.json 파싱 실패: ${relPath} (${e.message}) — --expect <version> 로 우회 가능`); process.exit(2); }
   const releases = data.releases || (Array.isArray(data) ? data : []);
   const v = releases[0] && releases[0].version;
   if (!v) { console.error('✗ releases.json 에서 최신 버전을 찾지 못함'); process.exit(2); }
@@ -51,10 +53,12 @@ async function main() {
   if (typeof fetch !== 'function') { console.error('✗ 이 Node 버전엔 전역 fetch 없음 (Node 18+ 필요)'); process.exit(2); }
   const url = arg('--url', 'https://leerness.com');
   const expect = expectedVersion();
-  const retries = parseInt(arg('--retries', '6'), 10);
-  const delay = parseInt(arg('--delay', '15000'), 10);
-  // 정확 매칭: 'v1.31.2' 또는 '1.31.2' 가 더 긴 버전의 접두어로 오탐되지 않게 경계 확인.
-  const re = new RegExp('v?' + expect.replace(/\./g, '\\.') + '(?![0-9.])');
+  let retries = parseInt(arg('--retries', '6'), 10); if (!Number.isFinite(retries) || retries < 1) retries = 6;  // NaN/0/음수 → 기본(최소 1회 fetch 보장)
+  let delay = parseInt(arg('--delay', '15000'), 10); if (!Number.isFinite(delay) || delay < 0) delay = 15000;
+  // 정확 매칭: 버전이 더 긴 토큰의 일부(asset hash 'app.1.31.2a3f9.js', '1.31.20', '99v1.31.2')로 오탐되지 않게
+  //   양쪽 경계 확인 — 좌(?<![\w.])·우(?![\w.]). 선행 'v' 는 stripping 후 옵션 v? 로 흡수(--expect v1.31.2 == 1.31.2).
+  const bare = String(expect).replace(/^v/i, '');
+  const re = new RegExp('(?<![\\w.])v?' + bare.replace(/\./g, '\\.') + '(?![\\w.])');
 
   console.log(`# verify-deploy — url=${url} expect=${expect} (retries=${retries}, delay=${delay}ms)`);
   let lastSeen = '(none)';
