@@ -1,0 +1,134 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>leerness — ontology</title>
+<style>
+:root{--bg:#0a0d12;--panel:#0f141a;--line:#222a33;--txt:#e6edf3;--mut:#8b949e;--brand:#39d353;--mono:ui-monospace,'SF Mono',Menlo,monospace}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font-family:var(--mono);font-size:13px;overflow:hidden}
+#bar{position:fixed;top:0;left:0;right:0;height:46px;display:flex;align-items:center;gap:14px;padding:0 16px;background:rgba(10,13,18,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+#bar .ttl{font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+#bar .dot{width:9px;height:9px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px var(--brand)}
+#bar .stat{color:var(--mut);font-size:11px}
+#search{background:#0b0f14;border:1px solid var(--line);color:var(--txt);border-radius:7px;padding:6px 10px;font:inherit;width:200px;outline:none}
+#search:focus{border-color:var(--brand)}
+#chips{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.chip{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:100px;padding:3px 10px;cursor:pointer;font-size:11px;user-select:none}
+.chip .sw{width:9px;height:9px;border-radius:50%}
+.chip.off{opacity:.35}
+canvas{position:fixed;inset:0;top:46px}
+#panel{position:fixed;top:60px;right:14px;width:340px;max-height:calc(100% - 80px);overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 24px 60px -20px #000;display:none;z-index:9}
+#panel.show{display:block}
+#panel .pt{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+#panel .pt .sw{width:10px;height:10px;border-radius:50%}
+#panel h2{margin:0 0 12px;font-size:15px;line-height:1.4;color:#fff;word-break:break-word}
+#panel .row{margin:0 0 10px;border-top:1px solid var(--line);padding-top:10px}
+#panel .k{color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+#panel .v{white-space:pre-wrap;word-break:break-word;line-height:1.55}
+#panel .nbrs a{color:#58a6ff;cursor:pointer;display:block;padding:2px 0}
+#panel .x{position:absolute;top:12px;right:14px;color:var(--mut);cursor:pointer;font-size:16px}
+#hint{position:fixed;bottom:12px;left:16px;color:var(--mut);font-size:11px;opacity:.7}
+#empty{position:fixed;inset:0;display:none;place-items:center;color:var(--mut);text-align:center}
+</style></head><body>
+<div id="bar">
+  <div class="ttl"><span class="dot"></span><span id="proj">leerness</span><span style="color:var(--mut);font-weight:400">/ ontology</span></div>
+  <span class="stat" id="stat"></span>
+  <input id="search" placeholder="search nodes…" autocomplete="off">
+  <div id="chips"></div>
+</div>
+<canvas id="c"></canvas>
+<div id="panel"><span class="x" onclick="closePanel()">✕</span><div id="pbody"></div></div>
+<div id="empty">No nodes — run <b>leerness handoff .</b> to populate the harness, then regenerate.</div>
+<div id="hint">drag node · scroll zoom · drag bg pan · click node → details · search+Enter jump · f / dblclick fit · p export PNG · Esc close</div>
+<script>
+var DATA = {"project":"demo-app","version":"1.35.5","root":"C:\\Users\\leehy\\AppData\\Local\\Temp\\demo-app","counts":{"task":6,"plan":3,"decision":2,"lesson":1,"rule":2,"skill":3,"feature":4},"nodes":[{"id":"T-0001","type":"task","status":"done","label":"Email/password 로그인 + 세션","detail":{"request":"Email/password 로그인 + 세션","status":"done","evidence":"auth.js 구현, 12/12 passed; M-0001","nextAction":"-","updated":"2026-06-20"}},{"id":"T-0002","type":"task","status":"done","label":"Google OAuth 로그인 (T-0001 기반)","detail":{"request":"Google OAuth 로그인 (T-0001 기반)","status":"done","evidence":"oauth.js; M-0001","nextAction":"-","updated":"2026-06-21"}},{"id":"T-0003","type":"task","status":"in-progress","label":"Stripe 체크아웃 결제 (T-0001 필요)","detail":{"request":"Stripe 체크아웃 결제 (T-0001 필요)","status":"in-progress","evidence":"payment.js; M-0002","nextAction":"webhook 처리","updated":"2026-06-27"}},{"id":"T-0004","type":"task","status":"planned","label":"구독 정기결제","detail":{"request":"구독 정기결제","status":"planned","evidence":"M-0002","nextAction":"-","updated":"-"}},{"id":"T-0005","type":"task","status":"done","label":"CI 게이트 + verify-claim","detail":{"request":"CI 게이트 + verify-claim","status":"done","evidence":".github/workflows/gate.yml; M-0003","nextAction":"-","updated":"2026-06-25"}},{"id":"T-0006","type":"task","status":"blocked","label":"출시 체크리스트 (T-0003 차단)","detail":{"request":"출시 체크리스트 (T-0003 차단)","status":"blocked","evidence":"M-0003","nextAction":"-","updated":"2026-06-27"}},{"id":"M-0001","type":"plan","status":"done","label":"인증 (Auth)","detail":{"title":"인증 (Auth)","status":"done","progress":"100","doneWhen":"","nextAction":""}},{"id":"M-0002","type":"plan","status":"in-progress","label":"결제 (Payments)","detail":{"title":"결제 (Payments)","status":"in-progress","progress":"60","doneWhen":"","nextAction":""}},{"id":"M-0003","type":"plan","status":"planned","label":"출시 (Launch)","detail":{"title":"출시 (Launch)","status":"planned","progress":"20","doneWhen":"","nextAction":""}},{"id":"D-1","type":"decision","status":"","label":"세션은 JWT 대신 서버 세션 채택 (T-0001)","detail":{"decision":"세션은 JWT 대신 서버 세션 채택 (T-0001)","reason":"토큰 폐기/회수 단순화","impact":"auth","date":"2026-06-20"}},{"id":"D-2","type":"decision","status":"","label":"결제는 Stripe Checkout 채택 (T-0003)","detail":{"decision":"결제는 Stripe Checkout 채택 (T-0003)","reason":"PCI 부담 최소 + 빠른 통합","impact":"payments","date":"2026-06-22"}},{"id":"L-1","type":"lesson","status":"","label":"OAuth redirect URI 는 환경별로 분리해야 함 (T-0002 회귀)","detail":{"lesson":"OAuth redirect URI 는 환경별로 분리해야 함 (T-0002 회귀)","tag":"auth","date":"2026-06-21"}},{"id":"R-0001","type":"rule","status":"active","label":"leerness verify-claim 으로 완료 검증","detail":{"rule":"leerness verify-claim 으로 완료 검증","trigger":"every-pr","status":"active","lastVerified":"2026-06-25"}},{"id":"R-0002","type":"rule","status":"active","label":"scan secrets 로 시크릿 점검","detail":{"rule":"scan secrets 로 시크릿 점검","trigger":"every-commit","status":"active","lastVerified":"2026-06-25"}},{"id":"skill:ci-gate","type":"skill","status":"","label":"ci-gate","detail":{"name":"ci-gate","description":"PR 완료-주장 검증 게이트","category":"devops"}},{"id":"skill:oauth-google","type":"skill","status":"","label":"oauth-google","detail":{"name":"oauth-google","description":"Google OAuth 2.0 로그인 플로우","category":"auth"}},{"id":"skill:stripe-api","type":"skill","status":"","label":"stripe-api","detail":{"name":"stripe-api","description":"Stripe Checkout/구독 연동 가이드","category":"payments"}},{"id":"feat:payments","type":"feature","status":"","label":"payments","detail":{"feature":"payments"}},{"id":"feat:auth","type":"feature","status":"","label":"auth","detail":{"feature":"auth"}},{"id":"feat:billing","type":"feature","status":"","label":"billing","detail":{"feature":"billing"}},{"id":"feat:launch","type":"feature","status":"","label":"launch","detail":{"feature":"launch"}}],"edges":[{"source":"T-0001","target":"M-0001","kind":"milestone"},{"source":"T-0002","target":"M-0001","kind":"milestone"},{"source":"T-0002","target":"T-0001","kind":"ref"},{"source":"T-0003","target":"M-0002","kind":"milestone"},{"source":"T-0003","target":"T-0001","kind":"ref"},{"source":"T-0004","target":"M-0002","kind":"milestone"},{"source":"T-0005","target":"M-0003","kind":"milestone"},{"source":"T-0006","target":"M-0003","kind":"milestone"},{"source":"T-0006","target":"T-0003","kind":"ref"},{"source":"D-1","target":"T-0001","kind":"ref"},{"source":"D-2","target":"T-0003","kind":"ref"},{"source":"L-1","target":"T-0002","kind":"ref"},{"source":"feat:payments","target":"feat:auth","kind":"feature"},{"source":"feat:billing","target":"feat:payments","kind":"feature"},{"source":"feat:launch","target":"feat:payments","kind":"feature"},{"source":"feat:launch","target":"feat:auth","kind":"feature"}]};
+var COLORS={task:'#58a6ff',plan:'#d29922',decision:'#39d0d8',lesson:'#e3b341',rule:'#bc8cff',skill:'#2dd4bf',feature:'#6e7681'};
+var STATUSCOL={done:'#3fb950',verified:'#3fb950','in-progress':'#58a6ff',in_progress:'#58a6ff',blocked:'#f85149',waiting:'#d29922',planned:'#8b949e',requested:'#8b949e'};
+var EKIND={milestone:'rgba(210,153,34,.22)',ref:'rgba(88,166,255,.20)',link:'rgba(57,211,83,.20)',feature:'rgba(110,118,129,.26)'};
+function nodeColor(n){ if(n.type==='task'&&STATUSCOL[n.status])return STATUSCOL[n.status]; return COLORS[n.type]||'#8b949e'; }
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+var cv=document.getElementById('c'),ctx=cv.getContext('2d'),DPR=Math.min(2,window.devicePixelRatio||1);
+var W,H; function resize(){W=cv.clientWidth=window.innerWidth;H=cv.clientHeight=window.innerHeight-46;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);} window.addEventListener('resize',resize);resize();
+
+var nodes=DATA?DATA.nodes:[],edges=DATA?DATA.edges:[];
+var idx={}; nodes.forEach(function(n,i){idx[n.id]=n; n.x=W/2+Math.cos(i)*Math.min(W,H)*0.32*Math.random()+ (Math.random()-0.5)*80; n.y=H/2+Math.sin(i)*Math.min(W,H)*0.32*Math.random()+(Math.random()-0.5)*80; n.vx=0;n.vy=0; n.deg=0;});
+edges=edges.filter(function(e){return idx[e.source]&&idx[e.target];});
+edges.forEach(function(e){idx[e.source].deg++;idx[e.target].deg++;});
+var off={}; // hidden types
+document.getElementById('proj').textContent=(DATA&&DATA.project)||'leerness';
+document.getElementById('stat').textContent=nodes.length+' nodes · '+edges.length+' links';
+if(!nodes.length){document.getElementById('empty').style.display='grid';}
+
+// chips
+var types=Array.from(new Set(nodes.map(function(n){return n.type;})));
+var chipsEl=document.getElementById('chips');
+types.forEach(function(t){var c=DATA.counts&&DATA.counts[t]; var el=document.createElement('div');el.className='chip';el.innerHTML='<span class="sw" style="background:'+(COLORS[t]||'#888')+'"></span>'+t+(c!=null?' '+c:'');el.onclick=function(){off[t]=!off[t];el.classList.toggle('off',!!off[t]);};chipsEl.appendChild(el);});
+
+// view transform
+var view={x:0,y:0,k:1};
+var sel=null,hover=null,nbr={};
+var cam={cx:W/2,cy:H/2};
+var _fit=false;
+
+// physics
+var alpha=1;
+function tick(){
+  if(alpha<0.006) return;
+  if(alpha>0.005) alpha*=0.992;
+  var REP=2600,SPR=0.012,LEN=70,CEN=0.012;
+  for(var i=0;i<nodes.length;i++){var a=nodes[i]; if(off[a.type])continue;
+    for(var j=i+1;j<nodes.length;j++){var b=nodes[j]; if(off[b.type])continue;
+      var dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+0.01; if(d2>360000)continue; var d=Math.sqrt(d2);var f=REP/d2; var ux=dx/d,uy=dy/d; a.vx+=ux*f;a.vy+=uy*f;b.vx-=ux*f;b.vy-=uy*f;}
+    a.vx+=(cam.cx-a.x)*CEN; a.vy+=(cam.cy-a.y)*CEN;
+  }
+  edges.forEach(function(e){var a=idx[e.source],b=idx[e.target]; if(off[a.type]||off[b.type])return; var dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)+0.01;var f=(d-LEN)*SPR;var ux=dx/d,uy=dy/d; a.vx+=ux*f;a.vy+=uy*f;b.vx-=ux*f;b.vy-=uy*f;});
+  nodes.forEach(function(n){ if(n.fixed)return; n.vx*=0.86;n.vy*=0.86; n.x+=n.vx*alpha*2.2;n.y+=n.vy*alpha*2.2;});
+}
+function toScreen(n){return{x:(n.x-cam.cx)*view.k+W/2+view.x,y:(n.y-cam.cy)*view.k+H/2+view.y};}
+function fromScreen(sx,sy){return{x:(sx-W/2-view.x)/view.k+cam.cx,y:(sy-H/2-view.y)/view.k+cam.cy};}
+function fitView(){var minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9,c=0; nodes.forEach(function(n){if(off[n.type])return;c++;if(n.x<minx)minx=n.x;if(n.x>maxx)maxx=n.x;if(n.y<miny)miny=n.y;if(n.y>maxy)maxy=n.y;}); if(c<1)return; var gw=Math.max(1,maxx-minx),gh=Math.max(1,maxy-miny); view.k=Math.min(2.2,Math.max(0.2,0.82*Math.min(W/gw,H/gh))); cam.cx=(minx+maxx)/2; cam.cy=(miny+maxy)/2; view.x=0;view.y=0;}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // edges
+  ctx.lineWidth=1;
+  edges.forEach(function(e){var a=idx[e.source],b=idx[e.target]; if(off[a.type]||off[b.type])return; var p=toScreen(a),q=toScreen(b); var on=sel&&(e.source===sel.id||e.target===sel.id); ctx.strokeStyle=on?'rgba(57,211,83,.55)':(EKIND[e.kind]||'rgba(120,130,145,.16)'); ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();});
+  // nodes
+  nodes.forEach(function(n){ if(off[n.type])return; var p=toScreen(n); var r=(3+Math.min(7,n.deg*0.7))*Math.max(.6,view.k*.9); var dim=sel&&!nbr[n.id]&&n.id!==sel.id; var srch=window._q&&(n.label||'').toLowerCase().indexOf(window._q)<0&&n.id.toLowerCase().indexOf(window._q)<0;
+    ctx.globalAlpha=(dim||srch)?0.18:1; ctx.fillStyle=nodeColor(n); ctx.beginPath();ctx.arc(p.x,p.y,r,0,6.2832);ctx.fill();
+    if(n===sel||n===hover){ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();}
+    if(view.k>1.35||n===sel||n===hover||(window._q&&!srch)){ ctx.globalAlpha=(dim)?0.3:0.92; ctx.fillStyle='#cdd9e5';ctx.font='10px ui-monospace';ctx.fillText((n.label||n.id).slice(0,42),p.x+r+3,p.y+3.5);}
+    ctx.globalAlpha=1;
+  });
+}
+function loop(){tick(); if(!_fit&&nodes.length&&alpha<0.08){_fit=true;fitView();} draw();requestAnimationFrame(loop);} loop();
+
+// interaction
+var drag=null,panning=null,moved=false;
+cv.addEventListener('mousedown',function(ev){var m=hit(ev.offsetX,ev.offsetY);moved=false; if(m){drag=m;m.fixed=true;}else{_fit=true;panning={x:ev.offsetX,y:ev.offsetY,vx:view.x,vy:view.y};}});
+window.addEventListener('mousemove',function(ev){var r=cv.getBoundingClientRect();var mx=ev.clientX-r.left,my=ev.clientY-r.top;
+  if(drag){var w=fromScreen(mx,my);drag.x=w.x;drag.y=w.y;drag.vx=0;drag.vy=0;alpha=Math.max(alpha,.3);moved=true;}
+  else if(panning){view.x=panning.vx+(mx-panning.x);view.y=panning.vy+(my-panning.y);moved=true;}
+  else{hover=hit(mx,my);cv.style.cursor=hover?'pointer':'default';}
+});
+window.addEventListener('mouseup',function(ev){ if(drag){drag.fixed=false; if(!moved)select(drag); drag=null;} else if(panning){ if(!moved){closePanel();} panning=null;} });
+cv.addEventListener('wheel',function(ev){ev.preventDefault();var f=ev.deltaY<0?1.12:0.89;var nk=Math.max(0.2,Math.min(6,view.k*f)); _fit=true; view.k=nk;},{passive:false});
+function hit(sx,sy){var best=null,bd=18*18; nodes.forEach(function(n){if(off[n.type])return;var p=toScreen(n);var dx=p.x-sx,dy=p.y-sy,d=dx*dx+dy*dy; if(d<bd){bd=d;best=n;}});return best;}
+
+function select(n){sel=n;nbr={}; edges.forEach(function(e){if(e.source===n.id)nbr[e.target]=1;if(e.target===n.id)nbr[e.source]=1;}); showPanel(n);}
+function closePanel(){sel=null;document.getElementById('panel').classList.remove('show');}
+function showPanel(n){
+  var nb=Object.keys(nbr).map(function(id){return idx[id];}).filter(Boolean);
+  var h='<div class="pt"><span class="sw" style="background:'+nodeColor(n)+'"></span>'+esc(n.type)+(n.status?' · '+esc(n.status):'')+' · '+esc(n.id)+'</div>';
+  h+='<h2>'+esc(n.label||n.id)+'</h2>';
+  var d=n.detail||{};
+  Object.keys(d).forEach(function(k){ if(!d[k]||k==='request'&&d[k]===n.label)return; if(String(d[k]).trim()==='')return; h+='<div class="row"><div class="k">'+esc(k)+'</div><div class="v">'+esc(d[k])+'</div></div>';});
+  if(nb.length){h+='<div class="row"><div class="k">connected ('+nb.length+')</div><div class="nbrs">'+nb.slice(0,30).map(function(x){return '<a onclick="goto(\''+x.id.replace(/'/g,"")+'\')">'+esc(x.label||x.id)+'</a>';}).join('')+'</div></div>';}
+  document.getElementById('pbody').innerHTML=h;
+  document.getElementById('panel').classList.add('show');
+}
+window.goto=function(id){var n=idx[id];if(n){select(n);cam.cx=n.x;cam.cy=n.y;view.x=0;view.y=0;}};
+document.getElementById('search').addEventListener('input',function(ev){window._q=ev.target.value.trim().toLowerCase()||null;});
+document.getElementById('search').addEventListener('keydown',function(ev){ if(ev.key!=='Enter'||!window._q)return; var h=null; for(var i=0;i<nodes.length;i++){var n=nodes[i]; if(off[n.type])continue; if((n.label||'').toLowerCase().indexOf(window._q)>=0||n.id.toLowerCase().indexOf(window._q)>=0){h=n;break;}} if(h){_fit=true;goto(h.id);} });
+function exportPng(){ try{ var t=document.createElement('canvas'); t.width=cv.width; t.height=cv.height; var tx=t.getContext('2d'); tx.fillStyle='#0a0d12'; tx.fillRect(0,0,t.width,t.height); tx.drawImage(cv,0,0); var a=document.createElement('a'); a.download='leerness-graph.png'; a.href=t.toDataURL('image/png'); a.click(); }catch(e){} }
+window.addEventListener('keydown',function(ev){ if(ev.target&&ev.target.tagName==='INPUT')return; if(ev.key==='f'||ev.key==='F'){_fit=true;fitView();} else if(ev.key==='p'||ev.key==='P'){exportPng();} else if(ev.key==='Escape'){closePanel();} });
+cv.addEventListener('dblclick',function(ev){ if(!hit(ev.offsetX,ev.offsetY)){_fit=true;fitView();} });
+</script></body></html>

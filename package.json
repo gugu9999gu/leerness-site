@@ -10,7 +10,7 @@
     "auth:youtube": "node pipeline/auth-youtube.cjs",
     "site:dev": "astro dev",
     "site:build": "node pipeline/parse-changelog.cjs && astro build",
-    "site:deploy": "wrangler pages deploy dist --project-name leerness-site",
+    "site:deploy": "wrangler pages deploy dist --project-name leerness-site --branch=main --commit-dirty=true",
     "video:render": "node pipeline/render-shorts-hf.cjs",
     "video:verify": "node pipeline/verify-video.cjs",
     "upload": "node pipeline/upload-youtube.cjs",

@@ -14,7 +14,7 @@ const badgeClass = (c) => ['security','data-integrity','feature','compat','perfo
 <Base title="leerness — AI 코딩 에이전트를 위한 운영 레이어">
   <section class="hero">
     <h1>AI 코딩 에이전트를 위한<br /><span class="grad">운영 레이어 (operating layer)</span></h1>
-    <p class="tag">기억 · 인수인계 · 검증 · 감사 · 보안 가드를 <code>.harness/</code> 에 영속화 — 코드를 대신 쓰지 않고, 어떤 에이전트 위에도 얹는 공통 운영 계층. 0 의존성 · offline-first · MCP 85 도구.</p>
+    <p class="tag">기억 · 인수인계 · 검증 · 감사 · 보안 가드를 <code>.harness/</code> 에 영속화 — 코드를 대신 쓰지 않고, 어떤 에이전트 위에도 얹는 공통 운영 계층. 0 의존성 · offline-first · MCP 86 도구 · 온톨로지 그래프.</p>
     <div class="install"><span class="pfx">$ </span>npm i -g leerness</div>
     <div class="cta">
       <a class="btn primary" href="/how-it-works">leerness가 해주는 일 →</a>
@@ -25,7 +25,7 @@ const badgeClass = (c) => ['security','data-integrity','feature','compat','perfo
       <div class="stat"><div class="n">v{latest.version || '—'}</div><div class="l">최신 버전</div></div>
       <div class="stat"><div class="n">{total}</div><div class="l">릴리스</div></div>
       <div class="stat"><div class="n">0</div><div class="l">의존성</div></div>
-      <div class="stat"><div class="n">85</div><div class="l">MCP 도구</div></div>
+      <div class="stat"><div class="n">86</div><div class="l">MCP 도구</div></div>
     </div>
   </section>
 
@@ -56,6 +56,15 @@ const badgeClass = (c) => ['security','data-integrity','feature','compat','perfo
       <div class="title">🔐 보안·인코딩 — 시크릿 스캔 + 한글 UTF-8/BOM/CRLF 검사</div>
       <div class="summ">하드코딩 시크릿·gitignore 정합·셸 스크립트 인코딩 위험 자동 탐지</div>
     </div>
+  </section>
+
+  <section id="visualize">
+    <h2>🕸️ 온톨로지 그래프 <span class="badge feature">NEW</span></h2>
+    <p class="sub"><code>leerness graph --html</code> — 프로젝트 하네스(작업·계획·결정·교훈·룰·스킬·기능)를 <b>하나의 인터랙티브 그래프</b>(self-contained <code>leerness.html</code>)로 표면화합니다. 노드를 클릭하면 내용이 바로 열리고 — 검색·타입 필터·자동 맞춤(fit)·PNG 내보내기까지. 0 의존성 vanilla JS라 파일 하나로 어떤 브라우저에서나 열립니다.</p>
+    <div style="margin-top:14px;border:1px solid #222a33;border-radius:14px;overflow:hidden;background:#0a0d12;box-shadow:0 24px 60px -28px #000">
+      <iframe src="/graph-demo.html" title="leerness 온톨로지 그래프 데모" loading="lazy" style="width:100%;height:540px;border:0;display:block"></iframe>
+    </div>
+    <p class="sub" style="margin-top:10px">↑ 샘플 프로젝트의 실제 그래프 — 노드 드래그 · 스크롤 줌 · 클릭하면 내용 패널. <a href="/graph-demo.html" target="_blank" rel="noopener">전체 화면으로 열기 →</a> · <code>LEERNESS_AUTO_GRAPH=1</code> 로 <code>handoff</code> 마다 자동 갱신.</p>
   </section>
 
   <section id="latest">
