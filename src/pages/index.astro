@@ -10,8 +10,22 @@ const stable = releases.filter(r => ['data-integrity', 'security', 'compat'].inc
 const total = data.count || releases.length;
 const importantCount = releases.filter(r => r.important).length;
 const badgeClass = (c) => ['security','data-integrity','feature','compat','performance','consistency','refactor','fix'].includes(c) ? c : 'fix';
+// AEO/GEO: FAQ — 답변엔진이 그대로 인용할 수 있는 질문-답 쌍 (본문 섹션과 1:1 동일 내용)
+const faq = [
+  { q: 'leerness가 뭐예요?', a: 'AI 코딩 에이전트(Claude Code, Cursor, Codex 등) 위에 얹는 운영 레이어입니다. 작업 기억·완료 검증·보안 가드·인수인계를 .harness/ 폴더의 일반 파일로 영속화해서, 어떤 에이전트가 와도 일이 이어지고 결과를 믿을 수 있게 만듭니다.' },
+  { q: 'leerness가 코드를 대신 써주나요?', a: '아니요. 애플리케이션 코드는 에이전트가 쓰고, leerness는 그 작업이 기억되고 검증되고 안전하게 인계되도록 챙깁니다. 기본 동작은 LLM 호출·코드 실행이 없으며, 옵트인 기능(에이전트 오케스트레이션, verify-claim --run-tests의 프로젝트 테스트 실행)을 켠 경우에만 설정한 도구를 호출합니다.' },
+  { q: '어떻게 시작하나요?', a: 'npm i -g leerness 로 설치하고, 프로젝트에서 leerness init . 을 실행한 뒤, 매 세션 시작 시 leerness handoff . 로 컨텍스트를 로드하면 됩니다. Node.js 18 이상이면 되고 런타임 의존성은 0개입니다.' },
+  { q: 'AI가 "다 했어요"라고 거짓말하면요?', a: 'leerness verify-claim 이 완료 주장을 실제 파일 존재·테스트 실행 결과·git 변경과 대조해서 증거 없는 완료를 차단합니다. leerness lazy detect 는 증거 없는 done, 빈 인수인계, 테스트 미실행 신호를 자동 감지합니다.' },
+  { q: '어떤 에이전트와 함께 쓸 수 있나요?', a: 'CLI를 실행하거나 MCP를 쓸 수 있는 모든 에이전트와 호환됩니다 — Claude Code, Cursor, Codex CLI, GitHub Copilot, Goose 등. MCP 서버(leerness mcp serve)가 86개 도구를 노출합니다.' },
+  { q: '내 데이터가 외부로 전송되나요?', a: '아니요. 모든 상태는 로컬 일반 파일(.harness/)에 저장되고, 도구 자체가 offline-first에 런타임 의존성 0개, 설치 스크립트 0개입니다.' },
+];
+const faqJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
-<Base title="leerness — AI 코딩 에이전트를 위한 운영 레이어">
+<Base title="leerness — AI 코딩 에이전트를 위한 운영 레이어" jsonld={faqJsonld}>
   <section class="hero">
     <h1>AI 코딩 에이전트를 위한<br /><span class="grad">운영 레이어 (operating layer)</span></h1>
     <p class="tag">기억 · 인수인계 · 검증 · 감사 · 보안 가드를 <code>.harness/</code> 에 영속화 — 코드를 대신 쓰지 않고, 어떤 에이전트 위에도 얹는 공통 운영 계층. 0 의존성 · offline-first · MCP 86 도구 · 온톨로지 그래프.</p>
@@ -43,7 +57,7 @@ const badgeClass = (c) => ['security','data-integrity','feature','compat','perfo
 
   <section id="about">
     <h2>leerness 란? <span style="font-size:.6em;color:#9aa0ad">(개발자용)</span></h2>
-    <p class="sub">AI 코딩 에이전트(Claude Code, Cursor, Codex 등)는 코드를 잘 쓰지만 <b>기억하지 못하고, 증거 없이 "완료"를 선언</b>합니다. leerness 는 그 위에 얹는 <b>운영 레이어</b> — 프로젝트 상태를 <code>.harness/</code> 파일로 영속화하고 CLI · MCP 도구로 노출합니다. <b>leerness 자체는 LLM 을 호출하거나 코드를 실행하지 않습니다.</b></p>
+    <p class="sub">AI 코딩 에이전트(Claude Code, Cursor, Codex 등)는 코드를 잘 쓰지만 <b>기억하지 못하고, 증거 없이 "완료"를 선언</b>합니다. leerness 는 그 위에 얹는 <b>운영 레이어</b> — 프로젝트 상태를 <code>.harness/</code> 파일로 영속화하고 CLI · MCP 도구로 노출합니다. <b>leerness 자체는 애플리케이션 코드를 쓰지 않습니다</b> — 기본 동작은 LLM 호출·코드 실행 없음, 옵트인 오케스트레이션/테스트 실행만 예외.</p>
     <div class="rel" style="cursor:default">
       <div class="title">🤝 핸드오프 — 세션 시작 시 컨텍스트 자동 로드, 종료 시 인수인계 생성</div>
       <div class="summ">progress-tracker · decisions · lessons · rules 를 읽어 다음 에이전트가 이어받음</div>
@@ -100,4 +114,14 @@ const badgeClass = (c) => ['security','data-integrity','feature','compat','perfo
       ))}
     </section>
   )}
+
+  <section id="faq">
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    {faq.map(f => (
+      <details class="rel" style="cursor:pointer">
+        <summary class="title" style="font-weight:600">{f.q}</summary>
+        <p class="summ" style="margin:10px 0 4px">{f.a}</p>
+      </details>
+    ))}
+  </section>
 </Base>

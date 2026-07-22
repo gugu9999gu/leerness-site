@@ -1,7 +1,1529 @@
 {
-  "generated": "2026-06-28",
-  "count": 555,
+  "generated": "2026-07-22",
+  "count": 630,
   "releases": [
+    {
+      "version": "1.36.62",
+      "date": "2026-07-21",
+      "title": "commands/AX/잔여 참조층 en 완역 (F-05 4회차) — R-0001 검수 7회전",
+      "titlePlain": "commands/AX/잔여 참조층 en 완역",
+      "summary": "9/61",
+      "highlights": [
+        "**en 오버라이드 14종**: .claude/commands 5·skills/leerness.md·AX 가이드 4·test-evidence/review-evidence·skill-index·context-routing·feature-graph.",
+        "(검수 #1) **/update 한국어 되덮기**: auto-update 훅 설치기가 en 템플릿을 한국어로 재작성 — 언어 인지 렌더. (검수 #2) **feature add 가 en 그래프를 한국어로 회귀+frontmatter 소실**: _writeFeatureGraph 가 매 저장마다 ko 템플릿 전체 재생성 — 기존 서두를 '## Nodes' 까지 보존. (검수 #3) 전환 누락 4종: AX_PLAN/test-evidence 는 managed 편입, review-evidence 는 _USER_STATE 편입(검증 이력=사용자 데이터), feature-graph 는 #2 경로가 커버. (검수 #4) verify-code 증거 마커 en 프로젝트에서 (auto).",
+        "검증: en /update·feature add 후 그래프 무한글+frontmatter 보존+파싱 실측, ko 15종 바이트 무회귀(검수), selftest 332."
+      ],
+      "videoHighlights": [
+        "en 오버라이드 14종",
+        "update 한국어 되덮기"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.61",
+      "date": "2026-07-21",
+      "title": ".harness 정책·시드 문서군 en 완역 (F-05 3회차) — R-0001 검수 6회전",
+      "titlePlain": "harness 정책·시드 문서군 en 완역",
+      "summary": "23/61",
+      "highlights": [
+        "**en 오버라이드 27종**: guideline/guardrails/anti-lazy/writeback/session-close/secret/encoding/consistency/testing/checklists/plan·brief·current-state·decisions·task-log·handoff 시드 등 — read-order 참조층 전체.",
+        "**자가 선검**: en brief placeholder 문구가 감지 regex 와 미스매치(작성됨 오판) → 문구 정합 (anchors status true/true 실측).",
+        "(검수 High) **정책문서 12종 managed 편입** — 언어 전환 시 구 언어로 방치되던 것 (사용자 상태 문서는 의도 제외). 실측: en→ko 전환 시 guardrails 한국어 재생성 + 커스텀 1회 + 영어 잔재 0."
+      ],
+      "videoHighlights": [
+        "en 오버라이드 27종",
+        "자가 선검",
+        "정책문서 12종 managed 편입"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.60",
+      "date": "2026-07-21",
+      "title": "언어 전환 현지화 병합 (F-05 2회차, 전 검수 High 해소) — R-0001 검수 5회전",
+      "titlePlain": "언어 전환 현지화 병합",
+      "summary": "차감 병합",
+      "highlights": [
+        "**차감 병합**: _managedMerge 에 altTemplate — 구 언어 canonical 라인은 커스텀이 아니므로 미이월 (종전: KO 템플릿 통째 Preserved 이월). session-workflow.md managed 편입(전환 시에도 낡은 언어로 방치되던 것). 보존 래퍼 문구 현지화(en 프로젝트에 한글 래퍼가 새 한글원이 되던 것).",
+        "**검수 2차 High 반영 — 전환-감지 게이트 + 출현-횟수 차감**: 무조건 차감은 동일-언어 재init 에서 \"반대-언어 템플릿과 우연히 일치하는 정당한 커스텀\"을 유실시켰다(실측) — 이전 저장 언어를 포착해 실제 전환일 때만 차감 + Set 대신 출현 1회분만 소비(복제 커스텀 생존).",
+        "(검수 #2) adapter 경로에 래퍼 언어 전달(전환-감지 없는 경로라 altTemplate 은 의도적 미적용). (검수 #3) 구버전 workflow 의 자동생성 이력 로그(MCP 도구-카운트/마일스톤 불릿)는 좁은 시그니처로 필터 — 낡은 모순 잔재 방지, 사용자 산문 보존."
+      ],
+      "videoHighlights": [
+        "차감 병합",
+        "검수 2차 High 반영 전환-감지 게이트 + 출현-횟수 차감"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.59",
+      "date": "2026-07-21",
+      "title": "en 지시-레이어 완전 번역 (외부감사 F-05 시리즈 1회차) — R-0001 검수 4회전",
+      "titlePlain": "en 지시-레이어 완전 번역",
+      "summary": "en 완역 5종",
+      "highlights": [
+        "**en 완역 5종**: AGENTS.md · CLAUDE.md · session-workflow.md · .cursor/leerness.mdc · copilot-instructions.md — 한글 0 실측. frontmatter(doNotStore)까지 영어(fm lang 인자). ko 무회귀.",
+        "(검수 #2) **계약 동등성 보강**: 검수가 KO 대비 누락 6종 적발 — lens 자기질문 원문/brainstorm 트리거/5세션 회고/rule list 안내/push 클래스/release bump·note·publish 자동화 지시 전부 EN 반영 + workflow 에 복구 절차·자동회복/보안·빠른 체크리스트·안티패턴 섹션 추가 (이력성 도구-카운트 로그는 드리프트 소음이라 의도적 비이식).",
+        "(검수 #3) **integrity 펜스-H1 오인 수정**: 코드펜스 안 # 주석을 H1 로 인정해 H1 상실을 놓치던 것 — 펜스 밖 라인만 검사."
+      ],
+      "videoHighlights": [
+        "en 완역 5종",
+        "계약 동등성 보강",
+        "integrity 펜스-H1 오인 수정"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.58",
+      "date": "2026-07-21",
+      "title": "MCP core 프로필 (외부감사 F-09 종결) — R-0001 검수 3회전",
+      "titlePlain": "MCP core 프로필",
+      "summary": "`leerness mcp serve --profile core`",
+      "highlights": [
+        "**leerness mcp serve --profile core** (또는 LEERNESS_MCP_PROFILE=core): 핵심 20종만 노출 — 에이전트 1세션 필수 루프(handoff→기억 CRUD→verify→인수인계) + 상태 substrate + get_project_context/about/brief. 비노출 도구 호출은 -32601 일관 거부(노출=호출가능). **기본 full 무변경**(검수 실측: tools/list 바이트 동일).",
+        "(검수 Medium) 오타 프로필 fail-open 차단 — core/full 외에는 exit 1 거부(제한 요청의 무언 무력화 방지). (검수 Low) CORE 를 비열거+freeze — for..in/Object.keys 소비자 오인 차단.",
+        "검증: 검수 통과 프로브(20종 전원 _mcpToCliArgs 해석·policy 동일 적용·initialize/ping 불변·README 배지 86 유지·CORE 무누출), selftest 331(+1), 게이트."
+      ],
+      "videoHighlights": [
+        "leerness mcp serve --profile core"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.57",
+      "date": "2026-07-21",
+      "title": "integrity check --repair: managed 문서 무결성 복구 (외부감사 F-04) — R-0001 검수 2회전",
+      "titlePlain": "integrity check --repair",
+      "summary": "`leerness integrity check [--repair] [--force] [--json]`",
+      "highlights": [
+        "**leerness integrity check [--repair] [--force] [--json]**: 정책-문서 12종(사용자 데이터 표면 제외) — 부재/H1 전무/템플릿 40% 미만 절단 감지. --repair 는 원본 archive 대피(pid+seq 접미, 검수 #4) 후 현재 버전 템플릿 재생성.",
+        "(검수 #1 High) **minimal 설치 존중**: manifest.minimal 반영 — minimal 이 뺀 6종을 '부재 손상' 오판/재생성하지 않음(6종만 검사).",
+        "(검수 #2 High) **repair 실패 = exit 1**: 종전엔 복구 실패(EEXIST 등)에도 exit 0."
+      ],
+      "videoHighlights": [
+        "minimal 설치 존중",
+        "repair 실패 exit 1",
+        "오탐 완화"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.56",
+      "date": "2026-07-21",
+      "title": "시크릿 스캐너 F-06 (외부감사 P1) + 매 라운드 codex 검수 룰 (R-0001, 사용자 지시)",
+      "titlePlain": "시크릿 스캐너 F-06 외부감사 P1 + 매 라운드 codex 검수 룰",
+      "summary": "무명 확장자 소형 텍스트 스캔",
+      "highlights": [
+        "**무명 확장자 소형 텍스트 스캔**: config.custom/확장자 없는 credential 파일 미탐 해소 — ≤64KB + NUL 스니핑 + 이진 확장자 deny(검수 #4: .bin/.dat 등 추가). (검수 #2) 확장자 없는 파일('')이 기존 무제한 경로로 새던 것을 가드 경로로 통일 — 대형/이진 무명 파일도 이제 안전장치 적용.",
+        "**중복 보고 dedupe**: (검수 #1) 시작-오프셋 키는 실제 중복(컨텍스트 패턴=키 시작 vs 직접 패턴=값 시작)을 못 접었다 — **값 스팬(시작+길이) 키**로 보정. 실측: api_key = \"npm_…\" 2건→1건, 서로 다른 토큰 2건 유지.",
+        "**성능**: (검수 #3) 파일당 stat 2회+.gitignore 재읽기(5천 파일 실측 5천회) — stat 1회 + .gitignore 수집당 1회 캐시."
+      ],
+      "videoHighlights": [
+        "무명 확장자 소형 텍스트 스캔",
+        "중복 보고 dedupe"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.36.55",
+      "date": "2026-07-21",
+      "title": "E2E 아티팩트 이식성: 게시본에서 release gate 재현 (외부 GPT 감사 P0-2)",
+      "titlePlain": "E2E 아티팩트 이식성",
+      "summary": ".gitignore/.npmignore 검사",
+      "highlights": [
+        "**.gitignore/.npmignore 검사**: npm files 화이트리스트가 의도적으로 제외하는 저장소-전용 파일 — 부재 시 명시 ⊘ SKIP(아티팩트 프로필) (조용한 누락 아님, total 미포함).",
+        "**skillpack 동적 로드**: 형제 디렉토리(../leerness-skillpack) 가정 제거 — 없으면 최소 catalog.json 픽스처를 테스트가 직접 생성.",
+        "**Codex 수렴(require-evidence) · capabilities/team 영어화**: auto 로케일(en 환경)에서 ko 정규식 단언이 깨지던 비결정성 — 모든 i18n 케이스에 --language ko|en 명시 고정."
+      ],
+      "videoHighlights": [
+        "gitignore/.npmignore 검사",
+        "skillpack 동적 로드",
+        "agents dispatch flag bleed"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.54",
+      "date": "2026-07-21",
+      "title": "codex 7차 헌트: 신작 표면(1.36.49~53) 12건 전수 수정 (High 2 · Med 7 · Low 3)",
+      "titlePlain": "codex 7차 헌트",
+      "summary": "#1 High — preview 형상-무효 스토어 파괴/크래시",
+      "highlights": [
+        "**#1 High — preview 형상-무효 스토어 파괴/크래시**: 파싱되지만 무효(비배열 루트/null 항목)를 []로 오인해 덮어씀(6차 rules 와 동일 클래스 재발!) — 로더 형상검증 + 변경 진입점 store_invalid 거부.",
+        "**#2 High — 동시 preview add lost-update**: 락 없는 read-modify-write — _withLock 직렬화(락 안 재로드). 실측: 동시 2건 모두 생존·고유 ID.",
+        "**#3 — clarify FP/FN**: \"A 또는 B 모두 테스트\" 오질문(모두/둘다/both 억제) + \"좀 더 좋게\" 미감지(비교급 모호 패턴 추가)."
+      ],
+      "videoHighlights": [
+        "1 High preview 형상-무효 스토어 파괴/크래시",
+        "2 High 동시 preview add lost-update",
+        "3 clarify FP/FN"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.36.53",
+      "date": "2026-07-21",
+      "title": "기술 프로필: 언어·서비스 자동 감지 + 마이그레이션 이력 + 그래프 🛠 탭 (사용자 요청 UR-0062)",
+      "titlePlain": "기술 프로필",
+      "summary": "`leerness tech [--json]`",
+      "highlights": [
+        "**leerness tech [--json]** (lib/tech-profile.js 신설): 언어 9종(매니페스트+얕은 확장자 스캔) · 서비스 21종(deps 이름/.env 키 이름/설정파일 — 값은 절대 안 읽음, 네트워크 0) 감지. .harness/tech-profile.json 에 현재 상태 + **변경 이력 diff**(±언어/±서비스, cap 50) 누적 — 서비스 마이그레이션·언어 전환이 시점과 함께 남는다. 실측: stripe→firebase 교체 시 +서비스 firebase · -서비스 stripe 자동 기록.",
+        "**handoff 자동 갱신**: 세션 시작마다 프로필 재감지 — AI 가 항상 최신 기술 스택을 컨텍스트로 갖는다.",
+        "**온톨로지 그래프 🛠 기술 탭**: 언어/서비스(근거 포함)/변경 이력 표시. **⚙ 토글 스위치 UI 제거**(사용자 요청) → 토글 상태 표(ON/OFF 텍스트) + leerness toggle list|set·leerness tech 사용 가이드로 대체."
+      ],
+      "videoHighlights": [
+        "leerness tech --json",
+        "handoff 자동 갱신",
+        "온톨로지 그래프 기술 탭"
+      ],
+      "category": "consistency",
+      "categoryKo": "일관성",
+      "categoryEn": "Consistency",
+      "important": false
+    },
+    {
+      "version": "1.36.52",
+      "date": "2026-07-21",
+      "title": "외부 GPT 감사(1.36.47) P0 채택 (UR-0063)",
+      "titlePlain": "외부 GPT 감사 P0 채택",
+      "summary": "F-01 (재현확정) — 재-init 언어 뒤집힘",
+      "highlights": [
+        "**F-01 (재현확정) — 재-init 언어 뒤집힘**: en 프로젝트 init 2회차에 1회차가 생성한 한국어 관리 블록을 콘텐츠 감지가 오인해 ko 로 전환되던 멱등성 버그. 저장된 manifest/LANGUAGE 언어 최우선, 콘텐츠 감지는 신규만 (감사 첨부 패치 검증 후 채택). 실측: en→en 유지, 명시 --language ko 는 전환.",
+        "**F-07 (재현확정) — memory restore 단수형 실패**: 생성 문서 예시(decision)와 CLI(decisions) 불일치 — 단수형 별칭 수용.",
+        "**F-02 — 비율형 증거 우회**: \"5/5 passed\"(비율형 완전-통과)가 명시 카운트(\"5 tests passed\")와 달리 정적 선언-수 대조를 우회하던 것 — 동일 정규화(1.35.9 원칙 유지: N/N 만 승격). verify-claim --json 에 신뢰 경계 명시: semanticVerified:false + evidenceLevel: static|executed."
+      ],
+      "videoHighlights": [
+        "F-01 재현확정 재-init 언어 뒤집힘",
+        "F-07 재현확정 memory restore 단수형 실패",
+        "F-02 비율형 증거 우회"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.51",
+      "date": "2026-07-21",
+      "title": "모호성 질문 + 미리보기 승인 워크플로 (사용자 요청 UR-0061)",
+      "titlePlain": "모호성 질문 + 미리보기 승인 워크플로",
+      "summary": "`leerness clarify \"<요청>\"`",
+      "highlights": [
+        "**leerness clarify \"<요청>\"** (lib/clarify.js 신설): 모호성 신호 6종(모호 수식어/지시대명사/복수 선택지/불명 범위/불명 수량/불명 시점) 감지 → **AI 가 사용자에게 그대로 물을 질문 목록** 생성. 신호 없으면 무질문(false-PASS 편향 — \"잘\"은 요청동사 동반 시만, 과질문으로 흐름 차단 금지). --json 지원.",
+        "**leerness preview add|list|show|approve|revise**: 신규 기능 미리보기 스토어(.harness/previews.json, P-XXXX). add(--design/--features) → proposed → 사용자 제시 → approve(구현 허가) / revise --note(수정요구, 이력 누적). **approve 전 코드 작성 금지가 계약**. 손상 스토어 위 변경 fail-closed. 플래그 값의 제목 흡수 차단(원시 argv 파싱).",
+        "**지시 레이어 강제**: 신규 init 의 AGENTS.md Required behavior 에 \"모호성 질문 의무\"+\"미리보기 승인 의무(①등록 ②제시·질문 ③approve 후 구현)\" 주입 — 자연어만 쓰는 에이전트도 절차를 따르게 됨."
+      ],
+      "videoHighlights": [
+        "leerness clarify 요청",
+        "leerness preview add list show approve",
+        "지시 레이어 강제"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.50",
+      "date": "2026-07-21",
+      "title": "결함 클래스 3종 전수 스윕: 발견이 아니라 클래스를 고친다 (시스템적 진입점 3곳)",
+      "titlePlain": "결함 클래스 3종 전수 스윕",
+      "summary": "클래스 1 — NaN 날짜 비교 fail-open",
+      "highlights": [
+        "**클래스 1 — NaN 날짜 비교 fail-open** (enforce #2 의 클래스): new Date(손상).getTime() → NaN 비교가 조용히 통과하던 7개소. drift 4곳(무효 날짜 → mtime 폴백/제외 — advisory 는 false-BLOCK 회피 원칙), audit 1곳(무효 Updated: → stale 취급, --fix 가 유효 날짜로 자가 복구), handoff-gap(정보 부재 취급), session-resume(신호 산출 불가 스킵). 실측: Updated: 2026-99-99 종전 무언 통과 → 경고+자가복구.",
+        "**클래스 A — 손상 JSON 스토어 클로버** (toggle #5 의 클래스, codex 실측 21개 스토어): 개별 가드 대신 단일 진입점 writeUtf8 에서 \"손상 JSON 위에 유효 JSON 저장\"(클로버 시그니처) 감지 시 원본을 <file>.corrupt-<ts> 로 대피 후 저장 — 바이트 유실 0 · 수동 흐름(handoff 등) 비차단 · 미래 스토어 자동 커버. 알림은 stderr(stdout JSON 계약 불오염). 명시 fail-closed 스토어(state/teams/toggles)는 상류 거부 유지.",
+        "**클래스 B — --json 오류 계약** (review #7 의 클래스, codex 전수 매트릭스 40+ 실측): fail() 진입점 자체가 --json 시 첫 오류를 단일 {ok:false,error,code:'error'} 로 방출하고 이후 사람용 출력을 묵음(래치는 argv 정체성 스코프 — REPL/인프로세스에서 자동 해제). failJson 구체 code 경로는 그대로 우선. stderr-only 빈 stdout 6개소(requests complete/drop·wakeup-interval set/record·intent classify/expand)는 fail() 로 전환. enforce remove --json 성공 JSON 화."
+      ],
+      "videoHighlights": [
+        "클래스 1 NaN 날짜 비교 fail-open",
+        "클래스 A 손상 JSON 스토어 클로버",
+        "클래스 B --json 오류 계약"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.49",
+      "date": "2026-07-21",
+      "title": "codex 6차 헌트: 신작 표면(1.36.28~48) 10건 전수 수정 (High 3 · Medium 5 · Low 2)",
+      "titlePlain": "codex 6차 헌트",
+      "summary": "#1 High — rules 손상행 무언 삭제 재발 경로",
+      "highlights": [
+        "**#1 High — rules 손상행 무언 삭제 재발 경로**: nextRuleId 가 파싱된 룰만 스캔해 손상행(셀 부족)의 R-id 가 새 룰에 재발급 → writeRules 보존 필터가 손상행을 기존 룰로 오인해 삭제(1.36.37 보존 로직이 지키려던 바로 그 행). 원시 파일의 모든 | R-XXXX | 를 카운트.",
+        "**#2 High — enforce check 손상 타임스탬프 통과**: new Date('not-a-date') → NaN → NaN > window 가 false 라 손상 last-handoff.json 이 강제를 통과(\"handoff NaNh 전\"). fail-closed(Infinity 취급) + --json 성공 시 구조화 출력(종전 빈 stdout).",
+        "**#3 High — anchors 위험신호로 --apply 마다 파일 증식**: 개행/## 포함 package description 이 섹션 본문에 구조 마크다운으로 박혀 재적용 시 섹션 경계가 밀려 중복 증식. 신호 한 줄 정규화(_oneLine) + _replaceMdSection 본문 개행 평탄화 방어층."
+      ],
+      "videoHighlights": [
+        "1 High rules 손상행 무언 삭제 재발 경로",
+        "2 High enforce check 손상 타임스탬프 통과",
+        "3 High anchors 위험신호로 --apply 마다 파일 증식"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.48",
+      "date": "2026-07-16",
+      "title": "ACP 입장 명문화 (docs/interoperability.md, 사용자 질의)",
+      "titlePlain": "ACP 입장 명문화 docs/interoperability.md 사용자 질의",
+      "summary": "Agent Client Protocol",
+      "highlights": [],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.47",
+      "date": "2026-07-16",
+      "title": "anchors 초안 품질 + 재초안 — 실프로젝트 6곳 실적용에서 발견·즉시 교정",
+      "titlePlain": "anchors 초안 품질 + 재초안",
+      "summary": "무유실 마이그레이션",
+      "highlights": [
+        "**어색문**: goal 문형의 조사 병기(\"…를(을) 동작하는…\") + 160자 **구 중간 절단**(\"주문 목록  를(을)\") → 단어/구두점 경계 절단(… 표시) + 조사 없는 문형(\"제품을 동작 상태로 유지·발전시킨다: <설명>\")으로 교정.",
+        "**재초안 불가**: 초안 적용 후엔 \"작성됨\" 판정이라 품질 개선을 전파할 수 없었음 → **draft 마커가 남아있는 섹션은 재초안 대상**(확정본 = 마커 제거본은 불가침 유지). 실측: 6곳 재적용 — draft 섹션만 갱신(2/2/1/2/1), 사용자 작성 2섹션 + AEGIRINE 완정본 0 접촉, 어색문 잔존 0.",
+        "(부수: _mdSectionBody bin 임포트 누락을 라이브 실행이 즉시 노출 — selftest 는 anchorsCmd 미실행이라 못 잡음. 임포트 추가.)"
+      ],
+      "videoHighlights": [
+        "재초안 불가"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.46",
+      "date": "2026-07-16",
+      "title": "JSON 계약 완결 — persona/review/guide (codex 5차 #10 잔여 소진)",
+      "titlePlain": "JSON 계약 완결",
+      "summary": "단일 JSON 문서",
+      "highlights": [
+        "**persona show <id> --json**: {id, name, description, body} (종전: 마크다운 방출) + 에러 경로 failJson 구조화.",
+        "**review <file> --persona … --json**: --emit json 과 동치화 + **prompts[](실제 리뷰 프롬프트 전문) 포함** — 종전 JSON 은 메타만 있어 소비자가 프롬프트를 재조립해야 했다.",
+        "**guide <target> --json**: 하위 4섹션(impact/reuse/uiConsistency/lessons) 출력을 캡처해 {target, query, date, sections} 단일 객체로 집계 (종전: 사람용 헤딩+JSON 파편 혼합)."
+      ],
+      "videoHighlights": [
+        "persona show id --json",
+        "review file --persona --json",
+        "guide target --json"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.45",
+      "date": "2026-07-16",
+      "title": "adapter codex --global — goal 모드까지 닿는 조건부 전역 지침 (사용자 버그 후속 2층)",
+      "titlePlain": "adapter codex --global",
+      "summary": "지침층 보완",
+      "highlights": [
+        "**leerness adapter codex --global [--remove]**: 마커 블록(leerness:codex-global)을 전역 AGENTS.md 에 병합 — 핵심은 **조건부**(\"현재 프로젝트 루트에 .harness/ 있을 때만 발동, 없으면 무시\") 라 비-leerness 프로젝트 무영향. handoff→verify-claim→session close 3계약 안내.",
+        "사용자 전역 내용 보존(마커 병합) · 멱등(재실행 중복 0) · --remove 로 흔적 없이 해제 — 전부 실측.",
+        "**goal 모드 대응 스택 완성**: ① 프로젝트 AGENTS.md(읽는 모드) → ② 전역 조건부 지침(안 읽는 모드, 본 릴리스) → ③ pre-commit 강제(1.36.43 — 지침 자체를 무시해도 커밋 차단) → ④ enforce audit + CI gate(우회 감지·하드 차단)."
+      ],
+      "videoHighlights": [
+        "leerness adapter codex --global --remove",
+        "goal 모드 대응 스택 완성"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.44",
+      "date": "2026-07-16",
+      "title": "enforce 적대적 하드닝 — FP/우회 자체 헌트 (anti-cheat 출하 후속 규율)",
+      "titlePlain": "enforce 적대적 하드닝",
+      "summary": "FP(실차단 버그) — `.harness` 없는 체크아웃 오차단",
+      "highlights": [
+        "**FP(실차단 버그) — .harness 없는 체크아웃 오차단**: 워크트리/.harness 없는 브랜치에서 커밋이 차단됐다(강제 대상이 아닌 상태). → 훅이 .harness 부재 시 체인만 실행하고 통과. 실측: .harness 없는 워크트리 커밋 0.",
+        "**worktree 훅 경로**: .git 이 파일인 워크트리에서 install 이 경로를 오해석할 수 있던 것 → git rev-parse --git-common-dir 로 해석(본체/워크트리 모두 정답). 실측: 워크트리에서 install → 공용 훅에 기록.",
+        "**--no-verify 우회 — 정직 처분**: git 설계상 클라이언트 차단 불가. → (a) **leerness enforce audit**: 최근 30 커밋 시각 vs handoff 창 대조로 우회 의심 사후 감지(advisory, 의심 시 exit 1). 실측: --no-verify 커밋만 정확히 표기, 창 안 커밋 무의심. (b) status 에 한계 명시 — 우회 불가 하드 레이어는 CI(ci init + branch protection)임을 정직하게 안내."
+      ],
+      "videoHighlights": [
+        "FP 실차단 버그 .harness 없는 체크아웃 오차단",
+        "worktree 훅 경로",
+        "no-verify 우회 정직 처분"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.36.43",
+      "date": "2026-07-16",
+      "title": "leerness enforce — 사용 강제를 문서에서 커밋 관문으로 (사용자 명시: codex goal 모드가 leerness 미참조)",
+      "titlePlain": "leerness enforce",
+      "summary": "배경(사용자 실측 버그)",
+      "highlights": [
+        "**leerness enforce install|check|status|remove [--window 24] [--strict]**: 최근 window 내 handoff 흔적(last-handoff.json) 없으면 **커밋 차단** + 정확한 회복 명령(leerness handoff .) 안내. --strict 는 gate 전체 통과까지 요구. 긴급 우회는 명시적 env(LEERNESS_ENFORCE_BYPASS=1) — 무언 우회 없음.",
+        "**훅은 자기완결 sh**: 설치된 leerness 버전/PATH/네트워크 무의존(find -mmin mtime 판정) — 검증 중 **구버전 전역 CLI(1.36.41)가 enforce 를 몰라 오차단하는 실측 함정**을 밟고 재설계한 결과. 기존 pre-commit 훅은 체인 보존(pre-commit.pre-leerness 로 이동 후 호출, remove 시 복원).",
+        "**init/migrate 시 git 저장소면 기본 자동 설치** (사용자 의도: 설치된 프로젝트는 강제) — 옵트아웃 --no-enforce / LEERNESS_NO_ENFORCE=1 / --minimal."
+      ],
+      "videoHighlights": [
+        "leerness enforce install check status",
+        "훅은 자기완결 sh",
+        "init/migrate 시 git 저장소면 기본 자동 설치"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.42",
+      "date": "2026-07-16",
+      "title": "판정 정직화 배치 C — codex 5차 헌트 10건 전건 처분 완결 (#4~#10)",
+      "titlePlain": "판정 정직화 배치 C",
+      "summary": "#4 agent-mode",
+      "highlights": [
+        "**#4 agent-mode**: 3개 자식 전부 실패해도 \"자율 라운드 진행 준비\" 선언 + exit 0 — 전부 실패=exit 1, 부분 실패=⚠ 명시, tick/stop 자식 실패 전파, 미지 하위명령 exit 1.",
+        "**#5 orchestrate**: --agents NaN/0/-1 이 조용히 1로 화하고 전원 실패에도 exit 0 → 정수 1~256 검증(invalid_agents) + 성공 0=exit 1.",
+        "**#6 release bump/note**: \"banana\" 를 0.0.1 로 덮어쓰기 → semver 검증 후 거부(invalid_version, 원본 보존) · prerelease 는 npm 의미론(1.2.3-beta.2→1.2.3 안정화) · 멀티라인 노트가 CHANGELOG 에 가짜 버전 헤더를 만들던 것 → 한 리스트 항목으로 정규화."
+      ],
+      "videoHighlights": [
+        "4 agent-mode",
+        "5 orchestrate",
+        "6 release bump/note"
+      ],
+      "category": "performance",
+      "categoryKo": "성능",
+      "categoryEn": "Performance",
+      "important": false
+    },
+    {
+      "version": "1.36.41",
+      "date": "2026-07-16",
+      "title": "데이터 보존 3종 2차 — .mcp.json 손상 중단 · register-pending 락 · glossary 마커 보존 (codex 5차 헌트 #1/#2/#3 High)",
+      "titlePlain": "데이터 보존 3종 2차",
+      "summary": "#1 adapter 가 손상 `.mcp.json` 파괴",
+      "highlights": [
+        "**#1 adapter 가 손상 .mcp.json 파괴** (1.36.28 손상-스토어 클래스): 파싱 실패를 {} 로 오인해 사용자의 다른 MCP 서버 등록을 통째 교체 + 지침 파일은 검증 전에 써서 부분 적용. → 파싱 실패/비객체 루트는 **선검증 후 아무것도 쓰지 않고 중단**(store_corrupt exit 1). 실측: keep 서버 보존·지침 미생성·정상 병합 무회귀.",
+        "**#2 병렬 register-pending 무성 유실** (1.36.31 락 클래스): ID 산출이 락 밖이라 같은 T-ID 배정→상호 덮어쓰기(30중 25 잔존 실측 — 다중 세션 등록이 이 명령의 명시 용도). → ID 산출→행 작성→저장 한 임계구역. 실측: **24병렬 24/24 잔존**.",
+        "**#3 glossary 재생성이 수동 내용 삭제**: 마커(GLOSSARY_START/END)가 있는데 통파일 덮어쓰기 → 마커 밖 서문/부록 소실. → 생성 블록만 splice. 실측: 서문+부록+생성블록 공존."
+      ],
+      "videoHighlights": [
+        "1 adapter 가 손상 .mcp.json 파괴",
+        "2 병렬 register-pending 무성 유실",
+        "3 glossary 재생성이 수동 내용 삭제"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.40",
+      "date": "2026-07-16",
+      "title": "사용자-대면 주장 사실성 감사 — 드리프트 수치 소거 (정기 정직성 점검)",
+      "titlePlain": "사용자-대면 주장 사실성 감사",
+      "summary": "정확 확인",
+      "highlights": [
+        "**정확 확인**: \"0 runtime dependencies\"(실측 0) · 템플릿 관리 구간의 MCP 도구 수(_mcpToolCount() 동적 — 86 실측 일치).",
+        "**드리프트 3건 교정**: ① README \"e2e **219/219**\"(현재 386 — 릴리스마다 거짓이 되는 고정 수치) → \"전체 e2e 스위트 통과\" 서술로. ② \"**70 라운드** 누적\"(실제 태그 427) → \"v1.9.x → 현재 릴리스 태그 이력(수백 라운드)\". ③ README.ko **내부 모순**(같은 문서에 86 과 85 공존) + 수동 구간 배지/문구의 하드코드 → 산문은 **80+ 표기**, 배지는 정확 수치 유지 — 게이트 e2e 가 배지==tools/list 실측 정합을 매 릴리스 강제하는 가드-검증형 표면임을 재확인(80+ 시도는 그 가드가 차단 — 가드-검증형엔 정확 수치가 우월).",
+        "원칙: 자동 동기화되지 않는 표면에는 릴리스마다 낡는 고정 수치를 쓰지 않는다 — 정확 수치는 동적 주입 구간에만."
+      ],
+      "videoHighlights": [
+        "정확 확인",
+        "드리프트 3건 교정"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.39",
+      "date": "2026-07-16",
+      "title": "판정 정직화 배치 B — codex 4차 헌트 10건 전건 처분 완결 (#3/#5/#6/#7/#8)",
+      "titlePlain": "판정 정직화 배치 B",
+      "summary": "#3 MCP 파라미터 검증",
+      "highlights": [
+        "**#3 MCP 파라미터 검증**: arguments: null/비객체가 args 접근 throw → stdin 캐치가 -32700 \"Parse error\"(id null)로 오보 + {\"title\":{...}} 같은 비문자열이 [object Object] 로 영속. → 비객체 arguments/스키마 타입 위반/필수 누락은 **-32602 + 원 id**, 파싱과 핸들링 캐치 분리(-32603 은 원 id 유지). 원 재현 2종 실측 + 정상 호출 무회귀.",
+        "**#5 decisions 이중 소스**: retro/insights 가 md 를 직접 읽어 decision list/memory status(canonical json)와 불일치 → canonical _loadDecisions 단일 소스(신호 텍스트·recent 목록·카운트 전부, cutoff 는 date 필드). 실측: md 수동 훼손 후에도 list=retro=2 일치.",
+        "**#6 llm-bench record**: -1/NaN 점수·무제한 필드 무검증 저장 → 유한·비음수 점수 필수(invalid_score), 필드 200자 상한 + 파이프/개행 셀 이스케이프."
+      ],
+      "videoHighlights": [
+        "3 MCP 파라미터 검증",
+        "5 decisions 이중 소스",
+        "6 llm-bench record"
+      ],
+      "category": "performance",
+      "categoryKo": "성능",
+      "categoryEn": "Performance",
+      "important": false
+    },
+    {
+      "version": "1.36.38",
+      "date": "2026-07-16",
+      "title": "분석 정직화 — retro 기간필터·신호 정규식·태그 계보·usage 귀속 (codex 4차 #2/#4/#9/#10)",
+      "titlePlain": "분석 정직화",
+      "summary": "#2 `retro --days`",
+      "highlights": [
+        "**#2 retro --days**: cutoff 를 계산만 하고 미적용 — 주간 회고가 전기간 집계였다. → 날짜 헤딩 섹션 필터(_filterDatedSections)를 task-log/evidence/decisions-신호에 적용(결정 블록 수는 \"누적\" 라벨대로 누적 유지). 실측: days=1 에서 2020 데이터 제외.",
+        "**#10 신호 정규식**: JS \\b 가 한글 경계를 못 만들어 한글 fix 신호 전멸(FN) + pass가 password/bypass 안에서, done 이 undone 안에서 매치(FP). → 한글 리터럴 카운트 + ASCII lookaround 토큰 경계. 실측: \"수정 롤백 재발 password bypass undone\" → fix 3 · pass 0.",
+        "**#4 태그 계보**: round-history/milestones 가 v1.9.* 하드코드 — 현 계보(v1.36.x) 이력 0 으로 집계하면서 **\"모든 마일스톤 달성 (500+)\" 허위 축하**까지 출력. → v* 전체 semver 수집 + 이력 0 이면 \"태그 이력 없음\" 정직 표기. 실측: v1.36.36/37 태그 → roundCount 2."
+      ],
+      "videoHighlights": [
+        "2 retro --days",
+        "10 신호 정규식",
+        "4 태그 계보"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.37",
+      "date": "2026-07-16",
+      "title": "managed 파일 --force 병합 — 마이그레이션 보존의 마지막 구멍 (1.9.441 드리프트 경로 실측)",
+      "titlePlain": "managed 파일 --force 병합",
+      "summary": "--force 반복에서 CLAUDE.md 사용자 커스텀 1종 유실",
+      "highlights": [
+        "**수정**: managed 파일(CLAUDE/AGENTS/cursor/copilot 지침)은 --force 여도 **항상 라인-diff 병합** — 병합이 곧 \"템플릿 최신화 + 커스텀 보존\"이라 raw 교체가 필요한 경우가 없다. 비-managed 파일의 force/preserve 동작은 불변.",
+        "**실측**: 1.9.441→1.36.37 기본 migrate 유실 0/11 · 반복+2×--force 후 CLAUDE 커스텀+task 모두 생존 · 새 CLI 로 task/rule/requests 정상 판독.",
+        "이로써 마이그레이션 보존 3부작 완결: 반복 병합(1.36.28) → --force 상태 파일(1.36.33) → **--force managed 파일(1.36.37)**."
+      ],
+      "videoHighlights": [
+        "force managed 파일"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.36",
+      "date": "2026-07-15",
+      "title": "leerness anchors — 정체성앵커 초안 합성 (도그푸딩 재실측 후속)",
+      "titlePlain": "leerness anchors",
+      "summary": "배경(실측)",
+      "highlights": [
+        "**leerness anchors [status|draft [--apply]] [path]**: package.json description · README 첫 산문 · milestones · 활성 task 만으로 Purpose/Goal 초안 합성(순수 _draftAnchors). **발명 금지** — 신호가 없으면 no_signal 로 거부(빈 프로젝트에 그럴듯한 거짓 목적을 써주지 않음).",
+        "**안전**: --apply 는 해당 섹션이 **미작성일 때만** 교체(_replaceMdSection — 그 섹션만, 나머지 불변). 작성된 앵커는 절대 불클로버(재실행 실측). 초안 표식 주석 명시 — AI/사용자 검토 후 주석 제거로 확정.",
+        "**handoff 힌트 배선**: 앵커 미작성 헤드라인에 → leerness anchors draft 액션 부착 — 다음 세션 AI 가 한 명령으로 전환."
+      ],
+      "videoHighlights": [
+        "leerness anchors status draft --apply",
+        "handoff 힌트 배선"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.35",
+      "date": "2026-07-15",
+      "title": "deps --run-tests 정직화 + #7 의도적 DEFER (codex 3차 잔여 소진)",
+      "titlePlain": "deps --run-tests 정직화 + 7 의도적 DEFER codex 3차 잔여 소진",
+      "summary": "#6 `deps <cap> --run-tests`",
+      "highlights": [
+        "**#6 deps <cap> --run-tests**: (a) --json 이 테스트 스윕 **전에** return → 스윕이 무언 무시되고 exit 0(false-green) — json/human 이 같은 _runImpactSweep 를 쓰도록 공용화, json 은 tests[] 필드 + 실패 시 exit 1. (b) 프로젝트를 basename 으로 역추적해 **동명 프로젝트(a/service, b/service) 중 하나만 테스트**되고 실패쪽이 조용히 생략 — 절대경로 키로 교정. 실측: 동명 2 프로젝트 모두 실행(PASS/FAIL 각각), json/human 동등, 실패 exit 1.",
+        "**#7 (주석 트레이스 오인) 의도적 DEFER — 정직 기록**: 주석 속 fetch('/users') 가 낙관검사 트레이스로 인정되는 건 사실이나, 교정에는 JS 주석 마스킹이 필요하다. 이 마스커 계열은 1.36.18 에서 7회 반증 끝에 리버트한 전력이 있고(0-deps 제약 하에 파서 없이 안전 불가), 잘못 벗기면 verify-claim --strict-claims 가 **false-BLOCK**(허위 실패로 머지 차단) 하는 방향이라 게이트 편향 원칙(false-PASS 편향)에 반한다. 현 한계는 문서화된 known-limitation 으로 유지: 낙관검사는 \"주장 vs 텍스트 흔적\" 수준의 advisory 신호다.",
+        "**검증**: selftest 305/305(스윕 공용+절대경로+exit 배선; 자기참조 트랩 4번째 재발 → split-literal), 동명 충돌 원 재현 before/after, exit 전파형 게이트 e2e, 클린룸. **codex 3차 헌트 10건 전건 처분 완료(수정 9 + 정직 DEFER 1).**"
+      ],
+      "videoHighlights": [
+        "6 deps cap --run-tests",
+        "7 주석 트레이스 오인 의도적 DEFER 정직 기록"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.34",
+      "date": "2026-07-15",
+      "title": "판정 정직화 5종 — 도구가 내리는 판정(허용/만료/최신/집계)이 거짓말하지 않도록 (codex 3차 #4/#5/#8/#9/#10)",
+      "titlePlain": "판정 정직화 5종",
+      "summary": "#8 policy check",
+      "highlights": [
+        "**#8 policy check**: 차단 판정인데 exit 0 → **exit 1**(CI/스크립트가 판정 신뢰 가능). 손상 policy.json 을 기본값 폴백으로 오답하던 것 → policy_corrupt 구조화 에러.",
+        "**#9 creds check**: null/비객체 레코드 → raw TypeError 크래시, 판독불가 날짜(NaN) → false-ready. → invalid_credentials_schema 구조화 판정 exit 1, 판독불가 날짜는 유효로 치지 않음(unparsable_lastRefreshed).",
+        "**#10 session close**: completed/cancelled 등 별칭·미지 상태가 어느 카테고리에도 안 담겨 마감 보고에서 조용히 소실(3건 중 1건 집계 실측; codex 실측 실프로젝트 13건 누락). → 별칭 정규화(completed/verified→done, cancelled→dropped 등) + 미지 상태 other 버킷(집계·handoff 모두 소실 0)."
+      ],
+      "videoHighlights": [
+        "8 policy check",
+        "9 creds check",
+        "10 session close"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.33",
+      "date": "2026-07-15",
+      "title": "데이터 보존 5종 — migrate --force 상태 보존 · positional path 클래스 소진 · symlink 미추종 · skill 충돌 가드 · settings 손상 중단 (codex 3차 헌트 + 자체 발견)",
+      "titlePlain": "데이터 보존 5종",
+      "summary": "P1 — `migrate --force` 가 사용자 상태를 삭제",
+      "highlights": [
+        "**P1 — migrate --force 가 사용자 상태를 삭제** (codex 3차 #1): --force 가 progress-tracker/plan/task-log/decisions 등 상태 파일까지 새 템플릿으로 덮어써 활성 task 가 archive 에만 남았다(마커 실측 소실). → force 는 가이드/템플릿 문서에만 적용, 상태 파일 14종은 force 여도 보존(_USER_STATE). 실측: --force 후 task 잔존 1 · guideline 은 갱신. **1.36.28 의 마이그레이션 유실 전수 검증을 --force 경로까지 확장 완결.**",
+        "**P2 — positional path 무시 클래스 8종 소진** (자체 발견 — migrate-workspace-dir <path> 가 positional 을 무시하고 cwd 를 마이그레이션해 **검증 중 소스 저장소가 실제로 오염**된 사고로 표면화): migrate-workspace-dir/lessons/resume/session-resume/commands/py-check/path-setup/capabilities 에 1.36.21/24 와 동일한 _taskPositionalPath 배선. 오염은 사본 제거로 정리(원본 .harness 불변).",
+        "**P2 — 재귀 복사 symlink 폭주** (1.36.21 이연 #6): 자기참조 junction 이 있으면 copyRec 이 MAX_PATH 에러로 자기종결할 때까지 실복사(63중첩 실측). → copyRec/copyRecursiveSafe lstat 미추종(+skip 기록). 실측: 중첩 0 · 일반 파일 정상 복사."
+      ],
+      "videoHighlights": [
+        "P1 migrate --force 가 사용자 상태를 삭제",
+        "P2 positional path 무시 클래스 8종 소진",
+        "P2 재귀 복사 symlink 폭주"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.32",
+      "date": "2026-07-15",
+      "title": "e2e 그린 복원 + 게이트 절차 정직 교정 (자기 감사)",
+      "titlePlain": "e2e 그린 복원 + 게이트 절차 정직 교정 자기 감사",
+      "summary": "정정(정직 기록)",
+      "highlights": [
+        "**e2e 단언 4건 현행화**: 자동생성 대상 단언을 leerness.html 로 (수동 leerness roadmap 의 roadmap.html 테스트 3건은 불변 — 여전히 유효한 기능).",
+        "**게이트 절차 교정**: 러너에서 exit 마스킹 echo 제거 — npm test 의 exit 가 그대로 전파. 성공 판정에 \"E2E result: N/N passed\" 라인 존재를 필수 조건으로 추가.",
+        "**검증**: 이번 릴리스는 전체 게이트(selftest 301 + e2e 전체)를 exit 전파형으로 통과한 것만 게시."
+      ],
+      "videoHighlights": [
+        "게이트 절차 교정"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.31",
+      "date": "2026-07-15",
+      "title": "동시성 직렬화 — 병렬 에이전트의 lost update 차단 (codex 미검토표면 헌트 이연분 #1/#2/#5/#7)",
+      "titlePlain": "동시성 직렬화",
+      "summary": "#1 P1 — 병렬 `state start` run 유실/충돌",
+      "highlights": [
+        "**#1 P1 — 병렬 state start run 유실/충돌**: 두 병렬 start 가 같은 run-0001 을 배정해 한쪽 goal 이 덮이거나 EPERM 크래시(codex 12-trial 실측 6~9/12 발화). → stateCmd 변경 sub(start/record/verify/handoff) 전체를 state.json 락으로 직렬화(load→카운터→run 저장→state 저장이 한 임계구역). 실측: 병렬 8 start → run 파일 8/8·고유 goal 8/8·EPERM 0.",
+        "**#2 P1 — 병렬 team add 무성 유실**: 20 병렬 add 전부 exit 0 인데 16 팀만 잔존(4건 무성 소실). → 락 안 재로드→중복검사→추가→저장 + Windows 일시 EPERM(락 밖 병렬 읽기가 파일을 잠깐 여는 사이 원자 rename 실패) 소규모 재시도. 실측: **20/20 잔존 ×2회**.",
+        "**#5 P2 — record↔handoff 경합 stale handoff**: 같은 state.json 락으로 함께 직렬화. 실측 6-trial 에러 0."
+      ],
+      "videoHighlights": [
+        "1 P1 병렬 state start run 유실/충돌",
+        "2 P1 병렬 team add 무성 유실",
+        "5 P2 record handoff 경합 stale handoff"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.30",
+      "date": "2026-07-15",
+      "title": "온톨로지 그래프 기본 활성 + roadmap 통합 + 기능 토글 (사용자 요청)",
+      "titlePlain": "온톨로지 그래프 기본 활성 + roadmap 통합 + 기능 토글 사용자 요청",
+      "summary": "컨트롤 타워",
+      "highlights": [
+        "**탭 3종**: 그래프(기존 force-directed) | **로드맵**(milestone 진행률바 + 상태별 task + skills/rules — roadmap.html 기능 흡수, 수동 leerness roadmap 은 호환 유지) | **⚙ 토글**(스위치 UI).",
+        "**leerness toggle list|set <id> on|off** + .harness/toggles.json — 레지스트리: gate / lens / auto-graph / delegation-brief. 기본 전부 ON.",
+        "**AI 준수 배선**: gate·lens 는 토글 OFF 시 \"🎛 토글 OFF — 건너뜀\" 명시 후 exit 0(조용한 무시 아님, --json 은 skipped:true) · delegation-brief OFF 면 dispatch/multi 가 브리프 미접두 · **handoff 헤드라인에 🎛 토글 OFF: … 노출** — AI 가 세션 시작 시 상태를 보고 준수."
+      ],
+      "videoHighlights": [
+        "탭 3종",
+        "leerness toggle list set id on off",
+        "AI 준수 배선"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.29",
+      "date": "2026-07-15",
+      "title": "agents multi 위임 브리프 접두 — 백그라운드 AI 도 leerness 프로토콜을 받도록 (사용자 보고)",
+      "titlePlain": "agents multi 위임 브리프 접두",
+      "summary": "`agents multi`(--execute 실 spawn 포함)는 원문 그대로 위임",
+      "highlights": [
+        "**multi 3지점 브리프 접두**: --execute 실 spawn(_cliChat) + 명령 목록 출력 + --json commands. dispatch 와 동일 규칙(--raw 로 원문 위임). 로그/_recordRun 의 task 표시는 원문 유지(기록 정직성).",
+        "참조 경로 정리(조사 확정): ① dispatch/multi 프롬프트 접두(이번에 완성) ② AGENTS.md 자동 로드(codex 실측 준수 — cwd 가 루트가 아니거나 미지원 CLI 면 무력해서 접두가 안전망) ③ orchestrate 는 자체 JSON 계약 컨텍스트 포함.",
+        "**검증**: selftest 299/299(브리프 4단계 + dispatch 와이어 + **multi 3지점 와이어**), 실측(multi 출력에 프로토콜 1회 포함 · --raw 0회), 게이트 e2e, 게시본 클린룸."
+      ],
+      "videoHighlights": [
+        "multi 3지점 브리프 접두"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.28",
+      "date": "2026-07-15",
+      "title": "미검토 표면 헌트: 데이터 유실 클래스(손상 스토어 클로버 · URL 덮어쓰기) + 정확성(impact 전이 · alias 경계)",
+      "titlePlain": "미검토 표면 헌트",
+      "summary": "제외",
+      "highlights": [
+        "**#3 P1 (데이터 유실 클래스) — 손상 JSON 스토어를 빈 값으로 오인해 덮어쓰기**: state.json/teams.json/platform-constraints.json 이 손상되면 fail-open 으로 빈 기본값이 되어 기존 데이터(진행 중 run·팀·커스텀 제약)를 소실시켰다. _assertStoreParsable(파일 \"없음\"과 \"있으나 손상\" 구분) + _guardStore 로 **변경(저장)을 거부하고 원본 보존** + store_corrupt 구조화 에러. 설계: SAVE 진입점에서만 던짐(handoff 등 비변경 읽기는 resilient 유지) — 단 state 는 카운터 리셋이 run 파일 클로버를 유발해 load 에서 던지고 stateCmd 를 감쌈.",
+        "**#4 P2 (데이터 유실) — api-skill 이 쿼리 다른 URL 을 같은 id 로 덮어씀**: ?doc=alpha 와 ?doc=beta 가 둘 다 example.md 로 슬러그돼 앞 URL·방향이 소실. 같은 id 파일의 저장 URL 이 다르면 정규화 URL 해시(_shortHash)를 붙여 분리, 같은 URL 재등록은 멱등 갱신 유지.",
+        "**#8 P2 (정확성) — feature impact 역의존 전이 누락**: A←B←C 에서 impact A 가 B 만 반환(C 누락). 역방향 depends-on 을 BFS 종료 후 1-홉이 아니라 BFS **안**에서 확장(visited 로 사이클 안전) → C 가 depth 2 로 포착."
+      ],
+      "videoHighlights": [
+        "3 P1 데이터 유실 클래스 손상 JSON 스토어를 빈 값으로 오인해",
+        "8 P2 정확성 feature impact 역의존 전이 누락",
+        "10 P2 정확성 intent alias 부분문자열 오탐"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.27",
+      "date": "2026-07-15",
+      "title": "debug 렌즈 — \"근본원인 조사 없이 수정 금지\"를 자기질문으로 (obra/superpowers systematic-debugging)",
+      "titlePlain": "debug 렌즈",
+      "summary": "lens 카테고리 정합대로 자기질문 6문항으로 재작성",
+      "highlights": [
+        "**LENS_CATALOG.debug** — persona \"재현 못 한 버그는 고친 적 없다고 믿는 조사관\". 6문항: 재현+스택 전문 / 근본원인 한 문장 / 유사 코드와 차이 전수 / 가설 하나·변수 하나 / **실패 테스트 먼저**(수정 후 초록불은 증거 아님) / 3번째 시도면 설계 의심 → decision·lesson 승격. ko/en 락스텝(병합 규칙상 개수 일치 필수). affects: [test, code].",
+        "**route bugfix 힌트** — 결정적 트리거(사용자가 task type 명시): 💡 수정 전 자기질문: leerness lens debug. 표면 문자열 5곳 |debug 동시 갱신(selftest 가드 리터럴 포함 — 미갱신 시 게이트가 깨지는 구조를 판정단이 사전 지적).",
+        "**검증**: selftest 297/297(ko/en 패리티 + 다중절 앵커 4쌍(1.36.16 F8 교훈 — 단어 하나 앵커 금지) + affects 유효 + route 힌트 + **파일매핑 미확장 확인**), lens/route/en 실측, 게이트 e2e, 게시본 클린룸."
+      ],
+      "videoHighlights": [
+        "LENS CATALOG.debug",
+        "route bugfix 힌트"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.26",
+      "date": "2026-07-15",
+      "title": "leerness skill lint — SKILL 메타 품질 lint (2티어 severity · 한국어 트리거절 · CJK 본문예산) (obra/superpowers P1/P2)",
+      "titlePlain": "leerness skill lint",
+      "summary": "P0 없이 lint 를 먼저 붙였으면 내장 9/9 가 실패",
+      "highlights": [
+        "**_lintSkillMeta(meta, body) 순수함수** (pure-utils, 의존 0) — 2티어 severity 설계(메모리 교훈: 게이트 휴리스틱은 false-PASS 편향, false-BLOCK 금지):",
+        "**leerness skill lint [id] [--all] [--json] [--strict]** — 설치 스킬(SKILL.md 우선, skill.json 폴백) + 내장 카탈로그 9종 대상. --json 구조화(ok/errors/warnings/results).",
+        "**검증**: selftest 296/296(ERROR 기계판정 2종 + clean 무오발 + WARNING 분리 + CJK lang + **내장 9종 clean 고정** + CLI 배선), 실측 5종(내장 --all exit 0 / description 없음 ERROR exit 1 / WARNING 기본 0·strict 1 / ko 트리거 무 INFO / --json), 게이트 e2e, 게시본 클린룸."
+      ],
+      "videoHighlights": [
+        "lintSkillMeta meta body 순수함수"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.25",
+      "date": "2026-07-15",
+      "title": "내장 스킬 9종 트리거 description + export/publish 합성 우선순위 — \"언제 로드할지\"를 알 수 있게 (obra/superpowers P0)",
+      "titlePlain": "내장 스킬 9종 트리거 description + export/publish 합성 우선순위",
+      "summary": "결함(도그푸딩 실측)",
+      "highlights": [
+        "**BUILTIN_CATALOG 9/9 에 트리거 서술 description 신설** — superpowers 규율(\"description 은 트리거 조건 전용 — 워크플로 요약 금지\") 적용: ko 트리거(\"~할 때 사용\") + en 트리거절(\"Use when …\"), 전부 40~200자(합성 시 .slice(0,200) 생존).",
+        "**합성 우선순위 역전 3사이트** — data.displayNameKo || data.description → data.description || data.displayNameKo (export 1 + publish 계열 2). 실측: skill export feature-implementation 산출 SKILL.md frontmatter 가 \"기능 구현 표준 스킬\"(구) → \"새 기능 구현을 시작할 때 사용 — … Use when starting to implement a new feature.\"(신). skill list 표시(displayNameKo)는 무변경.",
+        "**검증**: selftest 295/295(9/9 존재 + 트리거 형태 + 슬라이스 생존 + displayNameKo 반복 아님 + 우선순위 역전 3사이트 — 자기참조 트랩은 split-literal 로 회피, 3번째 재발), export 실측, 게이트 e2e, 게시본 클린룸."
+      ],
+      "videoHighlights": [
+        "합성 우선순위 역전 3사이트"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.24",
+      "date": "2026-07-14",
+      "title": "requests 계열 positional 경로 인식 — 다른 프로젝트에 조용히 오기록되던 갭 (UR-0027 확장, 실피해 재현)",
+      "titlePlain": "requests 계열 positional 경로 인식",
+      "summary": "결함(실피해 재현)",
+      "highlights": [
+        "**결함(실피해 재현)**: requests 계열만 positional 경로를 지원하지 않아 requests add \"text\" C:/other/proj 가 **경로 인자를 조용히 무시하고 cwd 프로젝트에 기록** 후 성공을 보고했다. task/rule 은 _taskPositionalPath 로 지원 → 표면 간 불일치가 실수를 유도(1.36.21 라운드에서 본인이 직접 당해 leerness-pkg 에 UR-0060 오기록·정리한 건).",
+        "**수정(배선 1줄)**: rule 선례(arg('--path', null) || _taskPositionalPath(args, 2) || process.cwd())와 동일 배선. 인프라는 이미 전부 존재 — _taskPositionalPath 는 선행 구분자(path-like)만 인정해 ID(UR-0001)/텍스트/내부 슬래시 제목(src/auth …)을 경로로 오인하지 않고, requests add 는 _parseAddTitle(1.9.416)이 텍스트를 path-like 에서 끊어 텍스트/경로 분리도 기존과 동일. UR-0027 이 경고한 \"존재 디렉토리 인식\"(bare 이름) 은 도입하지 않음 — FP 없는 기존 계약 유지.",
+        "**검증**: selftest 294/294(배선 소스가드 + 순수 행위 3종: 절대경로 인정/ID 미오인/내부슬래시 미오인). 실측 — 피해 케이스 재현: cwd=내 프로젝트에서 requests add \"…\" <다른경로> → **대상 프로젝트에 기록 + 내 프로젝트 바이트 불변**, list/drop positional 동작, --path 우선 유지, path-only 빈 텍스트 거부(exit 1) 무회귀. 게이트 e2e, 게시본 클린룸."
+      ],
+      "videoHighlights": [
+        "결함 실피해 재현",
+        "수정 배선 1줄"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.23",
+      "date": "2026-07-14",
+      "title": "memory search: 한국어↔영어 동의어(핸드오프 0→38) + BM25 랭킹(\"앞 N건\"→\"상위 N건\") + JSON 정합",
+      "titlePlain": "memory search",
+      "summary": "정렬 레이어로만",
+      "highlights": [
+        "**lib/search-core.js 신설** (순수함수 · 0-deps · 산술만): tokenizeForRank(한글은 조사 절단 근사로 prefix 변형 방출 — 핸드오프를 이 핸드오프 쿼리에 스코어를 받음) · expandQuery(동의어 맵 주입 → 순수) · scoreHits(BM25 k1=1.5/b=0.75) · suggestTerms.",
+        "**동의어(MEMORY_SYNONYMS, catalogs 단일출처)** — 같은 개념을 다른 언어로 물으면 결과가 갈리던 비대칭 해소: 핸드오프 **0 → 38** hits, 교훈 3 → 18, 결정 4 → 18, 작업 11 → 27, 계획 5 → 19. 메모리 내용은 언어가 섞이기 마련이라(코드·커밋은 영어, 결정·교훈은 모국어) 한쪽 표기만 아는 사용자/에이전트가 존재하는 기록을 못 찾았다. 양방향(어느 쪽으로 물어도 동일). --no-synonyms 로 종전 동작(실측 재현 확인).",
+        "**BM25 랭킹** — 종전엔 --limit(기본 5)이 파일당 **\"앞 5건\"** 임의 절단이었다(최고 5건이 아니라). 이제 히트를 전부 모아 스코어 → 정렬 → limit ⇒ **\"상위 N건\"**. 파일도 최고점수 순. --include-code(21k줄 소스)에서 특히 자의적이던 절단 해소."
+      ],
+      "videoHighlights": [
+        "lib/search-core.js 신설",
+        "동의어 MEMORY SYNONYMS catalogs 단일출처",
+        "BM25 랭킹"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.22",
+      "date": "2026-07-14",
+      "title": "SessionStart 컨텍스트 주입(compaction 후 컨텍스트 유실 차단) + README 를 소개·사용법·효과로 재구성",
+      "titlePlain": "SessionStart 컨텍스트 주입 compaction 후 컨텍스트 유실 차단 + README 를",
+      "summary": "① SessionStart 컨텍스트 주입",
+      "highlights": [
+        "**leerness hook session-start [path] 신설** — hook 전용 표면. Claude Code 규약({\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"…\"}})으로 진행상황 2~3줄 주입.",
+        "**handoff --no-record / LEERNESS_HOOK=1 가드 신설** — 읽기전용/hook 호출이 stamp 를 찍어 detector 를 오염시키던 경로 차단(기본 동작 불변, 실측 무회귀).",
+        "**hook 설치 배선** — auto-update install 이 2번째 SessionStart hook(matcher: 'startup|clear|compact')을 멱등 push. 기존 설치도 자동 취득. 투명성 문구로 무엇을/언제/왜/끄는법 명시."
+      ],
+      "videoHighlights": [
+        "leerness hook session-start path 신설",
+        "hook 설치 배선",
+        "주장과 그 한정어를 함께"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.21",
+      "date": "2026-07-14",
+      "title": "경로/EOL/형태 견고성 4종 — 없는 경로에 트리 생성·CRLF plan tasks 증발·오타 하위명령 전체설치·user-requests 원본 덮어쓰기 (22 에이전트 전수 sweep, 전부 재현확정)",
+      "titlePlain": "경로/EOL/형태 견고성 4종",
+      "summary": "동일 버그 클래스를 전수 조사",
+      "highlights": [
+        "**handoff / env detect 가 없는 경로에 디렉토리 트리 + .harness 를 생성 (P2, 현실성 high)**: 오타 경로로 handoff 하면 쓰레기 트리가 생기고, --json 은 ok/error 없는 **정상 \"빈 프로젝트\" JSON + exit 0** 이라 기계 소비자가 오타를 감지 못 했음. status/health/drift/lazy detect/scan secrets/session close 는 이미 path_not_found + exit 1(UR-0136)인데 **이 둘만 관례 갭**. → 두 진입점에 존재 가드(--pulse/--all-apps 분기보다 앞). 실측: 없는 경로 → exit 1 + path_not_found + **디렉토리 생성 0**, 기존 경로 무회귀.",
+        "**CRLF plan.md 에서 모든 마일스톤 tasks 가 조용히 증발 (P2, codex #8a — 3 에이전트 독립 수렴)**: 체크박스 정규식이 /m 없이 후행 \\r 앞에서 $ 를 못 잡아 실패. id/title/status/progress 는 /m 이라 정상 파싱돼 **부분·무증상 실패**(plan list 의 Tasks 줄 소실, MCP leerness_plan_list 가 tasks 0건 보고 → 계약 위반). leerness 엔 체크박스를 켜는 명령이 없어 tasks 사용엔 외부 편집이 필수인데 Windows 관용 편집(PowerShell Set-Content 등)이 기본 CRLF → 현실 경로. → 코드베이스 기존 관례대로 **읽는 즉시 정규화**(혼합 EOL 도 복구). 실측 LF/CRLF 모두 tasks 2건.",
+        "**migrate 오타/추측 하위명령이 전체 설치를 수행 (P2)**: migrate aduit / migrate check 가 그 토큰을 **경로로 삼아** 오타명 디렉토리를 만들고 77개 파일을 설치 + --json 무시 + exit 0. → **존재 기반 가드**(migrate 의 전제는 기존 프로젝트, 새 트리 생성은 init 의 일) + unknown_subcommand 구조화 에러. 정당 흐름(migrate . / migrate /existing / migrate --path X / migrate audit|apply|plan)은 전부 보존. 실측: 오타 → exit 1 + **디렉토리 생성 0**."
+      ],
+      "videoHighlights": [
+        "handoff / env detect 가 없는 경로에 디렉토리 트리 +",
+        "CRLF plan.md 에서 모든 마일스톤 tasks 가 조용히 증발",
+        "migrate 오타/추측 하위명령이 전체 설치를 수행 P2"
+      ],
+      "category": "compat",
+      "categoryKo": "호환성",
+      "categoryEn": "Compatibility",
+      "important": true
+    },
+    {
+      "version": "1.36.20",
+      "date": "2026-07-14",
+      "title": "--apply --json이 실제로 적용하도록 수정 — mutation-before-output (codex fresh-QA #7, 3커맨드 재현확정)",
+      "titlePlain": "apply --json 이 실제로 적용하도록 수정",
+      "summary": "silent no-op",
+      "highlights": [
+        "**reuse autodetect --apply --json** — 후보만 보고하고 reuse-map.md를 안 씀(bin:20307의 --json return이 20319의 --apply 앞). → apply를 출력 전에 수행하고 JSON에 applied/added 반영. 실측: --apply --json → applied:true, added:2 + reuse-map 실제 기록(0→1건), --apply(no-json) 무회귀.",
+        "**release cleanup --apply --json** — apply:true, deleteCount:N을 보고하고도 브랜치를 안 지움(15018의 --json return이 15051의 삭제 앞). → 삭제를 출력 전에 수행하고 JSON에 deleted/deleteFailed 반영 + 삭제 실패 시 exitCode=1. 실측: --apply --keep 1 --json → deleted:3 + 브랜치 실제 삭제(4→1).",
+        "**env encoding --apply --json** — read-only 파일 apply 실패를 action:'failed'로 기록만 하고 exit 0. → 실패 시 process.exitCode=1. 실측: read-only→exit 1, writable→exit 0."
+      ],
+      "videoHighlights": [
+        "reuse autodetect --apply --json",
+        "release cleanup --apply --json",
+        "env encoding --apply --json"
+      ],
+      "category": "consistency",
+      "categoryKo": "일관성",
+      "categoryEn": "Consistency",
+      "important": false
+    },
+    {
+      "version": "1.36.19",
+      "date": "2026-07-14",
+      "title": "전략 앵커(project-brief/plan Goal) 미작성 감지 — 인계 AI가 프로젝트 맥락을 못 받던 근본원인 표면화 (실사용 7 프로젝트 dogfood)",
+      "titlePlain": "전략 앵커 project-brief/plan Goal 미작성 감지",
+      "summary": "현장 관찰",
+      "highlights": [
+        "**전략 앵커 미작성 감지 (신규)**: pure-utils에 _briefUnfilled/_planGoalUnfilled 순수 detector 추가 — ## Purpose/## Goal 섹션이 템플릿 placeholder 문구이거나 실내용 0(빈 bullet)이면 미작성으로 판정. bullet/문단 무관(문단형 실작성도 정상 인식), 섹션 자체가 없으면 미플래그(FP 회피). 7 프로젝트 ground-truth + 컨트롤(placeholder/빈칸/bullet작성/문단작성/섹션없음)로 판별 정밀 검증.",
+        "**audit finding 2종**: project-brief Purpose 미작성 → project_brief_unfilled 경고(\"인계받는 AI가 프로젝트 목적/맥락을 못 받습니다\"), plan Goal 미작성 → plan_goal_unfilled 경고. <!-- leerness:na --> 마커로 의도적 스킵 가능(기존 design-system/reuse-map 관례와 동일).",
+        "**handoff 헤드라인 표면화**: 세션 시작 헤드라인에 📋 project-brief 미작성 / 📋 plan Goal 미작성 / 📋 정체성앵커 미작성 (brief+plan) 노출 — 파묻힌 init task(T-0001) 대신 매 세션 가시화. 채워진 프로젝트엔 무신호(무노이즈)."
+      ],
+      "videoHighlights": [
+        "전략 앵커 미작성 감지 신규",
+        "audit finding 2종",
+        "handoff 헤드라인 표면화"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.18",
+      "date": "2026-07-14",
+      "title": "UR-0052: handoff --compact 단일경로 + ID 5자리+ 대응 (P2-6 주석 마스킹은 조사 후 이연)",
+      "titlePlain": "UR-0052",
+      "summary": "파서 없이 안전 구현 불가",
+      "highlights": [
+        "**P3-8 handoff --compact 단일 워크스페이스 무효**: --compact가 멀티(_handoffWorkspace)에만 있어 단일 handoff . --compact는 섹션 몇 개만 억제하고 본문 186줄 전량 출력 → 문서상 \"~500자 요약\"과 불일치. MCP handoff·REPL preview·agent-mode 등 내부 호출자 3곳이 단일 경로에 --compact를 써 preview 첫 3줄이 헤더/날짜/이름으로 무의미했음(재현: 186줄). → 단일 handoff()에 compact 단축 추가(subprocess 없이 파일 로더만으로 프로젝트/진척/메모리요약/다음액션/미답요청 3줄 압축, _lineSafe로 projectName 개행 주입 차단). 실측 186→3줄, --json은 여전히 full, preview 유의미화.",
+        "**P1-2 ID 리더 5자리+ 대응**: T-/M-/D-/R-/F- ID를 \\d{4}(정확히 4자리)로 읽어, 10,000번째 ID(T-10000)부터 앞 4자리(\"1000\")만 잡아 truncation/충돌(예: T-10000 뒤 task add가 T-1001 재발급)(재현확정). → letter-prefix ID의 \\d{4}를 \\d{4,}로 확장(bin 28·pure-utils 2·lib 9 = feature.js/audit.js/health.js/session-close.js 포함 — codex가 이 lib 누락을 지적). 판별자 (?!-)로 날짜 연도(\\d{4}-)는 exactly-4 보존(불변 assert). \\d{4,}는 4자리 ID도 매치해 무회귀. 실측: T-10000 뒤 add→**T-10001**, feature show F-10000 수용, 밀스톤 M-10000 카운트, 날짜 정상.",
+        "**P2-6 이연(조사 완료, 미채택)**: contract verify가 raw 소스를 훑어 주석처리된 // module.exports = { fn }을 실 구현으로 카운트하는 FN은 실재한다. 그러나 이를 고치려면 스캔 전 \"주석만\" 지워야 하고, JS에서 주석 경계를 정확히 찾으려면 정규식-리터럴/나눗셈/문자열/템플릿 보간(임의 코드)을 모두 렉싱해야 한다. 의존성 0(파서 금지) 제약 하에 손수 만든 마스커 3종(주석+문자열+정규식 마스킹 → 주석+문자열만 원문보존 → 줄머리 주석만)을 codex가 **7라운드 연속** 유효 JS에서 깨뜨렸다 — 특히 실코드를 지우는 **거짓 FAIL**(정당 계약을 CI에서 차단): if(x) /[/*]/의 /*를 유령 블록주석으로, ${/[}]/.test(x)?\\n/* ${f.field} */\\n:''}의 정규식 }를 보간 종료로 오계수해 중첩 템플릿의 실 필드를 삭제 등. CI 게이트에서 거짓 FAIL(정당 계약 차단) > 거짓 PASS(주석 export 카운트)이므로, **니치한 FN을 위해 현실적 거짓 FAIL 위험을 들이는 것은 순손해**로 판단하고 미채택. 근본 해법은 실 JS 파서(제약 위반)라 이연. contract verify는 기존 raw-소스 동작 유지(무회귀)."
+      ],
+      "videoHighlights": [
+        "P3-8 handoff --compact 단일 워크스페이스 무효",
+        "P1-2 ID 리더 5자리+ 대응",
+        "P2-6 이연 조사 완료 미채택"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.17",
+      "date": "2026-07-14",
+      "title": "렌즈-외 표면 버그헌트: 데이터손실 2 + gate FN + 아카이브 주입 + --json 에러경로 (codex, 재현확정)",
+      "titlePlain": "렌즈-외 표면 버그헌트",
+      "summary": "P1 데이터손실 — `memory restore` (decisions/lessons)",
+      "highlights": [
+        "**P1 데이터손실 — memory restore (decisions/lessons)**: 복원이 MD 프로젝션에만 append 하고 canonical JSON을 안 고쳐, list엔 안 보이고 다음 add/save가 JSON→MD 재생성으로 복원분을 영구 삭제(재현확정). → 복원 후 MD를 canonical 파서로 재파싱해 _saveDecisions/_saveLessons로 JSON 재빌드.",
+        "**P2 데이터손실 — plan remove**: ###  만 블록 경계로 써서 마지막 마일스톤 뒤 사용자 h1/h2 섹션(## Risks 등)이 함께 삭제(재현확정). → 모든 헤딩(#{1,3} )을 경계로 분할, ### M- 블록만 삭제.",
+        "**P2 gate FN — verify-claim**: FILE_RE/_evidenceQuality가 basename 첫 글자를 [A-Za-z]로만 잡아 123.js 같은 숫자시작 실파일 미추출 → 없는 파일 인용한 done 주장이 vacuous-pass(재현확정, 정상 done FP 회귀 없음 확인). → 첫 글자에 숫자 허용(prev-separator 가드 유지)."
+      ],
+      "videoHighlights": [
+        "P2 데이터손실 plan remove",
+        "P2 gate FN verify-claim",
+        "P2 아카이브 주입"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.36.16",
+      "date": "2026-07-13",
+      "title": "게시본 1.36.15 클린룸 codex 9건 채택: database 렌즈 정직/정밀 + selftest·병합 하드닝",
+      "titlePlain": "게시본 클린룸 codex 9건 채택",
+      "summary": "문항 정직화 5건(KO=EN)",
+      "highlights": [
+        "**문항 정직화 5건(KO=EN)**: (Q6) MVCC \"reads don't block writes\"를 non-locking 한정으로·스냅샷 스코프는 격리수준 의존·lost update 는 PG READ COMMITTED 노출이고 PG REPEATABLE READ는 조용한 유실 아닌 직렬화 abort로 정정; SQLITE_BUSY_SNAPSHOT은 busy_timeout 이 아니라 롤백+재시작. (Q9) **자기모순 수정** — abort 장벽이 \"세대 카운터를 걷어낸다\"고 썼으나, 카운터는 오히려 유지·단조증가해야 stale continuation 을 거부(제거하면 ABA 재유입 — deadlock 라운드 shipped 수정과 정합). (Q11) 단일 락만으론 데드락 사이클 불가(다른 락과 얽힐 때)·파티션 co-location≠순서(in-flight 1+순서보존 프로듀서+sink 시퀀스 필요). (Q12) 상태-조건 UPDATE 만으로 비순환 전이 직렬화; 버전 조건은 상태만으로 stale 구분 불가할 때만.",
+        "**구조 4건**: (F6) 커스텀 병합 초과분 조용한 절단 → _droppedCustom 플래그 + lens 렌더 ⚠ 경고(내장 12는 앞이라 보존, 커스텀만 잘림). (F7) \"병합이 12 안 자름\" selftest 가 빈 custom 이라 slice 미실행(공허) → 넘치는 custom 주입해 내장12 보존+초과6 절단을 실제 검증. (F8) 단어 하나 앵커가 실질 문항 삭제를 못 잡음 → 문항별 다중절(clause) 판별로 강화(재현: 신 가드는 변이 포착, 구 가드는 놓침). (F9) selftest 이름 \"11문항\"→\"12문항\".",
+        "**검증**: selftest 286/286, F3/F6/F8 프로브 재현확정, 게이트 e2e 386/386, 게시본 클린룸 재실증."
+      ],
+      "videoHighlights": [
+        "문항 정직화 5건 KO EN",
+        "구조 4건"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.15",
+      "date": "2026-07-13",
+      "title": "database 렌즈 11→12문항 + Q6 확장: 매트릭스 partial 6요소 승격",
+      "titlePlain": "database 렌즈 11 12문항 + Q6 확장",
+      "summary": "왜(37-코퍼스 매트릭스 후속)",
+      "highlights": [
+        "**왜(37-코퍼스 매트릭스 후속)**: v2 매트릭스가 partial(문항이 인접 개념만 언급)로 정직 기록한 16요소 중 실무 빈도 최상위 두 클러스터를 문항으로 승격.",
+        "**Q6 확장(KO+EN)**: dirty read(READ UNCOMMITTED 급) 명시 + MVCC/스냅샷 가시성(\"자기 시점 스냅샷, 읽기가 쓰기를 안 막음 — 그러나 스냅샷 격리 ≠ 직렬화, lost update 잔존\") → 2-1 MVCC·2-2 Snapshot Isolation·격리 이상 열거 승격.",
+        "**추가 12번(KO+EN)**: 상태 전이 허용 목록(현재-상태+버전 조건 UPDATE, 0행=불법 전이), aggregate 별 시퀀스 순서(created_at 불신, 역전 이벤트), inbox 소비 멱등(중복=정상, exactly-once 는 좁은 조건), 멱등키 본문 불일치 거부 → 2-10 State Machine·2-16 Exactly/At-least-once·2-17 Ordering·2-21 Inbox 승격."
+      ],
+      "videoHighlights": [
+        "왜 37-코퍼스 매트릭스 후속",
+        "Q6 확장 KO+EN",
+        "추가 12번 KO+EN"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.14",
+      "date": "2026-07-13",
+      "title": "database 렌즈 10→11문항: 37-코퍼스 검증 매트릭스가 측정한 커버리지 갭(hot row/부하 계열) 보강",
+      "titlePlain": "database 렌즈 10 11문항",
+      "summary": "왜(사용자 지시)",
+      "highlights": [
+        "**왜(사용자 지시)**: leerness 설치 프로젝트(lens-validation, 신규)에서 로컬 SQLite 로 37개 코퍼스 요소를 14개 실행형 픽스처로 재현하고, 요소별 렌즈 작동을 행위 테스트(설치된 CLI 로 task→done→verify-claim 트리거 + lens 실렌더 문항 근거)로 측정 — 트리거 14/14 ✓·음성 대조(비-DB 파일) 무발화 ✓·redis-only 캐시 파일 트리거 ✓(_DB_IMPORT_RE 의 redis/ioredis). 유일한 측정 갭: **hot row·sharded counter·큐 직렬화·backpressure·bulkhead 5개 요소를 다루는 문항이 0개**.",
+        "**추가 11번(KO+EN)**: hot row 락 경합의 전파(대기→타임아웃→데드락→풀 고갈), 비정확 카운터의 샤딩(+재고/잔액엔 샤딩 금지 주의), 같은 키 경합의 큐 직렬화·예약 패턴(expires_at 회수), 유입>처리량 시 backpressure(큐 상한·rate limit·워커/풀 상한·bulkhead).",
+        "**selftest**: database 렌즈 케이스 11문항(KO=EN) + hot row/backpressure/bulkhead 앵커(EN 동형) + 병합 cap(12) 무절단 가드 갱신."
+      ],
+      "videoHighlights": [
+        "왜 사용자 지시",
+        "추가 11번 KO+EN"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.13",
+      "date": "2026-07-13",
+      "title": "database 렌즈 8→10문항: 9라운드 dogfood playbook 역이식",
+      "titlePlain": "database 렌즈 8 10문항",
+      "summary": "왜",
+      "highlights": [
+        "**왜**: stock-service 에서 코퍼스 9개 동시성 개념을 실구현-리뷰-재현 루프로 dogfood 한 결과(회고: db-safety-lens/review-playbook.md), 기존 8문항이 다루지 않는 결함 패밀리가 반복 확인됨 — 전부 \"그린 테스트는 통과했는데 리뷰가 잡은\" 실사건 기반.",
+        "**추가 9번(KO+EN)**: 감싼 사용자 콜백의 async 이탈(await 강제/thenable 거부 — 아웃박스 sent=1 유실·펜스 밖 늦은 쓰기), 추적 구조의 등록-후-실행(동기 throw 가 반초기화 상태를 보면 원본 에러 삼킴·키 영구 오염), abort 의 완전 장벽(대기열 엔트리·표식·세대 카운터까지; 세대 재검사 없는 중단 획득은 abort 뒤에도 진행), 정리의 identity 가드.",
+        "**추가 10번(KO+EN)**: 버전/토큰 불변식의 전-라이터 참여(INSERT OR REPLACE 버전 초기화 ABA), 토큰/키 식별자(무표식 LSN 교차-스토어 노출·객체 키 identity), 수량 경계 검증(음수 qty 의 가드 방향 역전), 테스트 정직성(자기보고 라벨 대신 분기 데이터 판별·no-op 변이 실행·활성성 timeout)."
+      ],
+      "videoHighlights": [
+        "추가 9번 KO+EN",
+        "추가 10번 KO+EN",
+        "병합 cap 8 12"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.12",
+      "date": "2026-07-12",
+      "title": "UR-0009 완결: selftest 견고화 불변식 메타가드 + .gitattributes LF 강제 커밋",
+      "titlePlain": "UR-0009 완결",
+      "summary": "저순위 백로그 UR-0009 (1.12.0 클린룸 exact-match 실패 후속) 3파트 완결.",
+      "highlights": [
+        "**(1) 멀티라인 needle 전수 점검: CLEAN** — 실제 개행을 포함한 백틱 needle .includes( 0건(라인 히트 3건은 needle 텍스트에 이스케이프 \\n 문자가 든 단일라인 — EOL 무관 견고). 1.12.1 정규식화 이후 재발 없음을 확인하고, **불변식을 메타가드 selftest 로 상시 강제**(실개행 needle 이 다시 생기면 selftest 실패; 스캔 정규식은 charCode 조립으로 self-ref 안전).",
+        "**(2) .gitattributes LF 강제 커밋** — 파일은 working tree 에 존재했으나 **미추적**이라 다른 클론엔 무효였음(git 은 untracked .gitattributes 도 읽으므로 로컬은 이미 유효 — 과거 커밋의 \"CRLF will be replaced by LF\" 경고가 증거). 커밋으로 모든 체크아웃에서 bin/lib LF 일관성 보장.",
+        "**(3) 1.12.0 실패 메커니즘** — 정확한 역사적 재현은 불가(당시 환경 소멸)를 정직 인정. 가설(체크아웃별 EOL/포맷 분산)은 (1) 불변식 강제 + (2) LF 정규화 커밋으로 **원인-계열 자체를 구조적으로 차단** — 증상(1.12.1)과 원인계열(1.36.12) 모두 닫힘."
+      ],
+      "videoHighlights": [
+        "1 멀티라인 needle 전수 점검 CLEAN",
+        "2 .gitattributes LF 강제 커밋",
+        "3 실패 메커니즘"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.11",
+      "date": "2026-07-09",
+      "title": "17th 클린룸 리뷰 4/4 채택: deps --json 누수 + UNC 우회 + DB렌즈 prose FP + en 렌즈 i18n",
+      "titlePlain": "17th 클린룸 리뷰 4/4 채택",
+      "summary": "게시본 1.36.10 을 codex 가 클린룸(fresh npm install)에서 행위로만 적대 검증(이 세션 7개 신규 표면) — P1×2, P2×2 전부 명령+출력 증거로 확정, 4/4 수정.",
+      "highlights": [
+        "**P1-A deps --json plain-text 누수** — 워크스페이스-없음 에러 경로가 failJson 미배선 → **설치본 selftest 283/284 실패**의 원인. dev 트리는 _apps 가 있어 이 분기를 안 타 게이트가 못 잡는 **환경 의존 경로**였음(클린룸 리뷰의 존재 이유를 재확인). → no_workspace_projects 구조화.",
+        "**P1-B UNC 접두 조용한 변환** — evidence \\\\src\\thing.mjs 의 UNC 접두를 벗겨 무관한 로컬 src/thing.mjs 를 검증(존재검사 우회성). → 매치 직전이 경로 구분자면 \"더 긴 경로의 꼬리\"로 보고 추출 제외(드라이브 C:\\...·URL 꼬리도 함께 차단). 파일:src/x.js 정상 케이스는 유지.",
+        "**P2-A DB 렌즈 prose FP** — // select from the menu where …(주석)·JSX 텍스트가 렌즈를 발화. → 완결형 SQL 문장은 **대문자 키워드(case-sensitive) 또는 따옴표/백틱 문맥**일 때만 인정 — 실제 코드 SQL 은 거의 항상 둘 중 하나라 recall 손실 없음(인용 소문자·대문자 SQL recall 행위 검증)."
+      ],
+      "videoHighlights": [
+        "P1-A deps --json plain-text 누수",
+        "P1-B UNC 접두 조용한 변환",
+        "P2-A DB 렌즈 prose FP"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.36.10",
+      "date": "2026-07-09",
+      "title": "FILE_RE Windows 백슬래시 경로 지원 (마지막 선재 백로그 소진)",
+      "titlePlain": "FILE RE Windows 백슬래시 경로 지원 마지막 선재 백로그 소진",
+      "summary": "verify-claim 의 주장-파일 추출이 Windows 백슬래시 경로를 잘라먹던 선재 결함(전 확장자 공통, codex 6차 core-diff 리뷰에서 지적 후 backlog).",
+      "highlights": [
+        "증상(충실 재현): evidence src\\thing.mjs → thing.mjs 로(디렉터리 소실 → 존재 검사 false-fail), db\\migrations\\001_create.sql → create.sql 로(숫자 시작 세그먼트까지 소실) 추출.",
+        "수정: FILE_RE 구분자에 \\\\ 허용 + 추출 직후 / 정규화(하류의 git diff 비교·렌즈 도메인 매핑은 / 기준이라 일관).",
+        "검증: 백슬래시/다단/혼합 6케이스 전부 정확 추출·정규화, forward-슬래시 회귀 0, 버전 문자열(1.36.9)·확장자 없는 경로(C:\\Users\\…) FP 0. selftest 284 (신규 행위 케이스: 백슬래시 evidence done 주장이 files-missing 없이 통과) + e2e 통과."
+      ],
+      "videoHighlights": [],
+      "category": "feature",
+      "categoryKo": "신기능",
+      "categoryEn": "Feature",
+      "important": true
+    },
+    {
+      "version": "1.36.9",
+      "date": "2026-07-09",
+      "title": "optimism [DB] FP 수정: SQL-migration 프로젝트의 정직한 done 주장 무오탐 (dogfood 백로그)",
+      "titlePlain": "optimism DB FP 수정",
+      "summary": "stock-service 도그푸드에서 두 번 마주친 선재 FP 소진(깨끗한 1.36.2에서도 동일 재현 확인 — 이번 세션 회귀 아님).",
+      "highlights": [
+        "증상: .sql 마이그레이션만으로 구성된 정직한 done 주장(evidence 에 migration 언급)이 verify-claim/lazy-detect 의 optimism 검사에서 [DB] 주장 있는데 코드 호출 흔적 없음 으로 오탐 → 기본 게이트 false-fail.",
+        "원인(재현으로 확정): _scanCodeForPatterns 확장자 필터에 .sql/.prisma 부재(스캔 결과 0바이트) **그리고** DB codeRe 가 JS/ORM 관용구만 인식(raw SQL 미인식) — 둘 다 충족돼야 오탐이 사라짐.",
+        "수정: 스캐너 확장자 += sql|prisma|mjs|cjs · DB codeRe += CREATE TABLE|ALTER TABLE|INSERT INTO|node:sqlite|DatabaseSync|better-sqlite3 (검출 관대화 — 1.12.4 다언어 확장과 같은 안전 방향)."
+      ],
+      "videoHighlights": [],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.36.8",
+      "date": "2026-07-09",
+      "title": "정직성 marginal 소진 + 넛지 확장 (심층 감사 P3 완결)",
+      "titlePlain": "정직성 marginal 소진 + 넛지 확장 심층 감사 P3 완결",
+      "summary": "심층 정직성 감사(1.36.5)의 마지막 marginal P3 2건 소진 + handoff 넛지를 실사용 최다 명령으로 확장.",
+      "highlights": [
+        "**encoding \"passed\" 스코프 명시** — passed 는 전체 트리가 아니라 allowlist 텍스트 확장자(≤5MB)만 검사한 결과 → encoding check passed (scope: allowlisted text extensions, files ≤5MB).",
+        "**\"self-heal\" 범위 정직화** — identity/about/README 의 자동 감사 + self-heal 이 secret 자동치유를 암시 → 실제 범위 명시: self-heal: drift·idempotency --auto-fix, encoding --apply; secret 은 감지 전용.",
+        "**넛지 확장** — task update(작업 중 최다 실행 명령)에도 handoff 넛지 노출(1.36.7 add 계열과 동일 가드/opt-out)."
+      ],
+      "videoHighlights": [
+        "encoding passed 스코프 명시",
+        "self-heal 범위 정직화",
+        "넛지 확장"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.7",
+      "date": "2026-07-09",
+      "title": "handoff 넛지: 세션-시작 리추얼 사각지대 메꿈 (메타-테스트 도그푸드)",
+      "titlePlain": "handoff 넛지",
+      "summary": "자기 행동 실측(세션 트랜스크립트 파싱)에서 드러난 사각지대를 leerness 기능으로 메꿈.",
+      "highlights": [
+        "신규: _handoffNudgeState/_emitHandoffNudge — task add/decision add(에이전트가 작업 중 실제로 실행하는 명령) 시, 마지막 handoff 가 오래됨(gap > 120분)이면 **한 줄 넛지**: ⚠ 마지막 handoff N시간 전 — 'leerness handoff .' 권장.",
+        "FP 가드: **기록 있음 + gap > 임계**일 때만(신규 프로젝트=last-handoff.json 부재 → 넛지 안 함). --json/--quiet 오염 없음. opt-out LEERNESS_NO_HANDOFF_NUDGE=1.",
+        "정본 _getLastHandoffGap 재사용(스키마 일관). selftest 281(행위: 오래됨→넛지·최근/부재→없음·opt-out) + e2e 통과."
+      ],
+      "videoHighlights": [
+        "한 줄 넛지",
+        "기록 있음 + gap 임계"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.6",
+      "date": "2026-07-09",
+      "title": "정직성 백로그 소진: 강제력/종합-health 문구 정직화 (심층 감사 P2/P3 후속)",
+      "titlePlain": "정직성 백로그 소진",
+      "summary": "1.36.5 심층 정직성 감사가 확인했으나 미수정으로 남긴 P2/P3 강제력·과장 문구를 정직화.",
+      "highlights": [
+        "**handoff ⚕ health 토큰 → 🔐 .env**: 이 헤드라인 토큰은 실제로 **.env 의 .gitignore 보호 여부만** 봤는데 \"종합 health(보안+drift)\"로 표기했다(주석까지 그렇게 거짓). 커밋된 시크릿/drift/상태무결성은 안 봄 → 라벨을 🔐 .env 로 정직화(종합 health 아님 명시).",
+        "**policy enforce \"초과 명령 차단\"** → 초과 명령 = 차단 판정 + exit 1 신호 · 실제 셸 실행을 가로채진 않음: leerness 는 셸을 감싸지 않으므로 enforce ON 이어도 협조적 verdict/exit code 일 뿐, 하드 실행 차단이 아님을 명시.",
+        "**KO identity/about \"허위 완료 차단\" → \"허위 완료 감지 (권고; CI 게이트 필수화 시 차단)\"**: EN 설명은 이미 협조적(권고)임을 밝히는데 KO 정체성/about/README 는 하드 \"차단\"으로 과장 → EN 과 일치시킴(사용자 프로젝트 README 에 기록되는 고가시성 문구)."
+      ],
+      "videoHighlights": [
+        "handoff health 토큰 .env",
+        "policy enforce 초과 명령 차단",
+        "README measures the real count and"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.5",
+      "date": "2026-07-09",
+      "title": "정직성 감사: 성숙도 판정 과장 보정 (심층 멀티에이전트 정직성 감사 채택)",
+      "titlePlain": "정직성 감사",
+      "summary": "게시본 1.36.4에 9개 사용자대면 표면 정직성 감사(멀티에이전트 35 + 적대적 반증) → 가장 강하게 수렴한 P1(성숙도 판정 과장) 보정.",
+      "highlights": [
+        "leerness health 6능력 매트릭스: overall N% (production-ready) 는 **소스 문자열 존재 + 의존성 설치 여부 휴리스틱**의 평균일 뿐(미설치 의존성도 부분점수). \"측정된/독립 성숙도 판정\"으로 오독되지 않도록 **인라인 캐비엇** 추가.",
+        "mcpTools 근거의 CRUD 완성/CRUD complete 제거 — 도구 수(≥50)는 기능적 CRUD 완결성을 증명하지 않음.",
+        "REPL 환영창의 **하드코딩된 \"72% production-ready · MCP 54 도구\"** 고정/구식 수치 제거 → leerness health 참조로 대체."
+      ],
+      "videoHighlights": [
+        "소스 문자열 존재 + 의존성 설치 여부 휴리스틱",
+        "하드코딩된 72 production-ready · MCP 54 도구"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.4",
+      "date": "2026-07-09",
+      "title": "database 렌즈 recall: 내용 기반 DB 감지 (dogfood FN) — 평범한 이름의 DB 모듈도 렌즈 노출",
+      "titlePlain": "database 렌즈 recall",
+      "summary": "도그푸드에서 발견한 recall gap(FN) 소진.",
+      "highlights": [
+        "신규: _isDbContentText / _anyDbContentInFiles / _withDbDomain — verify-claim 이 주장 파일의 **내용**에 실제 DB 드라이버 import(node:sqlite/pg/mysql2/better-sqlite3/typeorm/prisma 등) 또는 산문엔 거의 없는 완결형 SQL 문장(SELECT…FROM…WHERE/UPDATE…SET…WHERE/CREATE TABLE/INSERT INTO/ON CONFLICT/BEGIN IMMEDIATE)이 있으면 database 렌즈를 보강 노출.",
+        "FP 가드: 단일 키워드(database/select/from/where = 영어 단어)만으로는 안 켬 — 드라이버 import 또는 근접 다중 SQL 키워드 조합만. 산문/비-DB 코드 회귀 0(selftest 행위 검증).",
+        "안전: 코드 파일(.js/.mjs/.ts/.py 등)만, 512KB 이하만 읽음. path-기반 매핑은 그대로 두고 **추가 보강**만(비파괴). advisory 렌즈라 게이트 아님."
+      ],
+      "videoHighlights": [
+        "추가 보강",
+        "root 제한"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.36.3",
+      "date": "2026-07-08",
+      "title": "DB 안전성 렌즈 코어 승격 (race condition + ACID) — 사용자 명시 + codex 검수 채택",
+      "titlePlain": "DB 안전성 렌즈 코어 승격 race condition + ACID",
+      "summary": "",
+      "highlights": [
+        "신규 내장 품질 렌즈 도메인 database (8 자기질문: lost update / check-then-act TOCTOU / atomicity / DB 제약 / isolation+retry / durability / distribution). leerness lens database 로 호출, verify-claim 이 DB 파일 변경 시 인라인 노출.",
+        "_lensDomainsForFiles: DB 파일(.sql/.prisma/migrations/schema/models/repositories/dao/db·database 디렉토리/data-source·drizzle.config 등) → database 도메인 우선 매핑. 테스트 파일은 test 렌즈 유지(제외).",
+        "FILE_EXTS += sql|prisma (verify-claim 파일 추출) + _evidenceQuality += prisma (파일 근거 인식) — .sql/.prisma 변경도 정상 검증."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.2",
+      "date": "2026-07-07",
+      "title": "클린룸 후속: feature add|show|link|impact trailing positional path 존중 (조용한 cwd 오독 + stray .harness scaffold 차단)",
+      "titlePlain": "클린룸 후속",
+      "summary": "독립 클린룸 리뷰(1.35.17 게시본)가 재현한 P2 결함 소진.",
+      "highlights": [
+        "디스패치(bin/leerness.js)가 feature add 를 featureAddCmd(arg('--path', cwd), args.slice(2).filter(비-flag).join(' ')) 로 라우팅 — **모든 비-flag positional 이 NAME 으로 join** 되어 경로가 이름에 흡수되고 root 는 언제나 CWD. feature list 는 1.9.412(UR-0100)에서 _resolveRoot(args[2]) 로 positional-path 를 이미 지원했지만 add/show/link/impact 는 갱신되지 않았다.",
+        "featureAddCmd 의 _ensureFeatureGraph(root) 가 **무조건** .harness/feature-graph.md 를 생성 → 미초기화 폴더도 조용히 반쪽 상태로 오염.",
+        "**(a) trailing positional path 존중** — add/show/link/impact 모두 --path > path-like positional(_taskPositionalPath) > cwd 로 root 해석(기존 task/rule add/feature list 와 동일 규약). add 의 NAME 은 _parseAddTitle(args, 2) 로 첫 경로/플래그에서 절단해 경로 흡수를 차단(내부 슬래시 제목 auth/login 등은 선행 구분자만 경로로 보므로 보호)."
+      ],
+      "videoHighlights": [
+        "모든 비-flag positional 이 NAME 으로 join",
+        "a trailing positional path 존중",
+        "b 미초기화 scaffold 게이트"
+      ],
+      "category": "feature",
+      "categoryKo": "신기능",
+      "categoryEn": "Feature",
+      "important": true
+    },
+    {
+      "version": "1.36.1",
+      "date": "2026-07-07",
+      "title": "클린룸 후속: 상태파일 JSON 무결성 체크 (health/check/audit false-negative 차단)",
+      "titlePlain": "클린룸 후속",
+      "summary": "1.36.0 클린룸 리뷰가 남긴 후속 백로그 소진",
+      "highlights": [
+        "**단일출처 findCorruptedStateJson(root)** — .harness 바로 아래 *.json(manifest/decisions/lessons/skills-lock/active-wakeups/user-requests/…)을 열거해 JSON.parse 시도, 실패 파일 목록 반환. 비-재귀(archive/api-skills/cache 제외)·존재 파일만·빈/공백 파일 무오탐·BOM strip·**비-크래시**(파서 예외 흡수).",
+        "**3 진단 표면에 배선** (심각도는 표면 성격에 맞춤):",
+        "**doctor 는 무변경** — root 를 받지 않는 설치/환경 진단(selftest)이라 워크스페이스 상태 검증 범위 밖(설계상 분리)."
+      ],
+      "videoHighlights": [
+        "단일출처 findCorruptedStateJson root",
+        "3 진단 표면에 배선",
+        "doctor 는 무변경"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.0",
+      "date": "2026-07-07",
+      "title": "🏁 안정 minor: gate 표면 전체 적대적 헌트 완주 (1.35.14~1.35.17 통합) + 독립 클린룸 검증",
+      "titlePlain": "안정 minor",
+      "summary": "codex 협업 7라운드로 gate 임베드 플래그십의 모든 체크 표면을 적대적 헌트 완주한 안정 릴리스",
+      "highlights": [
+        "**scan secrets (1.35.14):** 복합키(DB_PASSWORD=)/JSON 따옴표키(\"password\":\"x\")/Django SECRET_KEY/개인키 변종 미탐 + 로컬 DB 기본자격·사전-단어 FP 억제.",
+        "**encoding check (1.35.15):** 🔴 파괴적 --apply 가 CP949 파일에 BOM 만 붙여 손상시키던 것 차단(유효-UTF-8 만 BOM) + 순수-ASCII .bat FP + .cmd 미스캔 FN + BOM+깨진본문 은폐 FN.",
+        "**lazy detect (1.35.16):** 안티-치트 우회 3종(status=completed evidence 회피, 아포스트로피/멀티라인 TODO 오판, 쓰레기 evidence) + 비-JS 테스트러너 FP."
+      ],
+      "videoHighlights": [
+        "scan secrets",
+        "encoding check",
+        "lazy detect"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.35.17",
+      "date": "2026-07-07",
+      "title": "codex 협업 라운드 ⑦: audit 적대적 헌트 — 유저-프로젝트 FP 4종 (gate 표면 sweep 완결)",
+      "titlePlain": "codex 협업 라운드",
+      "summary": "사용자 지시 \"codex와 협업\" 라운드 ⑦ — gate 임베드 마지막 미헌트 표면 `audit`.",
+      "highlights": [
+        "**readme_synced_version_stale 카테고리 오류.** README 관리블록의 \"Last synced by Leerness vX\" 는 readme sync 가 **leerness 도구 버전**(v${VERSION})으로 쓰는데, audit 은 이를 **프로젝트의 package.json 버전**과 비교 → 도구≠프로젝트 버전인 **모든 유저 프로젝트에서 항상 오탐** + --fix 가 pkg.version 을 써 다음 readme sync(VERSION 기록)와 영구 충돌. → **현재 실행 중 leerness VERSION 과 비교**(= \"오래된 leerness 로 sync 됨 → 재sync\" 정확 감지, leerness 자기 repo 는 VERSION==pkg 라 무변화). 재현 확정.",
+        "**gitignore_missing_secrets glob 무지 (codex #11).** 필수 시크릿 패턴(.env/.env.local/…)을 **정확-일치**로만 검사 → 흔한 .env*/.env.* 광역 패턴(git 이 실제로 .env 패밀리 전체 ignore)을 쓰면 \"누락\" 오탐(--strict 시 failure). trailing-star prefix 커버리지 인식 추가(git 동작 일치, 신규 FN 0). 재현 확정.",
+        "**api_skill_missing 이 영어 단어 \"rest\" 오인 (codex #15).** 키워드 정규식이 /…|REST|…/i 라 대소문자 무관 → **\"clean up the rest of the module\"** 같은 평범한 task 를 REST API 로 오판. API/REST 약어를 대소문자-민감으로 분리(서술형 endpoint/graphql/oauth/webhook/url 은 무관 유지). 재현 확정."
+      ],
+      "videoHighlights": [
+        "readme synced version stale 카테고리 오류.",
+        "gitignore missing secrets glob 무지 codex",
+        "api skill missing 이 영어 단어 rest 오인 codex"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.35.16",
+      "date": "2026-07-07",
+      "title": "codex 협업 라운드 ⑥: lazy detect(안티-치트) 적대적 헌트 — 우회/FP/FN 5종 수정",
+      "titlePlain": "codex 협업 라운드",
+      "summary": "사용자 지시 \"codex와 협업\" 라운드 ⑥ — gate 임베드 `lazy detect`(안티-게으름/안티-치트) 적대적 헌트.",
+      "highlights": [
+        "**FP — no_test_run 이 비-JS 프로젝트를 오탐.** hasTestRun 정규식이 JS+pytest 중심 → **Go/Rust/Ruby/PHP/.NET/Java/Elixir/Swift/Dart/C 프로젝트가 cargo test/go test/rspec/phpunit/dotnet test/mvn/gradle 등으로 실제 테스트를 돌려도** no_test_run 발화. done 작업이 있는 active 프로젝트에선 **blocking → gate 거짓 실패**. 러너 목록 확장(negative finding 억제라 FP-safe). 재현 확정.",
+        "**FN #6 + FP #10 — TODO 스캐너 따옴표 상태 오판.** 구 isInsideQuote(per-line 따옴표 패리티)가 (a) 큰따옴표 안의 아포스트로피(\"don't\")를 여는-따옴표로 세어 **뒤의 진짜 TODO 를 스킵(FN·고의 우회 벡터)**, (b) **여러 줄 템플릿 리터럴 안의 TODO 를 문자열 밖으로 오판(FP·blocking)**. 파일 전체를 문자 단위로 걸으며 실제 문자열 경계를 추적(백틱은 줄 넘김, '/\"는 개행 종료)하는 상태머신으로 교체 — 문자열 밖 TODO 만 카운트. 둘 다 재현 확정.",
+        "**우회 #3 — evidence_missing 이 status 를 === 'done' 로만 검사.** _hasDoneWork 는 /^(done|completed|verified)$/i 인데 evidence 검사는 정확-'done' 만 → **status=completed(유효한 CLI 값)로 두면 done-work 로는 세면서 evidence 는 검사 안 하던 우회**. 동일 done-집합(대소문자무관)으로 정합. 재현 확정."
+      ],
+      "videoHighlights": [
+        "FP no test run 이 비-JS 프로젝트를 오탐.",
+        "FN 6 + FP 10 TODO 스캐너 따옴표 상태 오판.",
+        "우회 4 쓰레기 evidence 통과."
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.35.15",
+      "date": "2026-07-07",
+      "title": "codex 협업 라운드 ⑤: encoding check 적대적 헌트 — 파괴적 --apply + FP/FN 5종 수정",
+      "titlePlain": "codex 협업 라운드",
+      "summary": "사용자 지시 \"codex와 협업\" 라운드 ⑤ — gate 임베드 `encoding check` + 변형 `env encoding-check --apply` 적대적 헌트.",
+      "highlights": [
+        "**FP — 순수-ASCII .bat 이 gate 를 거짓 실패.** .bat missing chcp 65001 이 내용과 무관하게 모든 .bat 에 발화 → @echo off 만 있는 ASCII 배치도 exit 1. 비-ASCII 바이트가 있을 때만 경고하도록 게이팅(CP949 오손 위험이 실제로 있을 때만).",
+        "**FN — .cmd 가 gate 에서 미스캔.** .cmd 가 SCAN_TEXT_EXT 에 없어 encodingCheck/scanSecrets 가 .cmd 를 전혀 안 봄(반면 env encoding-check 는 .cmd 스캔 → 불일치). .cmd 추가 + .bat 와 동일 규칙(chcp 검사 · BOM 예외) 적용.",
+        "**codex #4 DESTRUCTIVE — --apply 가 CP949 파일을 손상.** env encoding-check --apply 가 비-ASCII+no-BOM 파일에 transcode 없이 UTF-8 BOM 만 붙임 → CP949 본문에 BOM 을 붙이면 'UTF-8 이라 주장하는 CP949' 손상본(mojibake 악화). **재현 확정**(CP949 .ps1 → BOM+CP949). 수정: **유효 UTF-8 본문일 때만 BOM 추가**, 비-UTF-8 은 skip(수동 transcode 안내). 추가로 .bat/.cmd 는 BOM 이 cmd.exe 코드페이지를 안 바꾸므로 skip(첫 줄 chcp 65001 안내) — 이제 --apply 는 유효-UTF-8 .ps1(PS5.1 이 BOM 으로 UTF-8 인식) 에만 작용. .sh/shebang 가드(1.9.409)와 동류."
+      ],
+      "videoHighlights": [
+        "FP 순수-ASCII .bat 이 gate 를 거짓 실패.",
+        "FN .cmd 가 gate 에서 미스캔.",
+        "codex 4 DESTRUCTIVE --apply 가 CP949 파일을"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.35.14",
+      "date": "2026-07-06",
+      "title": "codex 협업 라운드 ④: scan secrets 적대적 헌트 — 하드코딩 자격증명 FN 2종 수정",
+      "titlePlain": "codex 협업 라운드",
+      "summary": "사용자 지시 \"codex와 협업\" 라운드 ④ — 보안-임계 `scan secrets` 적대적 FP/FN 헌트.",
+      "highlights": [
+        "**FN #1 — 복합 env 키 미탐.** Hardcoded credential (unquoted) / password assignment 정규식의 선두 \\b 가 _ 앞(word-word 경계)에서 안 걸려 **DB_PASSWORD= / REDIS_PASSWORD= / JWT_SECRET= / MY_API_KEY= 같은 복합키(.env 관례)를 전부 미탐**. \\b → (?<![A-Za-z0-9]) 로 교체 — _ 만 추가 허용하므로 기존 매칭 완전 보존 + 신규 FP 0.",
+        "**FN #2 — JSON 따옴표-키 미탐.** quoted 패턴 keyword\\s*[:=] 이 \"password\": \"x\" 처럼 **키워드와 : 사이의 닫는 따옴표 때문에 JSON 스타일 키를 전부 미탐**(config.json 극히 흔함). 키워드 뒤 [\"']? 추가로 흡수. 이로써 이제 매칭되는 사전 단어 값(\"secret\": \"required\" / \"password\": \"hashed\")이 새 FP 로 노출 → **unquoted 와 동일한 requireSecretLike 엔트로피 게이트를 quoted 에도 적용**해 억제(literal 워드리스트 아님 — 일관·비취약. [[lesson-widening-recall-resurfaces-masked-fp]]).",
+        "**보강 — Slack app-level 토큰.** xox[baprs]- 만으론 Socket Mode 의 xapp- 토큰 미탐 → xapp prefix 추가(Slack 전용이라 FP 0)."
+      ],
+      "videoHighlights": [
+        "FN 1 복합 env 키 미탐.",
+        "FN 2 JSON 따옴표-키 미탐.",
+        "보강 Slack app-level 토큰."
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.35.13",
+      "date": "2026-07-06",
+      "title": "테스트 3-tier: test:core 중간 티어(플래그십 행위 스위트) 신설 (UR-0014)",
+      "titlePlain": "테스트 3-tier",
+      "summary": "사용자 지시 \"codex와 협업\" 라운드 ③ — e2e 3-tier 분리.",
+      "highlights": [
+        "**test:fast** = selftest + smoke.js — 명령이 크래시 없이 도는가(clean 프로젝트), <1분. 개발 루프. (기존)",
+        "**test:core** (신규) = selftest + scripts/e2e-core.js — 플래그십(verify-claim/gate/contract/scan)이 *적대적* 입력을 실제로 거부하고 정직 입력을 통과시키는가, **10 케이스 ~16초**. pre-commit / 빠른 CI. smoke(\"명령이 도는가\")보다 깊고 full(\"전부\")보다 20배 빠른 \"가치제안 작동 확인\" 티어.",
+        "**test** = selftest + e2e.js(384) — 전체, ~12분. 릴리스 게이트. (기존)"
+      ],
+      "videoHighlights": [
+        "test fast",
+        "test core",
+        "test"
+      ],
+      "category": "refactor",
+      "categoryKo": "리팩터",
+      "categoryEn": "Refactor",
+      "important": false
+    },
+    {
+      "version": "1.35.12",
+      "date": "2026-07-06",
+      "title": "codex 협업 라운드 ②: clean-room 평가 문서 갱신 + codex 정직성 리뷰 8건 반영 (UR-0011)",
+      "titlePlain": "codex 협업 라운드",
+      "summary": "사용자 지시 \"codex와 협업\" 라운드 ② — clean-room 평가 문서 갱신.",
+      "highlights": [
+        "평가를 **\"에이전트 클린룸 평가\"(behavior-only)** 와 **\"메인테이너 자체 적대적 헌트\"(self-administered, 가장 덜 독립적)** 로 명확히 구분 — 1.35.9/10/11 헌트를 정직 outcome(FP 1건 발견·수정 / 0 product bug / codex 9건 중 3확정·1환각기각)으로 표에 추가. 한계 섹션에 contract heuristic 한계(UR-0018) + scan secrets 포지셔닝 추가.",
+        "**codex 정직성 리뷰 8건 전부 반영**(협업 검수 결과): \"every evaluation\"→\"most\", \"real development\"→\"development exercises\", \"Independently\"→\"Separately\", \"External reviews\"→\"maintainer-run(external models≠외부 인간)\", \"Codex independent review\"→\"separate Codex review\", \"converged on 0 bugs\"→\"0 bugs found in these probes\", 그리고 핵심 — \"reliably catches ... without false-failing\"의 **자기모순 교정**(문서 자신이 1.35.9에서 FP를 찾았으므로 \"no false failures\"는 보장이 아니라 검사 중인 속성이라 명시).",
+        "selftest **271** (기존 clean-room 문서 가드를 정직성 마커 강화: clean-room + heuristic + **self-administered** + 재현 레시피). full e2e (문서-only 변경, 무영향). 문서 변경이라 런타임 동작 불변."
+      ],
+      "videoHighlights": [
+        "에이전트 클린룸 평가 behavior-only",
+        "codex 정직성 리뷰 8건 전부 반영"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.35.11",
+      "date": "2026-07-06",
+      "title": "codex 협업 contract verify 적대적 헌트: FP 3종 수정 ($ 필드 정규식 + bracket export + 코드펜스 예제)",
+      "titlePlain": "codex 협업 contract verify 적대적 헌트",
+      "summary": "사용자 지시 \"codex와 협업\" 라운드 ① — contract verify 적대적 헌트.",
+      "highlights": [
+        "**① 필드명 $ 정규식-앵커 오탐 (Claude 발견)**: ## Fields 필드가 new RegExp(\\\\\\b${f}\\\\b\\) 로 impl 소스에 grep 되는데 JS 식별자에 유효한 $ 가 **정규식 앵커로 해석**돼 $scope/foo$bar 실존 필드를 **항상 missing 오탐(exit 1)** → CI 계약이 compliant impl 거짓 차단. \\b 도 $-접두 식별자 앞에서 경계 못 잡음. → 메타문자 이스케이프 + **식별자-경계 룩어라운드**((?<![\\w$])x(?![\\w$]), Node≥18)로 교체. (함수 검사는 Set 멤버십이라 무관 — $init 정상.)",
+        "**② bracket export 미인식 (codex #8)**: exports[\"foo\"] = function(){} 를 _parseImplExports 가 dot 표기만 인식해 미노출 → 실존 함수를 누락 오판. bracket 패턴 추가.",
+        "**③ 코드펜스 예제를 계약으로 오인 (codex #9)**: spec 의  js function helper(){}   예제가 _parseContractSpec 에서 declared 로 잡혀 impl 에 helper 강제 → 예제 있는 정상 spec 거짓 차단. triple-backtick 블록 제거 후 선언/필드 추출."
+      ],
+      "videoHighlights": [
+        "필드명 정규식-앵커 오탐 Claude 발견",
+        "bracket export 미인식 codex 8",
+        "코드펜스 예제를 계약으로 오인 codex 9"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.35.10",
+      "date": "2026-07-06",
+      "title": "자체 gate 적대적 헌트: 가드레일 검증(제품 결함 0) + 보안 동작 회귀 가드",
+      "titlePlain": "자체 gate 적대적 헌트",
+      "summary": "verify-claim(1.35.9)에 이어 인접 가드레일 `gate` 를 적대적으로 검증",
+      "highlights": [
+        "FP 4/4 OK(클린 프로젝트/placeholder 모두 통과, 오탐 없음), FN 3/3 OK(시크릿·거짓완료·구조결함 차단). 프로브가 낸 \"🚨 FN\" 2건은 모두 **프로브 아티팩트**(1건은 문서상 by-design 기본 5체크, 1건은 내 프로브의 --path 누락으로 done task 미생성) — 맹신 X 로 3-경로 재현해 제품 정상(gate --claims 는 올바른 셋업에서 거짓완료 차단 확인) 판명. 지난 라운드에 이어 실패 신호를 제품 회귀로 오인하지 않음.",
+        "기존 e2e(B(1.33.3)/B(1.34.1))는 --claims 콘텐츠 차원 중심 → gate 를 **보안 가드레일**로 보는 관점(커밋된 실키 차단 / placeholder 오탐 없음)이 gate 레벨 전용 가드가 없었음. e2e B(1.35.10) 추가: 정상 .env.example placeholder → 오탐 없이 통과(exit 0), 커밋된 실 AWS 키 → 차단(exit 1, scan secrets step 실패). selftest 에 gate 5체크 조합 고정(verify/audit/scan secrets/encoding/lazy detect + --claims 6번째) — scan-step 리팩터가 가드레일 보안을 조용히 무너뜨리는 회귀 차단.",
+        "selftest **270** (신규: gate 조합 고정). full e2e **383** (신규: gate 보안 가드레일 행위). 8-프로브 매트릭스 게시본 재실증(FP 0/FN 0)."
+      ],
+      "videoHighlights": [
+        "프로브 아티팩트",
+        "보안 가드레일"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.35.9",
+      "date": "2026-07-03",
+      "title": "자체 적대적 FP 헌트: declared-pass 게이트를 완전-통과(N/N) 주장으로 한정 (1.35.7 후속 하드닝)",
+      "titlePlain": "자체 적대적 FP 헌트",
+      "summary": "1.35.7 에서 declared-pass 부풀림 게이팅을 넣은 뒤, 그 신규 게이트에 전용 FP/FN 헌트를 직접 돌림",
+      "highlights": [
+        "**비-테스트 부분 비율 오탐**: evidence \"closed 2/5 passing PRs\"(테스트와 무관한 부분 비율) + 실행 1/1 → declaredPass 파서가 \"2/5 passing\" 을 테스트 통과 주장으로 추출 → 게이트가 1 < 2 로 **truthful 완료를 거짓 거부(exit 1)**. 검증 도구가 정직한 완료를 CI 에서 막는 최악 케이스(원래 FN 보다 신뢰 훼손 큼). 1.35.7 이 이 표시상 모호함을 게이팅으로 승격시키며 노출됨.",
+        "**완전-통과(N/N) 주장만 게이팅**: _declaredFullPass = declaredPass.num === declaredPass.denom 조건 추가. 위협모델은 거짓 \"all green\" 이므로 완전-통과 주장만 부풀림 판정. 부분 비율(N<M)은 완료-주장이 아니거나 비-테스트 → 게이트 제외(표시는 advisory 유지, \"부분 비율 — 게이트 제외\" 정직 라벨). **FN 무회귀**: 정직한 \"8/12 passed\" done 의 실제 부분-실행은 이미 allPassed(tests-failed)가 별도로 잡으므로 이 게이트가 불필요. 완전-통과 부풀림(\"3/3 주장 vs 2/2 실행\")은 그대로 FAIL.",
+        "표시 라벨 정직화: 실행<주장이지만 부분 비율이라 게이트 제외인 경우 \"실행 ≥ 주장\" 오표기 대신 \"부분 비율 — advisory, 게이트 제외\" 로 표기."
+      ],
+      "videoHighlights": [
+        "비-테스트 부분 비율 오탐",
+        "완전-통과 N/N 주장만 게이팅"
+      ],
+      "category": "security",
+      "categoryKo": "보안",
+      "categoryEn": "Security",
+      "important": true
+    },
+    {
+      "version": "1.35.8",
+      "date": "2026-07-03",
+      "title": "GPT5.5평가 잔여 제안 채택: 문서 drift 가드 + 전용 스캐너 병행 레시피 + 테스트 티어 안내 (UR-0017)",
+      "titlePlain": "GPT5.5평가 잔여 제안 채택",
+      "summary": "GPT 5.5 Pro 평가 후속 라운드",
+      "highlights": [
+        "**문서 숫자 drift 자동가드 (제안⑤)**: selftest 가 README managed 섹션의 MCP 도구 수(**N개 도구**)를 lib/mcp-tools 실제 정의 수와 대조 — 사이트가 85↔86 으로 drift 했던 계열의 재발을 릴리스 게이트에서 차단.",
+        "**전용 스캐너 병행 레시피 (제안⑥)**: README \"Guidance vs enforcement\" 에 gitleaks-action + leerness scan secrets 병행 워크플로 스니펫 추가. scan secrets human 출력에도 포지셔닝 정직 고지 1줄(편의 가드 — CI급 보장은 전용 스캐너 병행, ko/en) — README 만으론 CLI 사용자에게 닿지 않던 갭.",
+        "**테스트 티어 안내 (제안③ 문서파트)**: README Maturity 에 npm test = 풀 릴리스 게이트(10분+, 의도된 설계) vs test:fast = 개발 루프(1분 미만) 명시. 스크립트 분리 자체는 UR-0014 별도 라운드."
+      ],
+      "videoHighlights": [
+        "문서 숫자 drift 자동가드 제안",
+        "전용 스캐너 병행 레시피 제안",
+        "테스트 티어 안내 제안 문서파트"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.35.7",
+      "date": "2026-07-03",
+      "title": "19th GPT5.5pro 평가: verify-claim declared-pass 부풀림 게이팅 + spec 리포터 파싱 + json ok/reasons (UR-0013)",
+      "titlePlain": "19th GPT5.5pro 평가",
+      "summary": "웹 GPT 5.5 Pro 확장의 독립 평가보고서(1.35.6 게시본 대상) 검토 라운드",
+      "highlights": [
+        "**declared-pass mismatch 미게이팅 (P1)**: evidence 주장 \"3/3 passed\" vs 실행 \"2/2\" 를 감지·표시(\"⚠ 불일치\")하고도 human/--json/--all 3경로 모두 **exit 0** — 부풀린 완료 주장이 플래그십을 통과. 게다가 human 최종요약은 불일치 출력 직후 \"✓ evidence 주장이 실제 파일·테스트·실행 결과와 일치\" **자기모순 표기**.",
+        "**Node v26 파서 FN (추가발견)**: 신형 Node 는 비-TTY 도 spec 리포터가 기본(ℹ pass 2) → 기존 5패턴 전부 미매치 → parsed=null 로 mismatch 검사 자체가 조용히 스킵.",
+        "**부풀림 게이팅 (_declaredPassMismatch)**: 실행 pass < 주장 pass 면 human overallFail + --json exit + collect(--all/gate --claims) declared-pass-mismatch reason 3경로 FAIL. **방향성 게이트** — 실행 ≥ 주장(테스트가 늘어난 정상 흐름)은 무벌점(testCountMatch 의 \"실측≥주장\" 규칙과 동일 철학, 1.18.1식 거짓차단 FP 회피). 완화: --lenient. 요약 라벨도 \"✗ FAIL (주장이 실행 결과보다 부풀려짐)\" 로 자기모순 제거."
+      ],
+      "videoHighlights": [
+        "declared-pass mismatch 미게이팅 P1",
+        "Node v26 파서 FN 추가발견",
+        "부풀림 게이팅 declaredPassMismatch"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.35.6",
+      "date": "2026-07-02",
+      "title": "18th 위임실증: codex-leerness 준수 라이브 검증 + dispatch harness 브리프 + bench stdin hang 수정",
+      "titlePlain": "18th 위임실증",
+      "summary": "위임 실증 라운드 (사용자 명시: \"codex가 leerness를 참조하고 작업을 진행하는지 확인 후 고도화\")",
+      "highlights": [
+        "**codex 는 AGENTS.md 경유로 leerness 를 자발 준수함 (강한 준수 확인)**: session-workflow/필수 읽기 순서 11개 파일 → handoff → drift check → scan secrets → route → task add → reuse find/impact → 구현 → node --test 실측 → task update(--evidence) → **verify-claim --run-tests 자기검증(테스트 명령 미지정 경고를 보고 --test-cmd 붙여 재검증까지)** → lens code/test → lazy detect → session close. progress-tracker 에 T-0002 done + 실측 증거 기록 확인.",
+        "**dispatch harness 위임 브리프 자동 접두 (_harnessBrief, 안전망)**: codex 준수는 (a) cwd=프로젝트 루트, (b) AGENTS.md 지원 CLI, (c) 자발 준수 3조건 의존 → dispatch 태스크 앞에 4단계 계약(handoff 적재 → task add → evidence 기록+verify-claim → session close)을 자동 접두. 셸 임베드 안전(backtick/달러/쌍따옴표-free). --raw 로 원문 위임.",
+        "**agents bench codex stdin hang (확인, 실버그)**: codex exec 는 stdin 이 열린 파이프면 Reading additional input from stdin... 에서 EOF 를 무한 대기(라이브 재현 — 40바이트 출력으로 8분+ hang). bench 의 cp.spawn(..., { shell: true }) 는 기본 stdio pipe 로 stdin 을 닫지 않아 codex 가 항상 타임아웃으로 왜곡됨 → stdio: ['ignore','pipe','pipe']. dispatch 안내에도 비대화형 spawn 시 stdin 닫기 경고 추가."
+      ],
+      "videoHighlights": [
+        "agents bench codex stdin hang 확인 실버그"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.35.5",
       "date": "2026-06-27",

@@ -1,0 +1,14 @@
+{
+  "generated": "2026-06-07",
+  "items": [
+    {
+      "version": "1.9.426",
+      "lang": "ko",
+      "title": "10번째 외부평가: 모듈화 회귀(health) 수정 + contract/rule 일관성 (UR-0128~0131)",
+      "summary": "🔍 10번째 외부 멀티모델 리뷰(Codex GPT-5.5 + Claude Sonnet/Opus 4.8, README 미참조 클린룸, 1.9.425)로 6회 모듈화 직후 무결성 독립 검증 — 모듈화 회귀 1건 적발·수정.",
+      "file": "C:\\Users\\leehy\\Desktop\\vscode\\claudecode\\leerness\\leerness-site\\video\\out\\1.9.426-ko.mp4",
+      "privacy": "public",
+      "major": true
+    }
+  ]
+}

@@ -1,7 +1,42 @@
 ---
 import '../styles/global.css';
-const { title = 'leerness', desc = 'AI 코딩 에이전트를 위한 운영 레이어(operating layer) — 기억 · 인수인계 · 검증 · 감사 · 보안 가드를 .harness/ 에 영속화. 0 의존성 · MCP 86 도구 · 온톨로지 그래프.' } = Astro.props;
+const {
+  title = 'leerness',
+  desc = 'AI 코딩 에이전트를 위한 운영 레이어(operating layer) — 기억 · 인수인계 · 검증 · 감사 · 보안 가드를 .harness/ 에 영속화. 0 의존성 · MCP 86 도구 · 온톨로지 그래프.',
+  jsonld = null,           // 페이지별 추가 JSON-LD (객체 또는 배열)
+  ogType = 'website',
+} = Astro.props;
 const year = 2026;
+// SEO: canonical — trailingSlash ignore 환경에서 항상 site 기준 절대 URL
+// (검수) 비루트는 슬래시 제거로 정규화 — 내부 링크·sitemap 과 단일 형식(중복 신호 제거)
+const _cpath = Astro.url.pathname === '/' ? '/' : Astro.url.pathname.replace(/\/+$/, '');
+const canonical = new URL(_cpath, Astro.site || 'https://leerness.com').href;
+// 구조화 데이터 (GEO/AEO): 소프트웨어 정체성 — AI 답변엔진이 "leerness가 무엇인가"를 1개 블록으로 회수
+const baseJsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'leerness',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Windows, macOS, Linux',
+    description: 'An operating layer for AI coding agents — persists memory, handoff, verification, audit, and security guards into plain .harness/ files. Zero runtime dependencies, offline-first, 86 MCP tools. leerness does not author application code itself; opt-in orchestration can invoke configured agents and verification can run your project tests.',
+    url: 'https://leerness.com',
+    downloadUrl: 'https://www.npmjs.com/package/leerness',
+    installUrl: 'https://www.npmjs.com/package/leerness',
+    softwareRequirements: 'Node.js >= 18',
+    license: 'https://opensource.org/licenses/MIT',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    sameAs: ['https://www.npmjs.com/package/leerness', 'https://github.com/gugu9999gu/leerness'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'leerness',
+    url: 'https://leerness.com',
+    inLanguage: 'ko',
+  },
+];
+const allJsonld = jsonld ? baseJsonld.concat(Array.isArray(jsonld) ? jsonld : [jsonld]) : baseJsonld;
 ---
 <!doctype html>
 <html lang="ko">
@@ -10,11 +45,22 @@ const year = 2026;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="naver-site-verification" content="60b83e1e8733ae788a7b4c3a1b5fa6789e1a28a7" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={desc} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="leerness" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={desc} />
     <meta name="theme-color" content="#0a0b0f" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235eead4'/%3E%3Ctext x='16' y='23' font-size='20' font-family='monospace' font-weight='bold' text-anchor='middle' fill='%2304201b'%3El%3C/text%3E%3C/svg%3E" />
+    {allJsonld.map(obj => <script type="application/ld+json" set:html={JSON.stringify(obj).replace(/</g, '\\u003c')} />)}
   </head>
   <body>
     <header class="nav">
@@ -23,7 +69,7 @@ const year = 2026;
         <nav class="links">
           <a href="/how-it-works">기능 안내</a>
           <a href="/changelog">패치노트</a>
-          <a href="/#stable">안정화</a>
+          <a href="/#faq">FAQ</a>
           <a href="https://www.npmjs.com/package/leerness" target="_blank" rel="noopener">npm</a>
           <a href="https://github.com/gugu9999gu/leerness" target="_blank" rel="noopener">GitHub</a>
         </nav>
@@ -34,7 +80,7 @@ const year = 2026;
     </main>
     <footer>
       <div class="wrap">
-        <div>© {year} leerness · MIT · 0 dependencies · offline-first</div>
+        <div>© {year} leerness · MIT · 0 dependencies · offline-first · <a href="/llms.txt">llms.txt</a></div>
         <div><a href="https://www.npmjs.com/package/leerness">npm i -g leerness</a></div>
       </div>
     </footer>

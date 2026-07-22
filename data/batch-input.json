@@ -1,0 +1,54 @@
+[
+  {
+    "version": "1.9.412",
+    "date": "2026-06-07",
+    "category": "feature",
+    "categoryKo": "신기능",
+    "title": "list-family positional path 지원 (6번째 외부평가 Opus P1, UR-0100)",
+    "summary": "일관성 footgun 수정 — decision/feature/plan/runs/team `list` 이 positional path 를 조용히 무시하고 cwd 를 읽던 것을 positional 지원으로.",
+    "highlights": [
+      "각 list 브랜치 root 해석을 기존 헬퍼 _resolveRoot(positional)(--path > positional > cwd)로 전환: absRoot(_resolveRoot(args[2])). team 은 sub==='list' 일 때만(preview/deploy 의 args[2]=id 와 분리).",
+      "add/show/drop/preview 의 positional(title/id)은 별도 브랜치라 불변(회귀 0).",
+      "**selftest 157→158 PASS** (5개 list 디스패치 _resolveRoot 와이어)."
+    ]
+  },
+  {
+    "version": "1.9.410",
+    "date": "2026-06-07",
+    "category": "security",
+    "categoryKo": "보안",
+    "title": "값 없는 --path raw TypeError 크래시 차단 (8번째 버그헌트, UR-0114)",
+    "summary": "견고성 — `--path`(값 없이) 같은 비-문자열 인자가 `path.resolve(true)` raw Node TypeError 로 크래시하던 것을 cwd 폴백으로 차단.",
+    "highlights": [
+      "absRoot(p): (typeof p === 'string' && p.trim()) ? p : process.cwd() — 비-문자열/빈/공백 입력은 cwd 폴백(--path= 빈값 동작과 일관). 실제 문자열 경로는 그대로 보존.",
+      "**selftest 155→156 PASS** (true/''/undefined/공백 → cwd, 실경로 보존 5케이스).",
+      "**E2E 348→349 PASS** (status --path raw TypeError 누출 안 됨 + cwd 폴백 정상 실행)."
+    ]
+  },
+  {
+    "version": "1.9.409",
+    "date": "2026-06-07",
+    "category": "feature",
+    "categoryKo": "신기능",
+    "title": "encoding-check --apply 가 .sh/shebang 깨뜨리던 것 차단 (8번째 버그헌트, UR-0113)",
+    "summary": "인코딩 도구 자기모순 수정 — `env encoding-check --apply` 가 .sh(shebang) 파일에 BOM 을 추가해 스크립트 실행을 깨뜨리던 것 차단.",
+    "highlights": [
+      "--apply 루프: .sh 확장자 또는 첫 2바이트가 #!(shebang)인 파일은 BOM 추가 스킵(action: skipped-shebang). .ps1/.bat 등은 기존대로 BOM 추가.",
+      "**selftest 154→155 PASS** (.sh shebang 보존 + .ps1 BOM 추가 행위검증).",
+      "**E2E 347→348 PASS** (CLI --apply: .sh 첫바이트 #! 보존(BOM 없음) + .ps1 BOM 추가)."
+    ]
+  },
+  {
+    "version": "1.9.408",
+    "date": "2026-06-07",
+    "category": "compat",
+    "categoryKo": "호환성",
+    "title": "CRLF/CR SKILL.md frontmatter 파싱 복구 (8번째 버그헌트, UR-0112)",
+    "summary": "Windows 호환 — CRLF/CR 줄바꿈의 SKILL.md frontmatter 가 통째로 소실돼 `skill install` 이 \"name 필수\" 로 실패하던 것 수정.",
+    "highlights": [
+      "_parseSkillMd 상단에서 BOM strip 후 replace(/\\r\\n?/g, '\\n') 로 CRLF/CR → LF 정규화. 모든 줄바꿈 스타일(LF/CRLF/CR/BOM+CRLF) 동일 파싱.",
+      "**selftest 153→154 PASS** (LF/CRLF/CR/BOM+CRLF 4종 meta 파싱).",
+      "**E2E 346→347 PASS** (CRLF SKILL.md skill install exit0 + skill list 에 등록 확인)."
+    ]
+  }
+]
