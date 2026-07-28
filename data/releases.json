@@ -1,7 +1,311 @@
 {
-  "generated": "2026-07-22",
-  "count": 630,
+  "generated": "2026-07-28",
+  "count": 645,
   "releases": [
+    {
+      "version": "1.36.77",
+      "date": "2026-07-25",
+      "title": "UR-0061/0066 MCP 완결: leerness_clarify + leerness_preview (86→88 도구)",
+      "titlePlain": "UR-0061/0066 MCP 완결",
+      "summary": "`leerness_clarify`",
+      "highlights": [
+        "**leerness_clarify** (read-only): 요청 텍스트 모호성 신호 → 질문 목록 JSON.",
+        "**leerness_preview** (safe-write): action 파라미터로 add/list/show/approve/revise/mockup 전체 — 시안 스캐폴드 생성·승인·수정요구를 MCP 로. revise 노트 필수 계약 유지(isError 실측).",
+        "README 도구 수 86→88 정합(selftest 문서-drift 가드가 잡아준 대로)."
+      ],
+      "videoHighlights": [
+        "leerness clarify",
+        "leerness preview"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.76",
+      "date": "2026-07-25",
+      "title": "9차 헌트 이월 3건 종결 (P1 1·P2 2) — 헌트 8/8 전건 처리",
+      "titlePlain": "9차 헌트 이월 3건 종결 P1 1·P2 2",
+      "summary": "P1 (#3) 손상 아카이브 복원 거부",
+      "highlights": [
+        "**P1 (#3) 손상 아카이브 복원 거부**: 잘린 UTF-8 아카이브가 U+FFFD 를 품은 채 \"정상 복원\"돼 손상 데이터가 active 로 유입되고 아카이브 원본이 소비되던 것(codex 정확 재현으로 확정 — 지난 라운드 제 절단 변형은 미재현이라 이월했었다). 치환문자 감지 시 복원 중단·아카이브 무변경.",
+        "**P2 (#2) MCP read-only 가 대상을 변형**: ① 텔레메트리가 존재하지 않는 대상까지 디렉토리·usage-stats 를 생성 → 초기화된 하네스에만 기록. ② read-only 선언 leerness_env_detect 가 environment.json 을 기록 → MCP 경로는 --no-write(CLI 직접 호출은 종전대로 persist).",
+        "**P2 (#8) 긴/이상 URL 파생 id**: 300자 호스트·IPv6 가 raw ENOENT 로 터지던 것 — 호스트 슬러그화 + 길이 상한 80(초과 시 절단+짧은 해시). 정상 id 는 종전과 동일(문서화 예시 무변)."
+      ],
+      "videoHighlights": [
+        "P1 3 손상 아카이브 복원 거부",
+        "P2 2 MCP read-only 가 대상을 변형",
+        "P2 8 긴/이상 URL 파생 id"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.75",
+      "date": "2026-07-25",
+      "title": "UR-0066: 디자인 시안 우선 워크플로 (preview mockup) — R-0001 검수 18회전",
+      "titlePlain": "UR-0066",
+      "summary": "`leerness preview mockup <P-ID> [--force]`",
+      "highlights": [
+        "**leerness preview mockup <P-ID> [--force]**: 자립형(오프라인·외부 리소스 0) HTML 시안 스캐폴드를 .harness/previews/<P-ID>-mockup.html 에 생성 — AI 가 placeholder 를 실제 레이아웃 초안으로 교체해 사용자에게 브라우저로 제시. 기존 파일은 덮어쓰지 않음(--force 만 재생성, 이력은 mockup-regenerated 로 구분).",
+        "**preview add ... --mockup <파일>**: 이미 만든 시안 첨부(일반 파일 + 프로젝트 루트 안 검증). **디자인/페이지 작업 자동 감지** 시 시안 생성 안내 출력(false-PASS 편향 — 일반 기능 요청엔 강제 안 함).",
+        "**AGENTS.md(ko/en) 계약 강화**: 신규 페이지·디자인 요청 → 시안 제시·승인 전 실제 코드 작성 금지."
+      ],
+      "videoHighlights": [
+        "preview add ... --mockup 파일",
+        "AGENTS.md ko/en 계약 강화",
+        "검수 7건 반영"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.74",
+      "date": "2026-07-25",
+      "title": "codex 9차 홀리스틱 헌트: 미점검 표면 6건 수정 (P1 3·P2 3)",
+      "titlePlain": "codex 9차 홀리스틱 헌트",
+      "summary": "P1 `.leerness/state.json` 스키마 무효 통과",
+      "highlights": [
+        "**P1 .leerness/state.json 스키마 무효 통과**: 파싱은 되지만 형태가 무효인 파일({})이 손상 가드를 통과해 runCounter 를 0 으로 되돌리고 **기존 run 을 덮어썼다**(실측 original-goal → replacement-goal). 형태 검증도 fail-closed — 단 runs/ 가 비어 있으면 관대(없는 데이터를 지킬 필요 없음).",
+        "**P1 memory restore 가 활성 중복 생성**: drop → 같은 제목 재생성 → restore 시 동일 제목 2건이 조용히 생겨 어느 쪽이 진짜인지 알 수 없었다. 충돌 기본 거부(restore_conflict) + --force 우회 — 복원은 되살리기지 복제가 아니다. archive 는 그대로 두어 재시도 가능.",
+        "**P1 api-skill skeleton 경로 id 충돌**: fetch 경로에만 있던 충돌 해소기가 skeleton 폴백엔 없어 URL 이 다른데 slug 가 같으면 앞 항목을 통째로 덮어썼다(alpha URL·방향 소실 실측). 동일 규칙 공유."
+      ],
+      "videoHighlights": [
+        "P1 .leerness/state.json 스키마 무효 통과",
+        "P1 memory restore 가 활성 중복 생성",
+        "P1 api-skill skeleton 경로 id 충돌"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.73",
+      "date": "2026-07-25",
+      "title": "8차 헌트 완전 종결: F12 skills-lock 정합 + F9 설계 결정",
+      "titlePlain": "8차 헌트 완전 종결",
+      "summary": "F12",
+      "highlights": [
+        "**F12**: skills-lock 은 \"요청 집합\"이 아니라 **디스크 실재**를 기록 — --skills all 후 recommended 재init 시 9개 디렉토리가 남는데 락은 5개만 주장하던 불일치를 합집합 재생성으로 해소(실측 dirs 9 = lock 9). 스킬 제거는 하지 않음(비파괴 원칙).",
+        "**F9 (설계 결정)**: 초고령 KO canonical 이 en 프로젝트에 커스텀으로 오인 이월되는 것 — **자동 차감은 하지 않는다**(구판 템플릿 라인과 사용자 노트를 확신으로 구분 불가, false-DROP 이 버그·false-PRESERVE 는 무해). 대신 한글 비중 높은 이월(≥10줄·>50%) 시 Preserved 섹션에 **검토·정리 안내**를 명시해 조용한 동결을 없앤다. 안내는 멱등(재이월 안 됨), 소수 한글 커스텀·ko 프로젝트엔 무경고.",
+        "검증: F12 재현 시나리오 실측, F9 순수함수 5프로브(안내/멱등/무손실/소수 무경고/ko 무경고), selftest 334, e2e +1."
+      ],
+      "videoHighlights": [
+        "F9 설계 결정"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.72",
+      "date": "2026-07-24",
+      "title": "성장 한계 클래스 4(task list) + F16 lint 거짓 PASS 차단 — R-0001 검수 15회전",
+      "titlePlain": "성장 한계 클래스 4 task list + F16 lint 거짓 PASS 차단",
+      "summary": "task list --json 상한",
+      "highlights": [
+        "**task list --json 상한**: 기본 최신 100행 + shown/truncated 정직 표기(total 은 필터 후 전량), --all/--limit N 옵트인. MCP leerness_task_list 계약 동반 갱신(limit/all 노출+전달). 텍스트 모드 무변경(codex: HEAD 와 바이트 동일 확인).",
+        "**F16 (8차 헌트 이연분)**: lint 가 존재하지 않는 루트/빈 루트에서 ✓ 0 js clean **거짓 PASS** — \"아무것도 검사하지 않았다\"는 명시 실패(exit 1)로 전환. 검증 도구가 무검사 통과 도장을 찍는 것은 핵심 철학 위반.",
+        "(검수 Low) README/내장 문서의 \"전체 JSON 조회\" 낡은 계약 서술 정합."
+      ],
+      "videoHighlights": [
+        "task list --json 상한",
+        "F16 8차 헌트 이연분"
+      ],
+      "category": "consistency",
+      "categoryKo": "일관성",
+      "categoryEn": "Consistency",
+      "important": false
+    },
+    {
+      "version": "1.36.71",
+      "date": "2026-07-24",
+      "title": "성장 한계 클래스 3: retro/insights --json rows 상한 + 워크스페이스 --days 기존 버그 — R-0001 검수 14회전",
+      "titlePlain": "성장 한계 클래스 3",
+      "summary": "retro/insights --json 의 data.rows 전량 임베드",
+      "highlights": [
+        "**retro/insights --json 의 data.rows 전량 임베드**(무한 성장, 72 task 에 22KB)를 기본 최신 30행으로 상한 — rowsTotal/rowsShown/rowsTruncated 정직 표기, --all/--limit N 옵트인, **집계 수치(totalTasks 등)는 전량 기준 그대로**(수치 왜곡 없음). 4개 JSON 배출 지점(단일/워크스페이스 × retro/insights) 일괄. 실측 33KB → 14KB.",
+        "(검수 High) e2e 가 init 기본 T-0001 을 몰라 하드코딩 35 로 확정 실패할 케이스 — 기준선 유도 방식 + init/add exit 단언으로 교정(--force 가 init 실패를 가리던 문제도 제거).",
+        "(검수 Medium) MCP leerness_retro 에 limit/all 노출+전달 (whats-new 1.36.69 와 동일 계약 규율). insights 는 MCP 도구 자체가 없음(현행 유지)."
+      ],
+      "videoHighlights": [
+        "retro/insights --json 의 data.rows 전량 임베드",
+        "기존 버그"
+      ],
+      "category": "consistency",
+      "categoryKo": "일관성",
+      "categoryEn": "Consistency",
+      "important": false
+    },
+    {
+      "version": "1.36.70",
+      "date": "2026-07-24",
+      "title": "성장 한계 클래스 2: migrate 보고 상한 (88KB → 13.5KB) — R-0001 검수 13회전",
+      "titlePlain": "성장 한계 클래스 2",
+      "summary": "헤드라인 최신 30 + 명령/플래그/파일 목록 40 캡",
+      "highlights": [
+        "**헤드라인 최신 30 + 명령/플래그/파일 목록 40 캡**, 각 헤더에 실제 총수 표기 + 정직한 \"… 외 N개\" 오버플로 라인 + whats-new --from X --all/--limit N 탈출구. 작은 점프에선 상한 비가시(전량 출력).",
+        "(검수 #1 Medium) **광고된 --limit N 이 텍스트 모드에서 조용히 무시되던 것 수정** — 명시적 --limit 존중 + 오버플로 라인(기본 텍스트 출력은 전체 유지, 계약 무변경). 종전엔 보고서가 권하는 명령이 602줄을 그대로 뱉었다.",
+        "(검수 #2) e2e 픽스처 --no-stale-check(빈 캐시 npm 조회 8초 지연 차단). (검수 #3) e2e 단언을 헤딩 파싱 기반 정확 일치(shown===30·행수·오버플로 수치)로 강화."
+      ],
+      "videoHighlights": [
+        "헤드라인 최신 30 + 명령/플래그/파일 목록 40 캡",
+        "광고된 --limit N 이 텍스트 모드에서 조용히 무시되던 것 수정"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.69",
+      "date": "2026-07-22",
+      "title": "성장 한계 클래스: whats-new --json 응답 상한 (804KB → 30KB) — R-0001 검수 12회전",
+      "titlePlain": "성장 한계 클래스",
+      "summary": "기본 최신 30개 버전 + 정직한 절단 표기",
+      "highlights": [
+        "**기본 최신 30개 버전 + 정직한 절단 표기**(totalVersions/shown/truncated/hint), 전체는 --all, 개수는 --limit N. 텍스트 모드 무변경. 실측 804KB → 30KB.",
+        "(검수 #1 Medium) **MCP 계약 동반 갱신**: leerness_whats_new 에 limit/all 인자 노출 + 전달 — 종전 그대로면 MCP 소비자는 30개로 조용히 잘리고 조절 수단이 없었다(실측 확인 후 수정).",
+        "(검수 #2) 무효/비양수 --limit(0/-5/abc) 는 기본값 폴백(종전 -5 → 1). (검수 #3) 절단 힌트 UI 언어 준수. (검수 #4) e2e 단언을 shown === 30 정확 일치로 + 무효 limit·비절단 hint 부재·MCP 전달 케이스 추가."
+      ],
+      "videoHighlights": [
+        "기본 최신 30개 버전 + 정직한 절단 표기",
+        "MCP 계약 동반 갱신",
+        "후속 계측 검수 제공"
+      ],
+      "category": "consistency",
+      "categoryKo": "일관성",
+      "categoryEn": "Consistency",
+      "important": false
+    },
+    {
+      "version": "1.36.68",
+      "date": "2026-07-22",
+      "title": "F14 재구현: 마감 보고의 미승인 미리보기 (8차 헌트 이연분 종결) — R-0001 검수 11회전",
+      "titlePlain": "F14 재구현",
+      "summary": "이연 원인(규명)",
+      "highlights": [
+        "**이연 원인(규명)**: 이전 삽입 지점이 try/finally 밖 **jsonMode 전용 후처리 구간**이라 텍스트 경로가 도달조차 못 했다(추정 아님 — 코드 구조 확인). 텍스트 렌더 구간으로 이동해 양 모드 동일 데이터 출력.",
+        "**session close 가 승인 대기 미리보기를 보고**: 텍스트 블록(최대 5줄) + pendingPreviews {count, items[≤10]} JSON 필드. proposed/revision-requested 는 대기, approved 는 제외. 손상 previews.json 은 count 0 으로 안전 강등(마감 중단 없음 — 검수 확인).",
+        "(검수 Medium) **--no-suggest/LEERNESS_NO_SUGGEST=1 에서도 노출**: suggest 블록 안에 있어 승인 대기 상태가 사라지던 것 — 공용 구간으로 이동 + e2e 회귀 가드."
+      ],
+      "videoHighlights": [
+        "이연 원인 규명",
+        "session close 가 승인 대기 미리보기를 보고"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.67",
+      "date": "2026-07-22",
+      "title": "tech 갱신 시 그래프 동반 정합 (8차 헌트 F15)",
+      "titlePlain": "tech 갱신 시 그래프 동반 정합 8차 헌트 F15",
+      "summary": "F15",
+      "highlights": [
+        "**F15**: leerness tech 가 프로필 변경을 감지하면 이미 존재하는 leerness.html 의 🛠 탭도 함께 갱신 — 종전엔 프로필만 최신이고 그래프는 옛 서비스를 계속 보여줬다(다음 handoff 전까지 불일치). 그래프 산출물이 없는 프로젝트는 무동작(생성 강제 안 함).",
+        "**정직 이연 — F14(마감 보고의 미승인 미리보기)**: JSON 필드는 정상 동작했으나 텍스트 경로에서 출력 위치/스트림 상태가 맞지 않아 **반쪽 상태로 출하하지 않고 되돌림**. handoff 헤드라인 노출은 기존대로 유지되므로 기능 손실 없음. 다음 라운드에서 close 렌더 파이프라인 정비와 함께 재구현.",
+        "검증: 변경→그래프 동기화/무-그래프 프로젝트 무동작 실측, selftest 334."
+      ],
+      "videoHighlights": [
+        "정직 이연 F14 마감 보고의 미승인 미리보기"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.66",
+      "date": "2026-07-22",
+      "title": "codex 8차 홀리스틱 헌트: 기능 간 상호작용 11건 수정 (High 1·Med 8·Low 2)",
+      "titlePlain": "codex 8차 홀리스틱 헌트",
+      "summary": "F13 (write-skip × 손상바이트)",
+      "highlights": [
+        "**F13 (write-skip × 손상바이트)**: writeUtf8 동일-내용 비교를 디코딩 텍스트→**바이트 동일**로 — 손상 바이트(FF)/BOM 파일에 유효 UTF-8 정화 write 가 억제되던 것.",
+        "**F5 High (auto-update install × managed)**: /update.md 를 raw writeUtf8 로 덮어써 커스텀 파괴 → writeIfSafe mergeManaged 경로로.",
+        "**F6 (update --force 미전달)** → install 에 force 전달. **F4 (drift --json critical exit 0)** → exit 1 동치."
+      ],
+      "videoHighlights": [
+        "F13 write-skip 손상바이트",
+        "F5 High auto-update install managed",
+        "F6 update --force 미전달"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.65",
+      "date": "2026-07-22",
+      "title": "no-op 재설치 + 동일-내용 쓰기 스킵 (외부감사 F-08) — R-0001 검수 10회전",
+      "titlePlain": "no-op 재설치 + 동일-내용 쓰기 스킵",
+      "summary": "no-op 재설치",
+      "highlights": [
+        "**no-op 재설치**: coreFiles 계산 결과가 현재와 전부 동일하면(휘발 시각키·아카이브 경로 정규화 비교) 백업 생성·파일쓰기·마이그레이션 리포트 생략. force/dry/언어 전환/버전 차이/커스텀 변경은 정상 설치. LEERNESS_DEBUG_NOOP=1 진단.",
+        "**(검수 HIGH) no-op ≠ 조기 종료**: 하위 조정기(.env/.gitignore/훅/스킬 payload/roadmap)는 항상 계속 — 조기 return 은 --no-env→기본 재init 등 6케이스에서 요청된 복구를 건너뛰었다(검수 실측). 무변경 churn 은 **writeUtf8 동일-내용 스킵**이 전역 해소.",
+        "**(파생 선재버그) _mergeLines substring 흡수**: '.env' 가 '.env.local' 에 포함돼 gitignore 복구가 영영 안 되던 것 — 라인 단위 정확 매칭으로 수정."
+      ],
+      "videoHighlights": [
+        "no-op 재설치",
+        "검수 HIGH no-op 조기 종료",
+        "파생 선재버그 mergeLines substring 흡수"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.64",
+      "date": "2026-07-22",
+      "title": "lint 게이트 (외부감사 F-10) — R-0001 검수 9회전",
+      "titlePlain": "lint 게이트",
+      "summary": "`scripts/lint.js` + `npm run lint`",
+      "highlights": [
+        "**scripts/lint.js + npm run lint**: 배포 js 전수 node --check 구문 · U+2028/U+2029 감지 · BOM · JSON 유효성 (~3초). npm test/test:fast/(검수 #1)test:core 전 티어 선두 배선.",
+        "구현 중 자기참조 트랩 재발(6번째)을 자체 검출로 확인 — 검사 문자를 \\u 이스케이프 표기로.",
+        "(검수 #2) selftest 를 4축 전부 행위 검증으로(구문/U+2028/BOM/JSON 각각 검출 + 클린 통과 + 전 티어 배선). (검수 #3) 스폰 실패를 구문오류와 구분 + SyntaxError 본문 라인 우선 표시."
+      ],
+      "videoHighlights": [
+        "scripts/lint.js + npm run lint"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.63",
+      "date": "2026-07-22",
+      "title": "F-05 시리즈 완결: README 섹션·헤더·런타임 기본값 en (5회차) — R-0001 검수 8회전",
+      "titlePlain": "F-05 시리즈 완결",
+      "summary": "en init 한글 잔존 53/61 → 6/61",
+      "highlights": [
+        "**README 관리 섹션 en**(정체성/5계층/명령/CRUD/MCP/빠른시작/planning + 검수 #3 보강: list 예시·release/autonomous 절 + --next-action→--next 오기 정정 — KO 블록도 동일 오기였음). syncReadme 가 프로젝트 언어 감지.",
+        "**rules/progress 헤더 en**: 파서(readRules/readProgressRows)가 라인앵커+위치 기반임을 확인 후 frontmatter/라벨만 en. rule add 시 en 헤더 유지(writeRules 언어 해석), (검수 #1) 손상 헤더 복구도 프로젝트 언어로.",
+        "**런타임 기본값 언어 인지**: 시드 task·task/plan add 기본 nextAction(write the next action)·(검수 #2) plan Done-When (unset)·task/plan drop 사유 — lazy detect 가 en 기본값도 trivial 로 인식(감지 동수 유지)."
+      ],
+      "videoHighlights": [
+        "README 관리 섹션 en",
+        "rules/progress 헤더 en",
+        "런타임 기본값 언어 인지"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.62",
       "date": "2026-07-21",

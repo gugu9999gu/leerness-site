@@ -1,6 +1,6 @@
 # leerness
 
-> leerness is an operating layer for AI coding agents (Claude Code, Cursor, Codex, Copilot, Goose, and others). It persists project memory, handoff, verification, audit, and security guards into plain files under `.harness/`, and exposes them via a CLI and 86 MCP tools. leerness itself never authors application code — by default it calls no LLMs and executes nothing; opt-in orchestration can invoke configured agents, and verification can run your project tests. It makes the work of any coding agent trustworthy: remembered, verified, and handed over cleanly.
+> leerness is an operating layer for AI coding agents (Claude Code, Cursor, Codex, Copilot, Goose, and others). It persists project memory, handoff, verification, audit, and security guards into plain files under `.harness/`, and exposes them via a CLI and 88 MCP tools. leerness itself never authors application code — by default it calls no LLMs and executes nothing; opt-in orchestration can invoke configured agents, and verification can run your project tests. It makes the work of any coding agent trustworthy: remembered, verified, and handed over cleanly.
 
 Key facts:
 - Install: `npm i -g leerness` (Node.js >= 18, zero runtime dependencies, no install scripts, offline-first)
@@ -10,7 +10,7 @@ Key facts:
 - False-completion defense: `leerness verify-claim <T-ID>` cross-checks "done" claims against real files, test runs, and git; `leerness lazy detect` flags evidence-less completions.
 - Safety guards: `leerness scan secrets`, `leerness encoding check`, `leerness gate` (CI-friendly combined gate), git pre-commit enforcement (`leerness enforce install`).
 - Memory surfaces (plain markdown/JSON in `.harness/`): tasks, decisions, lessons, plan, rules — all with CRUD CLI + MCP tools and archive/restore.
-- Agent interop: MCP server (`leerness mcp serve`, 86 tools; `--profile core` = 20 essential tools), adapters for Claude/Cursor/Codex/Copilot instruction files, `.leerness/` JSON state substrate for agent-to-agent handoff.
+- Agent interop: MCP server (`leerness mcp serve`, 88 tools; `--profile core` = 20 essential tools), adapters for Claude/Cursor/Codex/Copilot instruction files, `.leerness/` JSON state substrate for agent-to-agent handoff.
 - Ontology graph: `leerness graph --html` renders tasks/decisions/lessons/features plus a tech profile (detected languages & connected services) as a local HTML graph.
 
 ## Docs
