@@ -1,0 +1,44 @@
+// /llms.txt — 답변엔진용 요약. **생성 라우트**다(이전: public/llms.txt 정적 파일).
+//   정적으로 두니 "88 MCP tools" 가 배포본 89 와 어긋난 채 공개돼 있었다. 수치는 measured 에서만 온다.
+import facts from '../../data/facts.json';
+
+const F: Record<string, any> = (facts as any).measured || {};
+// 못 잰 수치는 문장에서 통째로 뺀다 — 낡은 숫자보다 없는 편이 정직하다.
+const mcpPhrase = F.mcpTools ? ` and ${F.mcpTools} MCP tools` : '';
+const depsPhrase = F.runtimeDeps === 0 ? 'zero runtime dependencies, ' : '';
+const mcpLine = F.mcpTools
+  ? `- Agent interop: MCP server (\`leerness mcp serve\`, ${F.mcpTools} tools${F.mcpCoreTools ? `; \`--profile core\` = ${F.mcpCoreTools} essential tools` : ''}), adapters for Claude/Cursor/Codex/Copilot instruction files, \`.leerness/\` JSON state substrate for agent-to-agent handoff.`
+  : `- Agent interop: MCP server (\`leerness mcp serve\`), adapters for Claude/Cursor/Codex/Copilot instruction files, \`.leerness/\` JSON state substrate for agent-to-agent handoff.`;
+
+const body = `# leerness
+
+> leerness is an operating layer for AI coding agents (Claude Code, Cursor, Codex, Copilot, Goose, and others). It persists project memory, handoff, verification, audit, and security guards into plain files under \`.harness/\`, and exposes them via a CLI${mcpPhrase}. leerness itself never authors application code — by default it calls no LLMs and executes nothing; opt-in orchestration can invoke configured agents, and verification can run your project tests. It makes the work of any coding agent trustworthy: remembered, verified, and handed over cleanly.
+
+Key facts:
+- Install: \`npm i -g leerness\` (Node.js >= 18, ${depsPhrase}no install scripts, offline-first)${F.version ? `\n- Current version: ${F.version}` : ''}
+- License: MIT · Package: https://www.npmjs.com/package/leerness · Source: https://github.com/gugu9999gu/leerness
+- What it is NOT: not a coding agent and not an LLM wrapper. It is the reliability/operations layer that sits on top of coding agents.
+- Core loop: \`leerness handoff .\` (load context at session start) → work with your agent → \`leerness session close .\` (9-category close report + handoff for the next agent).
+- False-completion defense: \`leerness verify-claim <T-ID>\` cross-checks "done" claims against real files, test runs, and git; \`leerness lazy detect\` flags evidence-less completions. \`leerness referee\` proves a verifier actually detects failures before its green is trusted.
+- Safety guards: \`leerness scan secrets\`, \`leerness encoding check\`, \`leerness gate\` (CI-friendly combined gate), git pre-commit enforcement (\`leerness enforce install\`).
+- Memory surfaces (plain markdown/JSON in \`.harness/\`): tasks, decisions, lessons, plan, rules — all with CRUD CLI + MCP tools and archive/restore.
+${mcpLine}
+- Ontology graph: \`leerness graph --html\` renders tasks/decisions/lessons/features plus a tech profile (detected languages & connected services) as a local HTML graph.
+
+## Docs
+
+- [How it works](https://leerness.com/how-it-works): what leerness does for you, feature by feature
+- [Changelog](https://leerness.com/changelog): every release, grouped by date, auto-synced from CHANGELOG
+- [README (English)](https://github.com/gugu9999gu/leerness#readme): full command reference and positioning
+- [Interoperability](https://github.com/gugu9999gu/leerness/blob/main/docs/interoperability.md): MCP/ACP protocol stance
+
+## FAQ (short answers)
+
+- What is leerness? — An operating layer that makes AI coding agents reliable: it remembers work across sessions, verifies completion claims with evidence, and hands work over between agents.
+- Does it write code? — No. It never authors application code; by default it calls no LLMs and runs nothing (opt-in features can invoke configured agents or run your tests). Your agent codes; leerness keeps the agent honest and the state persistent.
+- How do I start? — \`npm i -g leerness\`, then \`leerness init .\` in your project, then \`leerness handoff .\` at every session start.
+- Which agents does it work with? — Any agent that can run a CLI or speak MCP: Claude Code, Cursor, Codex CLI, GitHub Copilot, Goose, and others.
+- Is my data sent anywhere? — No. Everything is local plain files; the tool is offline-first${F.runtimeDeps === 0 ? ' with zero runtime dependencies' : ''}.
+`;
+
+export const GET = () => new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });

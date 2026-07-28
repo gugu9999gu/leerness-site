@@ -1,6 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import data from '../../data/releases.json';
+import facts from '../../data/facts.json';
+
+// 수치는 하드코딩하지 않는다 — pipeline/derive-facts.cjs 가 배포 패키지에서 **측정**한 값만 쓴다.
+//   (이전: stat 은 88, 같은 파일 FAQ 는 86, 실제 배포본은 89 — 손으로 맞추는 수치는 반드시 낡는다)
+//   측정 실패 시 값이 없으므로, 그 통계/문장은 통째로 빼서 낡은 숫자 대신 공백을 보여준다.
+const F = facts.measured || {};
 
 const releases = data.releases || [];
 const latest = releases[0] || {};
@@ -16,7 +22,7 @@ const faq = [
   { q: 'leerness가 코드를 대신 써주나요?', a: '아니요. 애플리케이션 코드는 에이전트가 쓰고, leerness는 그 작업이 기억되고 검증되고 안전하게 인계되도록 챙깁니다. 기본 동작은 LLM 호출·코드 실행이 없으며, 옵트인 기능(에이전트 오케스트레이션, verify-claim --run-tests의 프로젝트 테스트 실행)을 켠 경우에만 설정한 도구를 호출합니다.' },
   { q: '어떻게 시작하나요?', a: 'npm i -g leerness 로 설치하고, 프로젝트에서 leerness init . 을 실행한 뒤, 매 세션 시작 시 leerness handoff . 로 컨텍스트를 로드하면 됩니다. Node.js 18 이상이면 되고 런타임 의존성은 0개입니다.' },
   { q: 'AI가 "다 했어요"라고 거짓말하면요?', a: 'leerness verify-claim 이 완료 주장을 실제 파일 존재·테스트 실행 결과·git 변경과 대조해서 증거 없는 완료를 차단합니다. leerness lazy detect 는 증거 없는 done, 빈 인수인계, 테스트 미실행 신호를 자동 감지합니다.' },
-  { q: '어떤 에이전트와 함께 쓸 수 있나요?', a: 'CLI를 실행하거나 MCP를 쓸 수 있는 모든 에이전트와 호환됩니다 — Claude Code, Cursor, Codex CLI, GitHub Copilot, Goose 등. MCP 서버(leerness mcp serve)가 86개 도구를 노출합니다.' },
+  { q: '어떤 에이전트와 함께 쓸 수 있나요?', a: `CLI를 실행하거나 MCP를 쓸 수 있는 모든 에이전트와 호환됩니다 — Claude Code, Cursor, Codex CLI, GitHub Copilot, Goose 등.${F.mcpTools ? ` MCP 서버(leerness mcp serve)가 ${F.mcpTools}개 도구를 노출합니다.` : ''}` },
   { q: '내 데이터가 외부로 전송되나요?', a: '아니요. 모든 상태는 로컬 일반 파일(.harness/)에 저장되고, 도구 자체가 offline-first에 런타임 의존성 0개, 설치 스크립트 0개입니다.' },
 ];
 const faqJsonld = {
@@ -28,7 +34,7 @@ const faqJsonld = {
 <Base title="leerness — AI 코딩 에이전트를 위한 운영 레이어" jsonld={faqJsonld}>
   <section class="hero">
     <h1>AI 코딩 에이전트를 위한<br /><span class="grad">운영 레이어 (operating layer)</span></h1>
-    <p class="tag">기억 · 인수인계 · 검증 · 감사 · 보안 가드를 <code>.harness/</code> 에 영속화 — 코드를 대신 쓰지 않고, 어떤 에이전트 위에도 얹는 공통 운영 계층. 0 의존성 · offline-first · MCP 88 도구 · 온톨로지 그래프.</p>
+    <p class="tag">기억 · 인수인계 · 검증 · 감사 · 보안 가드를 <code>.harness/</code> 에 영속화 — 코드를 대신 쓰지 않고, 어떤 에이전트 위에도 얹는 공통 운영 계층. {F.runtimeDeps === 0 ? '0 의존성 · ' : ''}offline-first{F.mcpTools ? ` · MCP ${F.mcpTools} 도구` : ''} · 온톨로지 그래프.</p>
     <div class="install"><span class="pfx">$ </span>npm i -g leerness</div>
     <div class="cta">
       <a class="btn primary" href="/how-it-works">leerness가 해주는 일 →</a>
@@ -38,8 +44,8 @@ const faqJsonld = {
     <div class="stats">
       <div class="stat"><div class="n">v{latest.version || '—'}</div><div class="l">최신 버전</div></div>
       <div class="stat"><div class="n">{total}</div><div class="l">릴리스</div></div>
-      <div class="stat"><div class="n">0</div><div class="l">의존성</div></div>
-      <div class="stat"><div class="n">88</div><div class="l">MCP 도구</div></div>
+      {F.runtimeDeps != null && <div class="stat"><div class="n">{F.runtimeDeps}</div><div class="l">의존성</div></div>}
+      {F.mcpTools != null && <div class="stat"><div class="n">{F.mcpTools}</div><div class="l">MCP 도구</div></div>}
     </div>
   </section>
 

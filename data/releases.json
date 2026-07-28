@@ -1,7 +1,91 @@
 {
   "generated": "2026-07-28",
-  "count": 645,
+  "count": 649,
   "releases": [
+    {
+      "version": "1.36.81",
+      "date": "2026-07-28",
+      "title": "게시본 클린룸 실측이 잡은 2건 (referee 상태 신호 정확화 · 출하 소스 생 NUL 제거)",
+      "titlePlain": "게시본 클린룸 실측이 잡은 2건 referee 상태 신호 정확화 · 출하 소스 생 NUL 제거",
+      "summary": "게시된 tarball 로",
+      "highlights": [
+        "**referee 상태 신호가 부정확했다** — isStale() 이 \"캘리브레이션이 아예 없음\"까지 stale 로 묶어, **한 번도 검증한 적 없는** 검증기가 verify-claim 게이트에서 referee_stale 로 보고됐다. 두 상태는 사용자가 취할 조치가 다르다(캘리브레이션 실행 vs 재검증). 정직한 신호가 존재 이유인 기능에서 신호 자체가 틀린 셈이라 고쳤다: stale 은 **\"한때 증명됐으나 정의가 바뀌어 무효\"** 만을 뜻하고, 미증명은 referee_uncalibrated, 캘리브레이션 실패도 referee_uncalibrated(사유 포함). fail-closed 동작은 이전과 동일 — 어느 상태든 통과시키지 않는다. e2e 가 미존재/미증명/무효/검증기실패 **4구분**을 고정한다.",
+        "**출하 소스에 생 NUL 바이트** — 지문·ID 구분자를 소스에 raw NUL 로 써서 git/grep 이 bin/leerness.js 와 lib/referee.js 를 **바이너리로 취급**했다(diff 가 Bin 16408 -> 17121 bytes 로만 표시, 코드 검색 차단). 더 위험한 쪽은 정규화 도구가 이 바이트를 조용히 지우면 해시 입력이 바뀌어 **기존 프로젝트의 캘리브레이션 지문과 api-skill ID 가 한꺼번에 어긋난다**는 점이다. 런타임 값이 동일한 유니코드 이스케이프 표기로 치환(기존 지문/ID 불변 — 실측 확인) + selftest 메타가드로 bin/lib 전수 0 을 상시 강제.",
+        "**High — fail-closed 기능의 fail-open**: calibration.ok 가 \"false\"(truthy 문자열)나 1 로 손상/조작되면 !r.calibration.ok 가 false 가 되어 **미증명 검증기가 게이트를 그대로 통과**했고 referee show 는 calibrated: true 로 표시했다. 이 기능의 전제 자체를 뚫는 구멍이다. _entryValid 가 ok(boolean)·fingerprint(비어있지 않은 문자열)를 형상 검증해 거부하고(스토어 전체 fail-closed — previews/teams 와 동일 규율), 판정 지점도 === true 엄격 비교로 이중 방어. 형상 무효는 \"없음\" 대신 referee_store_invalid 로 정확히 보고한다."
+      ],
+      "videoHighlights": [
+        "referee 상태 신호가 부정확했다",
+        "출하 소스에 생 NUL 바이트",
+        "High fail-closed 기능의 fail-open"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.80",
+      "date": "2026-07-28",
+      "title": "referee 캘리브레이션 · 라이브 미리보기 · 기본 스킬 정리 · 최소성 사다리 — MCP 89 도구 · R-0001 검수 22회전",
+      "titlePlain": "referee 캘리브레이션 · 라이브 미리보기 · 기본 스킬 정리 · 최소성 사다리",
+      "summary": "이 릴리스에 함께 들어간 것",
+      "highlights": [
+        "**라이브 미리보기(사용자 요청)**: preview serve <P-ID> 가 임시 워크스페이스 + **0-deps 로컬 서버**로 시안을 띄우고 승인/수정 시 정리(project 모드 배치본 포함). **시그니처 포트 5337**(키패드 \"LEER\", ollama:11434 방식) + 점유 시 순차 회피 → OS 빈 포트. preview mode self|project — A 기본·B 옵트인, 미설정 시 사용자에게 질문하되 흐름은 막지 않음. leerness 는 사용자의 dev 서버를 임의 실행하지 않는다.",
+        "**기본 제공 스킬 정리(사용자 지시)**: 도메인 7종(commerce-api/office/crawling/firebase/ads-analytics/appstore-review/ai-verified-skill-publisher) 내장 제거 — **설명 4줄짜리 메타데이터**인데 verification:'passed' 를 근거 없이 주장했고 특정 사용자 도메인이라 전역 기본값으로 부적절했다. 남은 2종의 verification 은 **'unverified'** 로 정직화(selftest 가 'passed' 주장 금지를 영구 단언). **기존 설치분은 파일·락 모두 보존**(비파괴) · 제거된 id 명시 요청 시 조용히 무시하지 않고 고지.",
+        "**review-request --ladder (P-0003, codex 공동판단 ADOPT)**: 순서 있는 최소성 결정 영수증(필요한가→기존코드→stdlib→네이티브→설치된 의존성→조합→최소구현). 옵트인·자문 전용이라 proceed 무영향, 근거 없으면 unknown, \"줄이면 안 되는 것\"(검증·보안·접근성·에러처리·데이터손실) 명시. **기각**: 룰 거버넌스/campaign 스냅샷(P-0002 — campaign 개념 부재, 제안/승인 분리는 이미 기본 모델, 모순탐지는 false-BLOCK 위험)."
+      ],
+      "videoHighlights": [
+        "라이브 미리보기 사용자 요청",
+        "기본 제공 스킬 정리 사용자 지시",
+        "review-request --ladder"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.79",
+      "date": "2026-07-28",
+      "title": "실 프로젝트 60개 도그푸딩: P1 5건 (합성 헌트 10회가 못 본 결함)",
+      "titlePlain": "실 프로젝트 60개 도그푸딩",
+      "summary": "실제 프로젝트 60개",
+      "highlights": [
+        "**P1 progress-tracker 행 무단 삭제 (실 데이터 손실)**: ID 접두를 T|M|D 로만 인정해 R-/UR- 등 다른 접두 행이 파싱에서 탈락 → 재작성 시 **사용자 이력이 조용히 삭제**됐다(실측: auto-Trading 9행 → 1행, 942B, exit 0 무경고). migrate 만이 아니라 task add 등 모든 쓰기 경로 공통. 접두 일반화 + **클래스 가드**(디스크 행 수 > 쓰려는 행 수면 쓰기 중단) — 규칙 하나가 아니라 불변식으로 차단.",
+        "**P1 handoff --json 이 사람용 drift 배너로 오염**: stale 프로젝트에서만 발화해(실 프로젝트 27/37 해당) JSON.parse 가 실패, MCP/AI 소비자가 전부 깨졌다 → --json 이면 배너 억제(텍스트 모드는 유지).",
+        "**P1 parent detect <path> 가 positional 경로 무시**: cwd 를 분석해 자신만만한 오답을 exit 0 으로 반환(positional path 잔존 클래스의 미소진 지점)."
+      ],
+      "videoHighlights": [
+        "P1 progress-tracker 행 무단 삭제 실 데이터 손실",
+        "P1 handoff --json 이 사람용 drift 배너로 오염",
+        "P1 tech 언어 오판"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.78",
+      "date": "2026-07-28",
+      "title": "codex 10차 홀리스틱 헌트: 오케스트레이션/분석 명령군 7건 수정 (병렬 적대검증 8건 중 7 CONFIRMED·1 REFUTED)",
+      "titlePlain": "codex 10차 홀리스틱 헌트",
+      "summary": "F1 team 스토어 형상 무효 → 데이터 손실",
+      "highlights": [
+        "**F1 team 스토어 형상 무효 → 데이터 손실**: 객체 루트({teams:[...]})/문자열 members 를 조용히 []로 coerce → list 는 0건(무경고), 이어지는 add 가 원본을 통째로 덮었다. previews/state 규율 적용 — 로더가 invalid 반환, 변경 거부(원본 보존), 유효 항목 members/personas 배열 정규화(string→[] 크래시 제거).",
+        "**F2 constraints 무효/중복 저장**: --constraint 가 kind:detail 형식 위반(콜론 없음/빈 kind/빈 detail)이면 조용히 버려지고 exit 0 + 빈 플랫폼을 쓰던 거짓 성공 → 저장 없이 거부. 동일 {kind,detail} 중복 누적 방지(멱등).",
+        "**F3 손상 constraints 읽기가 기본값을 권위처럼 노출**: list/check 가 손상 store 를 조용히 defaults 로 폴백 → corruptStore 표기 + 경고(커스텀 제약 미반영 명시). add 는 이미 fail-closed."
+      ],
+      "videoHighlights": [
+        "F1 team 스토어 형상 무효 데이터 손실",
+        "F2 constraints 무효/중복 저장",
+        "F3 손상 constraints 읽기가 기본값을 권위처럼 노출"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.77",
       "date": "2026-07-25",
