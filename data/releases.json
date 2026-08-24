@@ -1,7 +1,597 @@
 {
-  "generated": "2026-07-28",
-  "count": 649,
+  "generated": "2026-08-24",
+  "count": 681,
   "releases": [
+    {
+      "version": "1.36.160",
+      "date": "2026-08-25",
+      "title": "2026-08-25",
+      "titlePlain": "2026-08-25",
+      "summary": "",
+      "highlights": [
+        "CI 전체 E2E를 Linux/Windows에서 결정화하고, 다중 AI 세션 presence와 상태 쓰기 락을 고유 토큰 owner·heartbeat 가시성·기본 fail-closed로 강화했습니다. fencing 없는 PID/host/mtime 판정으로 기존 owner를 자동 탈취하지 않습니다.",
+        "잠금 프로토콜 전환 뒤에는 실행 중인 1.36.159 이하 에이전트 세션을 모두 재시작해야 합니다. 비정상 종료로 남은 owner/구버전 .lock은 자동 삭제하지 않으므로 소유자를 확인한 뒤 수동 복구해야 합니다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.159",
+      "date": "2026-08-24",
+      "title": "2026-08-24",
+      "titlePlain": "2026-08-24",
+      "summary": "",
+      "highlights": [
+        "CI 영어 로케일 회귀 수정: selftest의 알 수 없는 플래그 검증을 ko/en 공용 계약으로 통일"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.158",
+      "date": "2026-08-24",
+      "title": "2026-08-24",
+      "titlePlain": "2026-08-24",
+      "summary": "",
+      "highlights": [
+        "최종 외부 리뷰 수렴: enforce 설치 probe를 예약 난수 세션으로 격리하고 marker 락을 공유하며, 실제 handoff 동시 경합을 행동 테스트로 고정"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.157",
+      "date": "2026-08-24",
+      "title": "2026-08-24",
+      "titlePlain": "2026-08-24",
+      "summary": "",
+      "highlights": [
+        "최종 외부 리뷰 수렴: 주소 있는 세션의 legacy handoff 우회를 차단하고 anonymous 예약키·case/child/길이경계·probe 복원·부분쓰기 rollback·CI handoff gate를 행동 테스트로 고정"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.156",
+      "date": "2026-08-24",
+      "title": "2026-08-24",
+      "titlePlain": "2026-08-24",
+      "summary": "",
+      "highlights": [
+        "외부 Codex 재검수: Git hook 세션키 파생을 CLI와 일치시키고 synthetic install probe를 전용 handoff marker로 격리했으며, release bump를 preflight+rollback transaction으로 전환"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.155",
+      "date": "2026-08-24",
+      "title": "2026-08-24",
+      "titlePlain": "2026-08-24",
+      "summary": "",
+      "highlights": [
+        "enforce freshness를 handoff 전용 ignored marker로 분리해 주소 없는 세션도 정상 커밋하고 session close만으로 gate를 우회할 수 없도록 수정"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.154",
+      "date": "2026-08-24",
+      "title": "2026-08-24",
+      "titlePlain": "2026-08-24",
+      "summary": "",
+      "highlights": [
+        "T-0136: concurrent-safe handoff — default tracked-write 0, per-session freshness history, version-skew warning, Cursor sessionStart address bridge, and parallel/dry-run/enforce regression coverage"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.153",
+      "date": "2026-08-23",
+      "title": "2026-08-23",
+      "titlePlain": "2026-08-23",
+      "summary": "",
+      "highlights": [
+        "T-0122: release bump --patch를 정상 인식하고 leerness 자체 package/bin/README 버전 표면을 함께 동기화"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.152",
+      "date": "2026-08-23",
+      "title": "2026-08-23",
+      "titlePlain": "2026-08-23",
+      "summary": "",
+      "highlights": [
+        "T-0115: credentials·team remove·memory restore/plan RMW를 공유 락 트랜잭션으로 보강하고 지연 경쟁 회귀 6쌍을 추가"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.151",
+      "date": "2026-08-23",
+      "title": "2026-08-23",
+      "titlePlain": "2026-08-23",
+      "summary": "",
+      "highlights": [
+        "enforce worktree 공유 판정: 아직 없는 pre-commit의 조상 junction/symlink를 실제 위치로 해석해 형제 worktree 차단 사실을 설치 전부터 정확히 고지한다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.150",
+      "date": "2026-08-23",
+      "title": "2026-08-23",
+      "titlePlain": "2026-08-23",
+      "summary": "",
+      "highlights": [
+        "GIT_CONFIG_NOSYSTEM 보존: 설치기와 같은 셸의 git commit이 같은 hooksPath를 보도록 해 enforce 우회를 차단하고 실제 커밋 회귀 검사를 추가했다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.149",
+      "date": "2026-08-23",
+      "title": "2026-08-23",
+      "titlePlain": "2026-08-23",
+      "summary": "",
+      "highlights": [
+        "state run-id 경로 탈출 차단: legacy currentRunId와 run record run_id를 fail-closed 검증하고 두 입력 경로의 회귀 e2e를 추가했다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.102",
+      "date": "2026-08-05",
+      "title": "모르는 것을 안다고 말하지 않는다 · 준 경로에 적용한다",
+      "titlePlain": "모르는 것을 안다고 말하지 않는다 · 준 경로에 적용한다",
+      "summary": "재현부터 하고",
+      "highlights": [],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.101",
+      "date": "2026-08-05",
+      "title": "명령 표면 전수 감사: 경로 탈출로 남의 파일이 지워지고 있었다",
+      "titlePlain": "명령 표면 전수 감사",
+      "summary": "1,488회",
+      "highlights": [
+        "디스패처 126개 중 **46개가 leerness commands 에 없었다.** 그중 **library 는 --help 에도 없었다** — 1.36.98 에서 내가 디스패처에만 붙이고 두 표면에 등재하지 않았다. gate·toggle 도 같았다. 셋 다 등재하고, 핵심 명령의 등재를 selftest 가 실제 출력으로 확인한다.",
+        "readme·contract·self·reuse·consistency·mcp·hook·llm-bench·auto-update·ui 를 하위명령 없이 부르면 **\"알 수 없는 명령\"** 이라고 답했다. readme 는 알 수 없는 명령이 아니라 readme sync 가 필요한 명령이다 — 사용자를 오타 찾기로 보내는 거짓 안내였다. 안내 메커니즘은 이미 있었고 **데이터가 4개뿐**이었다.",
+        "그 두 맵(ko/en)을 모듈 스코프로 올려 **키 집합이 같은지 데이터로 단언**한다. 실행으로만 검사하면 --language en 이 프로젝트 밖에서 전환되지 않아 en 맵이 무방비로 남는다(변이에서 en 항목을 지워도 통과했다 — 1.36.89·1.36.97 에 이은 3회차)."
+      ],
+      "videoHighlights": [
+        "46개가 leerness commands 에 없었다.",
+        "알 수 없는 명령",
+        "키 집합이 같은지 데이터로 단언"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.100",
+      "date": "2026-08-05",
+      "title": "승인된 시안을 계약으로 고정하고, 구현이 지켰는지 기계로 대조한다 (P-0012 후반)",
+      "titlePlain": "승인된 시안을 계약으로 고정하고 구현이 지켰는지 기계로 대조한다",
+      "summary": "\"시안을 계약으로 고정 + 구현 후 자동 대조\"",
+      "highlights": [
+        "시안에 <!-- leerness:draw-start --> / draw-end 마커를 넣었다. AI 는 그 **사이만** 그리고, 승인 시 그 구간의 클래스·var(--토큰)·요소가 계약으로 고정된다(스캐폴드 자신의 장식은 계약에서 제외).",
+        "leerness preview verify <P-ID> --files a,b — 구현 파일에서 계약된 클래스·토큰이 나타나는지 대조하고 **누락 목록과 존재율**을 낸다. 실측: 계약을 무시한 구현 8% · 계약대로 구현 100%.",
+        "아직 안 그린 시안을 승인하면 *\"계약이 비어 대조가 무의미합니다\"* 라고 말한다 — 빈 계약을 조용히 만들지 않는다."
+      ],
+      "videoHighlights": [
+        "누락 목록과 존재율"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.99",
+      "date": "2026-08-05",
+      "title": "시안을 빈 종이가 아니라 이 앱의 재료로 시작시킨다 (P-0012)",
+      "titlePlain": "시안을 빈 종이가 아니라 이 앱의 재료로 시작시킨다",
+      "summary": "AI 의 상상에 100% 의존하니 정확할 수가 없었다.",
+      "highlights": [
+        "**실제 CSS 변수를 :root 에 심는다** — 시안이 앱과 같은 색·간격으로 그려진다. var(--brand-500) 이 진짜 값을 갖는다.",
+        "**이미 있는 컴포넌트를 어휘로 준다** — \"같은 걸 또 만들지 마세요\" 와 함께 파일 경로까지. 새로 만들기 전에 조립하게 한다.",
+        "**--target <파일> 로 대상 화면을 지정하면** 그 화면이 실제로 쓰는 클래스와 요소를 싣는다. 소스에서 읽은 것이지 렌더 결과가 아니라는 한계도 시안에 함께 적는다(파서 없이 0-의존성으로 할 수 있는 정직한 상한이다). 루트 밖 경로는 읽지 않는다."
+      ],
+      "videoHighlights": [
+        "실제 CSS 변수를 root 에 심는다",
+        "이미 있는 컴포넌트를 어휘로 준다",
+        "target 파일 로 대상 화면을 지정하면"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.98",
+      "date": "2026-08-04",
+      "title": "session close 가 사용자 문서를 지우고 있었다 + 재사용 인벤토리 (P-0013)",
+      "titlePlain": "session close 가 사용자 문서를 지우고 있었다 + 재사용 인벤토리",
+      "summary": "\"또\"",
+      "highlights": [
+        "**순진한 추출은 2~3배 부풀린다.** 대문자 export 를 세면 auto-influencer 83 · view-work 116 · **플레인 HTML 프로젝트 62** 인데, 그 62개는 전부 가짜다. 없는 것을 있다고 말하는 인벤토리는 없느니만 못하다 → 선언 근처에 **실제 마크업**이 있는 것만 싣는다(같은 프로젝트 39 · 46 · **1**).",
+        "**창을 고정 문자 수로 자르면 안 된다.** 실측한 선언→마크업 거리는 p50 684 · p90 3,248 · p99 20,639 자라 1,500 자 창은 69% 만 포착했고, 키우면 \"파일에 JSX 있으면 전부\"라는 부풀린 휴리스틱으로 되돌아간다. **다음 최상위 선언까지**로 잡아 상수를 없앴다(들여쓰기를 허용하면 컴포넌트 첫 줄 const [s,setS]=useState() 가 창을 즉시 닫아 반대로 붕괴한다 — 열 0 이 최상위라는 신호다).",
+        "**토큰 출처가 스택마다 정반대다.** Tailwind 프로젝트(12개 중 7개)는 CSS 커스텀 프로퍼티가 0~5개인 대신 유틸 어휘가 74~121종이고(text-ink-50 417회 — 빈도가 곧 사실상의 토큰), 안 쓰는 프로젝트는 CSS 변수 58개에 유틸 0. 한쪽만 보면 절반이 '토큰 없음' 이 된다."
+      ],
+      "videoHighlights": [
+        "순진한 추출은 2 3배 부풀린다.",
+        "창을 고정 문자 수로 자르면 안 된다.",
+        "토큰 출처가 스택마다 정반대다."
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.97",
+      "date": "2026-08-04",
+      "title": "가장 많이 물리는 축을 가장 얕게 묻고 있었다 (P-0011)",
+      "titlePlain": "가장 많이 물리는 축을 가장 얕게 묻고 있었다",
+      "summary": "측정부터 했다.",
+      "highlights": [
+        "**계약 · 실패·복구 · 관측 가능성** 3축을 각 12문항으로 신설(KO/EN 동수). 반례는 되도록 이 저장소에서 실제로 물린 사건으로 채웠다 — 상한을 UTF-16 코드 단위로 세어 한글 문서에서 512KB 주장이 실제 1,152KB 였던 일(계약: 단위를 안 적은 대가), 깊이 상한 너머를 원본 그대로 통과시켜 상한이 곧 우회 경로가 된 일(복구: 문제는 상한이 아니라 실패 방향), stderr 전문을 끝까지 읽고서야 \"환경 탓\"이 내 문법 오류였음을 안 일(관측: 첫 줄만 남기면 그 진단이 불가능하다).",
+        "**axes 8축 경량 점검** — 나머지 축은 한 축당 한 문항. 이미 깊은 렌즈가 있는 축(순서·동시성 → database, 신뢰·보안 → security, 인간 요소 → design/docs)은 중복 서술 대신 그 렌즈로 넘긴다(같은 내용을 두 곳에 적으면 한쪽이 반드시 낡는다).",
+        "**소환은 내용 기반** — 경로에 단서가 없는 파일도 켜진다. 신호는 낱말이 아니라 **\"코드 모양으로 쓰였는가\"** 다: 빈 catch · .catch(() => {}) · backoff:/maxRetries = 같은 대입·옵션 문맥 · new AbortController · SIGTERM 핸들러(복구), logger.error · catch **블록** 안의 console.error · traceId/x-request-id · metrics.inc( · @opentelemetry/(관측), 라우트 정의 · res.status(4xx) · zod/Joi 스키마 · @deprecated · protobuf IDL(계약)."
+      ],
+      "videoHighlights": [
+        "계약 · 실패·복구 · 관측 가능성",
+        "axes 8축 경량 점검",
+        "소환은 내용 기반"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.96",
+      "date": "2026-07-31",
+      "title": "실행기를 만들지 않고 문서를 띄운다 (P-0010)",
+      "titlePlain": "실행기를 만들지 않고 문서를 띄운다",
+      "summary": "실행기는 만들지 않았다.",
+      "highlights": [
+        "**렌더러는 최소 부분집합만 해석한다** — 제목(H1~H6) · **단층** 목록(중첩은 평탄화) · 순서 목록(**원문 번호 보존** — 시작값과 건너뛴 번호를 ol start·li value 로) · 코드펜스 · 표(**정렬 반영**) · 링크 · 강조. 나머지는 **이스케이프된 평문**이다(예외: 자리표시자와 충돌하는 U+0001·U+0002 는 표시 전에 제거한다). 이 파일은 사용자 문서를 그대로 싣기 때문에 파서를 넓힐수록 XSS 면이 넓어진다. 원시 HTML(<script>, <img onerror>)은 글자로 남고, 링크는 http(s)/mailto/앵커/상대경로만 통과한다(javascript:·data:·vbscript:·프로토콜 상대 // 거부).",
+        "**자격증명 표지가 있는 문서는 본문을 아예 싣지 않는다.** 값 단위 마스킹을 다섯 번 고쳤고 매번 새 누출 경로가 나왔다(아래) — 그래서 **마스킹을 안전의 전제에서 뺐다**. 표지는 값이 아니라 **형식**으로만 정의해 줄 앞 접두어(> ·- ·들여쓰기)·대소문자·base64 조성·placeholder 모양에 의존하지 않는다. 마스킹(redactSecrets, 대시보드와 같은 술어)은 표지가 없는 문서에 대한 **두 번째 방어층**으로만 남는다.",
+        "**상한과 고지**: 문서당 64KB · 전체 512KB(**UTF-8 바이트**). 잘리면 x/y자(뒷부분만) 로 적는다. 전체 상한이 남은 경우 **잔여 예산만큼 담고**, 잔여가 의미 없는 크기(전체 상한의 1/8, 최대 2KB)면 조각 대신 \"담지 않았다\"고 고지한다. (기본 7종에서는 7×64KB=448KB 라 전체 상한이 걸리지 않는다 — 목록이 늘 때를 위한 backstop 이고, 상한을 주입해 분기를 실제로 발화시켜 시험한다.) 누적 로그(진행 추적·결정 기록)는 **뒤**를 남기고 그 외는 앞을 남긴다 — 1.36.95 handoff 에서 고친 그 방향 규칙을 그대로 따른다."
+      ],
+      "videoHighlights": [
+        "렌더러는 최소 부분집합만 해석한다",
+        "자격증명 표지가 있는 문서는 본문을 아예 싣지 않는다.",
+        "상한과 고지"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.95",
+      "date": "2026-07-31",
+      "title": "AI 에게 매 세션 읽히던 파일의 절반이 틀린 과거 수치였다",
+      "titlePlain": "AI 에게 매 세션 읽히던 파일의 절반이 틀린 과거 수치였다",
+      "summary": "모델 인지는 만들지 않기로 했고",
+      "highlights": [
+        "이력 43줄을 제거하고, 남긴 운영 사실 11줄에는 영문과 대응하는 ## 자동 회복 · 보안 헤딩을 줬다. 실측: 한글 템플릿 **10,308자 → 5,107자**, 영문 5,075자 — 두 언어 크기가 맞았다.",
+        "e2e 가 **도구 수 주장 자체가 0 인지**를 양쪽 언어에서 단언한다. 개수를 고쳐 적는 것은 다음 릴리스에 또 낡는다. (초안의 정규식 \\d+\\s*도구\\b 는 **한글 뒤 \\b 가 절대 매치되지 않아** 아무것도 세지 않는 공허 단언이었다 — 변이 테스트가 잡았고, 그 함정은 이미 내 메모리에 적혀 있었는데도 다시 밟았다.)",
+        "실측(실제 설치본 21개, 진짜 _managedMerge): **유실 고유 줄 0**. 검수가 만든 사용자 문장 반례 5종 전부 보존. 이력 줄은 이월(삭제 아님). 멱등. **검수가 독립 재현으로 확인했다** — 21/21 유실 0, 같은 입력에 1.36.94 코어를 쓰면 정확히 346줄 유실."
+      ],
+      "videoHighlights": [
+        "10 308자 5 107자",
+        "유실 고유 줄 0",
+        "헤더가 1순위로 잘려"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.94",
+      "date": "2026-07-30",
+      "title": "제품이 안내한 탈출구가 막다른 길이었다 · 재등록이 지운 인증 차단",
+      "titlePlain": "제품이 안내한 탈출구가 막다른 길이었다 · 재등록이 지운 인증 차단",
+      "summary": "사용자가 갇히는 것",
+      "highlights": [
+        "형상 무효를 거부하는 **모든 발화점**(bugfix start · receipt · drop · list · 완료 판정)이 _recoverHint(root) 로 같은 문장을 말한다 — 스토어 절대경로와, 옮기면 게이트가 무영향이 되고 되돌리면 되살아난다는 사실까지.",
+        "회복 절차가 **평문 · task update --json · task sync · task sync --json · bugfix list --json 다섯 표면 전부**에 도달한다. 종전엔 escapeHint 가 store_invalid 에서 null 을 돌려주고 task sync 가 e.lines 를 버려서, \"틀린 안내\"가 **\"무안내\"로 회귀**했다(검수에서 실측으로 잡혔다). 이제 다섯 표면이 같은 문자열을 쓰고 e2e 가 그 동일성과 exit 코드를 함께 단언한다.",
+        "안내 문구가 --path 를 유지한다. BugfixBlocked 가 root 를 함께 싣고 _pathArg(root) 가 cwd 와 다를 때만 붙인다."
+      ],
+      "videoHighlights": [
+        "모든 발화점",
+        "평문 · task update --json · task sync ·",
+        "exit 0 · confirmed true"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.93",
+      "date": "2026-07-30",
+      "title": "검증기가 못 보던 완료 행 · MCP 에서 영영 완료 못 하던 사용자",
+      "titlePlain": "검증기가 못 보던 완료 행 · MCP 에서 영영 완료 못 하던 사용자",
+      "summary": "사용자가 갇히거나 검증 없이 완료되는",
+      "highlights": [
+        "같은 정규화를 태웠다. 실측: 정규화 안 된 행 0건 · verify-claim --all 대상 3 = done 행 수 3(이전 2 vs 3).",
+        "**정규화는 plan.md 본문의 Status: 줄에도 적용된다** — 이건 부수효과가 아니라 함께 고쳐야 할 것이었다. 로드맵 상태 라벨 목록(ROADMAP_STATUS_LABEL)에 verified 키가 **없어서**, 종전에는 렌더러가 모르는 값이 plan.md 에 적히고 있었다. 덧붙여 상태 이름으로 \"verified\" 를 스스로 적는 것 자체가 이 제품이 막으려는 **자기선언 검증**이다 — 검증 여부는 검증기가 판정한다.",
+        "정규화 클래스를 전수 스윕했다: progress 행에 status 를 쓰는 경로 6곳(task add · plan add · task update · task sync ×2 · 초기 planned) 모두 정규화 또는 안전한 리터럴임을 실행으로 확인."
+      ],
+      "videoHighlights": [
+        "정규화는 plan.md 본문의 Status 줄에도 적용된다",
+        "660초",
+        "사실대로"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.92",
+      "date": "2026-07-30",
+      "title": "동의 없는 외부 CLI 실행 차단 · 과소평가 우회 3종 · 손상 토글 fail-closed",
+      "titlePlain": "동의 없는 외부 CLI 실행 차단 · 과소평가 우회 3종 · 손상 토글 fail-closed",
+      "summary": "21건 확인 / 14건 반증",
+      "highlights": [
+        "**다국어**: 고위험 규칙 어휘는 영어·한국어뿐인데 tiny 어휘(css/lint/typo)는 라틴이라 살아남아, 支付退款逻辑修改 css(중국어 결제 환불)가 **tiny** 로 확정됐다.",
+        "**전각**: ＰＡＹＭＥＮＴ ｒｅｆｕｎｄ 이 어떤 규칙에도 안 걸려 normal 로 떨어졌다(반각은 high-risk) → 매칭 전 NFKC 정규화(실측 3500자 200회 4ms).",
+        "**제로폭**: pa<ZWSP>yment re<ZWSP>fund css 로 영문 키워드를 쪼개 우회 → 서식문자 제거."
+      ],
+      "videoHighlights": [
+        "한계는 그대로 적었다",
+        "조용히 무시",
+        "가 찍혀"
+      ],
+      "category": "data-integrity",
+      "categoryKo": "데이터무결성",
+      "categoryEn": "Data integrity",
+      "important": true
+    },
+    {
+      "version": "1.36.91",
+      "date": "2026-07-30",
+      "title": "인증 축: **설치됨 ≠ 사용가능**을 고지에서 실제 판정으로",
+      "titlePlain": "설치됨 사용가능",
+      "summary": "말하기만",
+      "highlights": [
+        "codex login status → exit 0 · **158ms** · \"Logged in using ChatGPT\" → **등록**",
+        "claude auth → status 하위명령 없음(exit 1) → unknown 유지",
+        "ollama list → **8초 타임아웃, Ollama 앱을 기동시킨다**(부작용) → **등록 제외**"
+      ],
+      "videoHighlights": [
+        "158ms",
+        "8초 타임아웃 Ollama 앱을 기동시킨다",
+        "agents check"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.90",
+      "date": "2026-07-29",
+      "title": "하네스 대시보드 (P-0006, 읽기 전용) · 승인 시 정한 경계를 테스트로 못 박음",
+      "titlePlain": "하네스 대시보드 · 승인 시 정한 경계를 테스트로 못 박음",
+      "summary": "대시보드만",
+      "highlights": [
+        "**leerness dashboard [path] [--port N] [--timeout SEC] [--json]** — localhost 읽기 전용 뷰: 기능 토글(기본 OFF 표시 포함) · 최근 task · 마일스톤 · 기능 미리보기 · 라우팅 기록 · bugfix probe. --json 은 **서버를 띄우지 않고** 같은 스냅샷을 낸다(CI·테스트가 서버 없이 같은 데이터를 쓴다).",
+        "**서버 런타임을 새로 만들지 않았다** — 이미 출하된 preview serve(1.36.80)의 리스너를 공유한다(포트 충돌 시 순차 탐색 → OS 임의 포트).",
+        "**.harness 에 실행 코드를 두지 않는다** — npm 패키지가 코드를 소유한다. 복사본을 두면 패키지가 올라가도 저장소의 사본은 얼어붙어, 업그레이드 1회가 저장소 N곳의 코드 마이그레이션 N회가 된다(스키마 드리프트 · 보안 수정 미반영 · 사용자 저장소의 검토 부담 증가)."
+      ],
+      "videoHighlights": [
+        "leerness dashboard path --port N",
+        "서버 런타임을 새로 만들지 않았다",
+        "harness 에 실행 코드를 두지 않는다"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.89",
+      "date": "2026-07-29",
+      "title": "작업 난이도별 모델 라우팅 (P-0007, 옵트인 · 제안 후 확인 실행)",
+      "titlePlain": "작업 난이도별 모델 라우팅",
+      "summary": "오래 가는 정책과 곧 낡을 정보를 갈라서",
+      "highlights": [
+        "**leerness agents route \"<작업>\"** — 난이도(tiny/normal/high-risk)를 결정적 규칙으로 판정하고, 등급별 추상 역할 구성을 제안한다. 최상위 route 는 이미 컨텍스트 라우팅 명령이라(실행해보고 알았다) agents recommend|dispatch 와 같은 집에 두었다.",
+        "**모델 이름은 한 줄도 하드코딩하지 않는다.** 정책은 추상 역할(architect/commander/coder/reviewer)로만 쓰고, 역할→provider+model 매핑은 기존 leerness roles set 사용자 설정이 소유한다. 벤더 모델명·성능 순위·컨텍스트 크기는 몇 달이면 낡아 제품 정책이 될 수 없다.",
+        "**4중 fail-closed** — 토글 OFF · 역할 미설정 · 고위험인데 사람 승인(--approved-by) 없음 · 검수자와 구현자가 같은 provider. 마지막 항목은 같은 벤더가 구현과 검수를 겸하면 같은 맹점을 공유하므로 \"검수됨\"이라고 부를 수 없기 때문이다."
+      ],
+      "videoHighlights": [
+        "leerness agents route 작업",
+        "모델 이름은 한 줄도 하드코딩하지 않는다.",
+        "4중 fail-closed"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.88",
+      "date": "2026-07-29",
+      "title": "selftest --json 잡음 3종 제거 · \"우연히 지켜지던\" 단일 JSON 계약을 원인 단계에서 고정",
+      "titlePlain": "selftest --json 잡음 3종 제거 · 우연히 지켜지던 단일 JSON 계약을 원인 단계에서 고정",
+      "summary": "먼저 계약이 실제로 깨졌는지 측정했고, 제보의 전제 두 가지는 사실이 아니었다.",
+      "highlights": [
+        "**stdout 은 이미 순수 JSON 이었다** — JSON.parse(stdout) 성공 · stdout.trimStart().startsWith('{') 참 · exit 0. 잡음 5줄은 **전부 stderr** 였다(2>&1 로 합쳐 보면 오염처럼 보인다). 소비자 계약은 깨져 있지 않았다.",
+        "**cwd 의존도 아니었다** — 리포 루트와 임시 cwd에서 잡음이 **동일하게** 나온다. e2e 가 통과한 이유는 \"임시 cwd 라 잡음이 안 보여서\"가 아니라 **stdout 이 실제로 순수해서**다.",
+        "**프로브가 stderr 를 안 가로챘다** — fail() 은 --json 모드에서 ✗ 를 **stderr** 로 보내는데(io.js 설계), 두 케이스(fail() exitCode 행위 · lib/io 프리미티브)는 process.stdout.write 만 스왑했다. 양쪽 스트림을 스왑하도록 수정 — 이미 있던 패턴(4558행 케이스는 _w/_e 둘 다 스왑)을 따랐다."
+      ],
+      "videoHighlights": [
+        "stdout 은 이미 순수 JSON 이었다",
+        "cwd 의존도 아니었다",
+        "프로브가 stderr 를 안 가로챘다"
+      ],
+      "category": "consistency",
+      "categoryKo": "일관성",
+      "categoryEn": "Consistency",
+      "important": false
+    },
+    {
+      "version": "1.36.86",
+      "date": "2026-07-29",
+      "title": "brainstorm 두 경로 수집 단일화(중복 149줄 제거) · 총계 계약 정정 · 조용한 절단 제거",
+      "titlePlain": "brainstorm 두 경로 수집 단일화 중복 149줄 제거 · 총계 계약 정정 · 조용한 절단 제거",
+      "summary": "세 겹",
+      "highlights": [
+        "**수집 단일화** — 사람용도 _brainstormFor 를 쓴다(중복 **149줄 제거**, 순 -87줄). 게시본 1.36.85 와 같은 픽스처로 출력을 줄 단위 비교해 **--include-code 없이는 byte-identical**, 있을 때만 의도한 code 섹션·총계 증가만 나타남을 확인했다(외부 검수도 동일 결론: 토큰화·2자 필터·preview 길이·코드펜스 제외·순서·cap·경로 표기 모두 무변경).",
+        "**총계 계약 정정** — _brainstormTotal 하나를 두 경로가 공유한다. archive 를 포함하도록 고쳤고(이전엔 JSON 이 hit 을 보여주면서 total=0 인 자기모순이 있었다), 반대로 **lessons 는 제외**했다 — evidence 의 파생 뷰(같은 블록을 실패 키워드로 재투영)라 더하면 **같은 자원을 두 번 센다**(검수 지적, 실측: evidence 1/lessons 1 인데 total 2). total 은 **고유 자원 수**를 뜻한다.",
+        "**workspace 경로에도 같은 결함이 남아 있었다** — 단일 프로젝트만 고치고 --include 경로를 놓쳤다. 집계에는 넣고 렌더는 빠뜨려 **\"3건\" 이라 적고 1건만 표시**했다(lessons·plan·skill이력·task-log·archive 5개 표면 누락, 실측). 전부 렌더하도록 고쳤다. — *증상만 고치고 완료로 판정하는 그 패턴을 이 라운드에서 내가 그대로 저질렀고, 외부 검수가 짚어서야 발견했다.*"
+      ],
+      "videoHighlights": [
+        "수집 단일화",
+        "총계 계약 정정",
+        "workspace 경로에도 같은 결함이 남아 있었다"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.85",
+      "date": "2026-07-29",
+      "title": "brainstorm 줄번호 오보 수정(10곳) · 실행되지 않던 명령 경로에 가드",
+      "titlePlain": "brainstorm 줄번호 오보 수정 10곳 · 실행되지 않던 명령 경로에 가드",
+      "summary": "표면을 제품 정확성으로 옮겨",
+      "highlights": [
+        "**brainstorm 검색 결과의 줄번호가 틀렸다.** 줄번호를 text.indexOf(block) 로 구하는데, **내용이 같은 블록이 둘 이상이면 항상 첫 번째 위치**를 돌려준다 — 실측으로 3행·10행에 있는 동일 lesson 블록이 둘 다 line=3 으로 보고됐다. 사용자가 그 줄로 가면 다른 항목이 있다. _blocksWithOffset(text, sep) 로 **순회하며 오프셋을 누적**하도록 10곳 전부 전환(evidence · skill history · lessons · plan milestones · archive × _brainstormFor/사람용 두 구현). 경계 9종(CRLF · 빈 블록 · 선두/말미 · 단일 조각 · 한글 · 구분자 없음 · 빈 문자열) 검증.",
+        "**selftest 338/338 이 초록인데 brainstorm 이 통째로 죽어 있었다.** 위 수정 중 import 를 빠뜨려 _blocksWithOffset is not defined 로 명령 전체가 실패했는데도 스위트는 전부 통과했다 — **그 명령의 실행 경로가 어떤 케이스에도 없었다**. 신설 가드는 실제 명령을 spawn 해 exit 와 출력을 함께 보므로 (a) 줄번호 회귀 (b) import 누락 둘 다 잡는다(변이로 확인).",
+        "**brainstorm 은 사람용과 --json 이 서로 다른 구현을 쓴다**(--json 은 _brainstormFor, 사람용은 자체 수집 코드). **텍스트 비교로는 \"skills 매칭 입력이 다르다\"고 보였지만 행위로 비교하니 같은 결과를 냈다** — 텍스트 diff 가 오판이었다. 다만 검수가 **세 입력에서 두 경로가 실제로 갈린다**는 반례를 냈다(--include-code · archive-only · workspace --include). 내 픽스처로는 재현되지 않았고 제대로 고치려면 사람용 수집을 _brainstormFor 로 단일화하는 큰 리팩터가 필요해 **이번 라운드에는 하지 않았다** — 다음 라운드 과제로 명시한다. 신설 가드에는 lessons/decisions 두 표면의 **건수와 줄번호 일치**만 넣었다(그 이상은 주장하지 않는다)."
+      ],
+      "videoHighlights": [
+        "brainstorm 검색 결과의 줄번호가 틀렸다.",
+        "brainstorm 은 사람용과 --json 이 서로 다른 구현을 쓴다",
+        "작업 도구가 또 한 번 틀렸다"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.84",
+      "date": "2026-07-29",
+      "title": "탐지 대신 **동결** · 검수 25회전 커버리지 부족 5건 상환",
+      "titlePlain": "동결",
+      "summary": "탐지",
+      "highlights": [
+        "**보장**: _selfTestCases 영역에서 **지원 철자 2종**의 lexical 출현 횟수 상한. 들여쓰기 변경·기존 케이스 내부 추가도 여기 걸린다(둘 다 1차 구현에서는 뚫렸고 출현-횟수 방식으로 바꿔 닫았다). 영역 파싱이 깨지면 **fail-closed**(검수 H2: 영역 안 주석에 줄머리 function 한 줄만 넣으면 스캔 범위가 306KB→108B 로 줄고 카운트 0 이 되어 통과했다 — 파싱된 케이스 수와 실제 수가 다르면 실패로 전환).",
+        "**미보장**: 별칭 · 동적 프로퍼티 접근 · require 체인 · 구조분해 · 배열 순회를 통한 간접 호출. 주석/문자열 안의 같은 철자도 계수된다(오탐 방향 — 실제로 이 보장 범위를 적은 주석 자신이 계수돼 가드가 자기를 막았고, split-literal 로 회피했다).",
+        "\"어떤 형태든 막는다\"는 lexical 방식으로 달성 불가다. 그렇게 적지 않는다."
+      ],
+      "videoHighlights": [
+        "여전히 과적합",
+        "every 빈 배열 공허참이 새 수리안에 그대로 들어와 있었다"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.83",
+      "date": "2026-07-28",
+      "title": "자기참조 가드 부채 상환 (탐지 가능 범위 12 → 0) · 소스 문자열 검사를 행위 검사로",
+      "titlePlain": "자기참조 가드 부채 상환 탐지 가능 범위 12 0 · 소스 문자열 검사를 행위 검사로",
+      "summary": "유예",
+      "highlights": [
+        "**12건을 현재 코드 기준으로 재작성 — 대부분 소스 문자열 검사를 행위 검사로 교체.** 실제 junction 을 만들어 migrate 복사가 심링크를 따라가지 않는지, 70KB .env.production 의 시크릿이 탐지되는지, plan add --done-when 이 저장·파싱되는지를 **직접 실행해** 확인한다. 문자열은 리팩터로 사라지지만 동작은 사라지지 않는다. 각 가드는 \"지키던 동작을 실제로 깨뜨렸을 때 실패한다\"를 변이로 증명했고, **대조군**(같은 변이에서 원본 가드는 통과)까지 붙였다 — 예: 심링크 미추종은 lstatSync→statSync 한 글자로 기능이 완전히 깨지는데 종전 가드는 337/337 초록이었다. 보고서에 적힌 것과 **다른 방식의 변이**(skip 기록 제거 / env 정규식 축소)로도 정확히 실패함을 확인해 과적합이 아님을 검증했다.",
+        "**메타가드를 파일-인지로 강화 — 3건이 더 드러났다.** 리터럴이 \"제품 어딘가\"에 있으면 통과시키던 판정을, **가드가 실제로 읽는 파일** 기준으로 바꿨다. read(__filename)(=bin)을 검사하는데 구현이 lib/ 로 옮겨갔다면 그 가드는 여전히 자기 줄만 매칭한다: drift 의 \"최신 Last generated\"(→lib/drift.js) · decision 필드 파싱(→lib/pure-utils.js) · constraints 호출부(인자가 하나 늘어 정확 리터럴이 어긋남). 셋 다 수리.",
+        "**파일을 넘나든 자기참조** — scripts/e2e.js 의 constraints 단언이 bin 에서 리터럴을 찾는데, 그 문자열의 **유일한 출처가 bin 안의 selftest 가드 줄**이었다. 위 수정으로 그 줄이 사라지자 게이트가 실패해 공허함이 드러났다(부작용이 아니라 의도한 효과). 불변식으로 교체하고, 같은 클래스가 e2e.js/e2e-core.js 에 더 있는지 전수 확인(1건이 유일)."
+      ],
+      "videoHighlights": [
+        "12건을 현재 코드 기준으로 재작성 대부분 소스 문자열 검사를 행위",
+        "메타가드를 파일-인지로 강화 3건이 더 드러났다.",
+        "파일을 넘나든 자기참조"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
+    {
+      "version": "1.36.82",
+      "date": "2026-07-28",
+      "title": "공허한 가드 클래스 스윕: 날조된 완료 주장이 통과하던 fail-open · 안내만 되고 없던 플래그 · 자기참조 소스가드",
+      "titlePlain": "공허한 가드 클래스 스윕",
+      "summary": "클래스로 확장",
+      "highlights": [
+        "**High — 플래그십 게이트가 가장 위험한 케이스에서 반대로 작동했다.** verify-claim 은 evidence 에 파일 경로가 없으면 fileChecks.every([])=true(공허참) · stubFiles=[] 이라 구현실체 true · git 교차검증은 files.length>0 을 요구해 skip — **모든 판정이 공허참**이 되어 \"코드도 테스트도 없이 done\" 이 ok:true/exit 0 이었다. **단조성이 뒤집혀 있었다**: 파일명을 적어 검증 가능하게 쓸수록 FAIL, 아무것도 안 적고 날조할수록 PASS. 코드 주석은 \"공허참은 evidenceQualityOk 가 차단한다\"고 적혀 있었지만 기본 모드의 그 값은 hasFile||hasTest||hasLog 라 \"tests: 32/32 passed\" 문자열 하나로 통과했다 — **주석의 전제가 거짓**이었다. 새 사유 unverifiable-claim 을 세 경로(collect/--json/human)가 공유하는 한 곳에 배선. 탈출구는 두 가지뿐(evidence 에 수정 파일 경로를 적거나 --run-tests 로 실행 결과를 붙이거나), 기존 --lenient opt-out 은 그대로.",
+        "**High — 툴이 안내하는 플래그가 구현되지 않았다.** referee verify 성공 시 leerness 는 \"이제 gate --require-referee <id> 가 이 검증기를 신뢰합니다\"라고 출력하는데, gate 는 그 플래그를 **읽지도 않았다**(패키지 전체에서 그 문자열은 안내문 한 줄뿐). 사용자는 안내받은 명령을 CI 에 넣고 검증기가 머지를 막는다고 믿지만 아무 일도 일어나지 않았고, 부재/무효 검증기에서도 exit 0 이라 오배선을 알 신호조차 없었다 — 1.36.80 에서 내가 만든 약속이 곧 거짓말이었다. 이제 실제로 게이팅한다: 미존재/미증명/무효 검증기는 실행 전 거부, 검증기가 현재 상태를 거부하면 게이트 실패, 반복 지정(--require-referee a --require-referee b) 지원, 플래그가 없으면 기존 5체크 그대로.",
+        "**High — 자기참조 소스가드**: read(__filename) 로 자기 파일을 읽는 selftest 가, 검사하려던 코드 리터럴이 리팩터로 사라지면 그 문자열이 **가드 자신의 줄에만** 남아 영원히 통과한다(기능을 통째로 지워도 초록). 실제로 **verify-claim 의 --json exit 게이트**와 **개인키 파일 스캔 강제포함**이 그 상태였다. 고가치 4건을 현재 구현 기준으로 교체하고, **확산 금지 메타가드**를 추가했다 — 제품 코드(bin 나머지 + lib/ + scripts/)에 없는 **코드형** 리터럴을 붙잡은 케이스가 늘어나면 실패한다. 잔여 부채 9건은 숨기지 않고 baseline 으로 명시했다(줄이는 방향으로만 갱신)."
+      ],
+      "videoHighlights": [
+        "High 플래그십 게이트가 가장 위험한 케이스에서 반대로 작동했다.",
+        "High 툴이 안내하는 플래그가 구현되지 않았다.",
+        "High 자기참조 소스가드"
+      ],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.81",
       "date": "2026-07-28",

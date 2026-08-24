@@ -1,12 +1,12 @@
 {
-  "generated": "2026-07-28",
+  "generated": "2026-08-24",
   "source": "leerness-pkg",
   "measured": {
-    "version": "1.36.81",
+    "version": "1.36.160",
     "runtimeDeps": 0,
     "mcpTools": 89,
     "mcpCoreTools": 20,
-    "selftestCases": 335
+    "selftestCases": 349
   },
   "unmeasured": []
 }

@@ -22,9 +22,9 @@
     "astro": "^4.16.0"
   },
   "devDependencies": {
-    "wrangler": "^3.80.0"
+    "wrangler": "^4.125.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.0.0"
   }
 }
