@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-26",
-  "count": 686,
+  "count": 687,
   "releases": [
+    {
+      "version": "1.36.166",
+      "date": "2026-08-26",
+      "title": "2026-08-26",
+      "titlePlain": "2026-08-26",
+      "summary": "",
+      "highlights": [
+        "T-0144: unknown/foreign/malformed CLI 플래그를 migration과 쓰기 전에 exit 1로 거부하고 commands 카탈로그의 verify-code·contract verify 누락을 보완했습니다. 명령별 strict route와 값 누락·부울 equals·language 선택값 회귀 probe를 npm test에 추가했습니다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.165",
       "date": "2026-08-26",
