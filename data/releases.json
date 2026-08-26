@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-26",
-  "count": 685,
+  "count": 686,
   "releases": [
+    {
+      "version": "1.36.165",
+      "date": "2026-08-26",
+      "title": "2026-08-26",
+      "titlePlain": "2026-08-26",
+      "summary": "",
+      "highlights": [
+        "verify-code가 fresh basic 권한에서도 Python/Go/Rust 러너를 제한적으로 실행하고, 혼합 Node/Python 테스트와 npm placeholder를 올바르게 판별하며, 실패·차단된 최신 증거가 lazy/gate를 거짓 통과하지 않도록 수정 (T-0143)"
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.164",
       "date": "2026-08-26",
