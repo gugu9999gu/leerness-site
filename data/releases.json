@@ -1,7 +1,24 @@
 {
   "generated": "2026-08-25",
-  "count": 682,
+  "count": 683,
   "releases": [
+    {
+      "version": "1.36.162",
+      "date": "2026-08-26",
+      "title": "2026-08-26",
+      "titlePlain": "2026-08-26",
+      "summary": "",
+      "highlights": [
+        "기본 작업 디렉터리를 .leerness/로 전환하고 기존 .harness/ 상태를 충돌 감지·백업·검증·롤백이 가능한 방식으로 자동 마이그레이션했습니다. 동시 세션 핸드오프 경로 격리, 설치형 클린룸, 소스 ratchet 검증도 함께 보강했습니다.",
+        "역사적 전체 E2E와 startup/handoff·Git/npm·진단·release·에이전트 설치/bench/REPL의 프로세스 호출을 PATH 전용 공용 shell-free 실행기로 통합했습니다. Windows npm .cmd/.ps1의 검증된 JS·PE 진입점과 Volta류 네이티브 npm.exe를 지원하고 해석 불가 shim·미해결 명령·cwd shadow는 실패-폐쇄합니다. 10개 내장 provider의 bench를 모두 정착시키되 모델 없는 Ollama는 명시적 unsupported로 보고하며, argv/stdin 보존과 PowerShell 경로 환경 데이터 채널을 공격성 프로브로 고정했습니다. DEP0190 억제 설정을 거부하고 부모·동기·비동기·detached 자식 경고를 한 파일에 집계하며 Windows Node 24 전체 E2E에서도 이를 검증합니다.",
+        "프로젝트 .env 자동 로드를 LEERNESS_*와 명시 provider/release 키 allowlist로 제한해 NODE_OPTIONS·NODE_PATH·NPM_EXECPATH·PATH 계열의 자식 프로세스 제어를 차단했습니다. 호출자가 명시한 정상 --redirect-warnings는 portable/npm 자식까지 보존합니다. 거부 진단의 명령명은 node -e 옵션과 분리해 --inspect·--cpu-prof가 inspector나 프로필 파일을 만들지 못하도록 했습니다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.161",
       "date": "2026-08-25",

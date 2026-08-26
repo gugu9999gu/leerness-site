@@ -9,7 +9,7 @@ const _depsKo = F.runtimeDeps === 0 ? '0 의존성 · ' : '';
 const _depsEn = F.runtimeDeps === 0 ? 'Zero runtime dependencies, ' : '';
 const {
   title = 'leerness',
-  desc = `AI 코딩 에이전트를 위한 운영 레이어(operating layer) — 기억 · 인수인계 · 검증 · 감사 · 보안 가드를 .harness/ 에 영속화. ${_depsKo}offline-first${_mcpKo} · 온톨로지 그래프.`,
+  desc = `AI 코딩 에이전트를 위한 운영 레이어(operating layer) — 기억 · 인수인계 · 검증 · 감사 · 보안 가드를 .leerness/ 에 영속화. ${_depsKo}offline-first${_mcpKo} · 온톨로지 그래프.`,
   jsonld = null,           // 페이지별 추가 JSON-LD (객체 또는 배열)
   ogType = 'website',
 } = Astro.props;
@@ -26,7 +26,7 @@ const baseJsonld = [
     name: 'leerness',
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Windows, macOS, Linux',
-    description: `An operating layer for AI coding agents — persists memory, handoff, verification, audit, and security guards into plain .harness/ files. ${_depsEn}offline-first${_mcpEn}. leerness does not author application code itself; opt-in orchestration can invoke configured agents and verification can run your project tests.`,
+    description: `An operating layer for AI coding agents — persists memory, handoff, verification, audit, and security guards into plain .leerness/ files. ${_depsEn}offline-first${_mcpEn}. leerness does not author application code itself; opt-in orchestration can invoke configured agents and verification can run your project tests.`,
     url: 'https://leerness.com',
     downloadUrl: 'https://www.npmjs.com/package/leerness',
     installUrl: 'https://www.npmjs.com/package/leerness',

@@ -12,7 +12,7 @@ const mcpLine = F.mcpTools
 
 const body = `# leerness
 
-> leerness is an operating layer for AI coding agents (Claude Code, Cursor, Codex, Copilot, Goose, and others). It persists project memory, handoff, verification, audit, and security guards into plain files under \`.harness/\`, and exposes them via a CLI${mcpPhrase}. leerness itself never authors application code — by default it calls no LLMs and executes nothing; opt-in orchestration can invoke configured agents, and verification can run your project tests. It makes the work of any coding agent trustworthy: remembered, verified, and handed over cleanly.
+> leerness is an operating layer for AI coding agents (Claude Code, Cursor, Codex, Copilot, Goose, and others). It persists project memory, handoff, verification, audit, and security guards into plain files under \`.leerness/\`, and exposes them via a CLI${mcpPhrase}. leerness itself never authors application code — by default it calls no LLMs and executes nothing; opt-in orchestration can invoke configured agents, and verification can run your project tests. It makes the work of any coding agent trustworthy: remembered, verified, and handed over cleanly.
 
 Key facts:
 - Install: \`npm i -g leerness\` (Node.js >= 18, ${depsPhrase}no install scripts, offline-first)${F.version ? `\n- Current version: ${F.version}` : ''}
@@ -21,7 +21,8 @@ Key facts:
 - Core loop: \`leerness handoff .\` (load context at session start) → work with your agent → \`leerness session close .\` (9-category close report + handoff for the next agent).
 - False-completion defense: \`leerness verify-claim <T-ID>\` cross-checks "done" claims against real files, test runs, and git; \`leerness lazy detect\` flags evidence-less completions. \`leerness referee\` proves a verifier actually detects failures before its green is trusted.
 - Safety guards: \`leerness scan secrets\`, \`leerness encoding check\`, \`leerness gate\` (CI-friendly combined gate), git pre-commit enforcement (\`leerness enforce install\`).
-- Memory surfaces (plain markdown/JSON in \`.harness/\`): tasks, decisions, lessons, plan, rules — all with CRUD CLI + MCP tools and archive/restore.
+- Memory surfaces (plain markdown/JSON in \`.leerness/\`): tasks, decisions, lessons, plan, rules — all with CRUD CLI + MCP tools and archive/restore.
+- Existing \`.harness/\` projects migrate transactionally to \`.leerness/\`, with backups and conflict/link fail-closed guards.
 ${mcpLine}
 - Ontology graph: \`leerness graph --html\` renders tasks/decisions/lessons/features plus a tech profile (detected languages & connected services) as a local HTML graph.
 
