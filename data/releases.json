@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-27",
-  "count": 693,
+  "count": 694,
   "releases": [
+    {
+      "version": "1.36.173",
+      "date": "2026-08-27",
+      "title": "2026-08-27",
+      "titlePlain": "2026-08-27",
+      "summary": "",
+      "highlights": [
+        "Memory DELETE 5종(task/decision/lesson/rule/plan)의 성공 --json 경로를 단일 JSON 문서·clean stderr 계약으로 통일했습니다. onEveryChange 자동 로드맵은 JSON 출력에 사람용 로그를 섞지 않으면서 다섯 명령 각각 갱신되며, 명령별 산출물 재생성과 외부 Codex P2 재현을 회귀로 고정했습니다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.172",
       "date": "2026-08-27",
