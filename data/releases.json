@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-27",
-  "count": 691,
+  "count": 692,
   "releases": [
+    {
+      "version": "1.36.171",
+      "date": "2026-08-27",
+      "title": "2026-08-27",
+      "titlePlain": "2026-08-27",
+      "summary": "",
+      "highlights": [
+        "MCP handoff/session-close가 호출별 sessionKey로 presence를 등록·종료하고, Windows 환경변수 casing·일회성 marker·legacy case variant·손상 closedAt를 안전하게 처리하도록 개선했습니다. 전용 MCP presence 회귀 22/22와 전체 E2E 467/467를 추가·통과했습니다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.170",
       "date": "2026-08-27",
