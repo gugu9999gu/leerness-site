@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-27",
-  "count": 692,
+  "count": 693,
   "releases": [
+    {
+      "version": "1.36.172",
+      "date": "2026-08-27",
+      "title": "2026-08-27",
+      "titlePlain": "2026-08-27",
+      "summary": "",
+      "highlights": [
+        "GitHub CI에서 재현된 동시 최초 .harness→.leerness 마이그레이션 TOCTOU를 수정했습니다. 라이브 마이그레이션이 두 번째 상태 검사와 충돌 스캔 전에 프로젝트 잠금을 획득하며, 실제 peer EEXIST와 잠금 해제 직전까지의 대기를 검증하는 결정론적 회귀를 fast/core/full 게이트에 연결했습니다."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.171",
       "date": "2026-08-27",
