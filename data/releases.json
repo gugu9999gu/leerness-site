@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-29",
-  "count": 698,
+  "count": 699,
   "releases": [
+    {
+      "version": "1.36.178",
+      "date": "2026-08-29",
+      "title": "2026-08-29",
+      "titlePlain": "2026-08-29",
+      "summary": "",
+      "highlights": [
+        "CI: env encoding-check --apply 전체 E2E를 Windows BOM 교체와 POSIX byte-exact no-op 계약으로 분기해 v1.36.177 Linux/Node 22의 466/467 실패를 수정."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.177",
       "date": "2026-08-29",
