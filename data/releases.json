@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-30",
-  "count": 700,
+  "count": 701,
   "releases": [
+    {
+      "version": "1.36.180",
+      "date": "2026-08-30",
+      "title": "2026-08-30",
+      "titlePlain": "2026-08-30",
+      "summary": "",
+      "highlights": [
+        "English-mode agents list, insights, and toggle output now contain zero Hangul; a dedicated red/green probe and 39-command ratchet reduce measured leakage from 104 to 58 lines while preserving Korean output."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.179",
       "date": "2026-08-30",
