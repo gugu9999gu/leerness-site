@@ -1,7 +1,22 @@
 {
-  "generated": "2026-08-30",
-  "count": 701,
+  "generated": "2026-08-31",
+  "count": 702,
   "releases": [
+    {
+      "version": "1.36.181",
+      "date": "2026-08-30",
+      "title": "2026-08-30",
+      "titlePlain": "2026-08-30",
+      "summary": "",
+      "highlights": [
+        "T-0161: English-mode release cadence, idempotency audit, plan list, and round-history now contain zero Hangul across stored, environment, and explicit locale paths. A dedicated edge-state probe preserves Korean output, legacy plan sentinels, locale-independent auto-fix JSON/state writes, and the 39-command leakage ratchet tightens exactly from 58 to 38 lines so improvements cannot mask regressions elsewhere."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.180",
       "date": "2026-08-30",
