@@ -1,7 +1,22 @@
 {
   "generated": "2026-08-31",
-  "count": 702,
+  "count": 703,
   "releases": [
+    {
+      "version": "1.36.182",
+      "date": "2026-08-31",
+      "title": "2026-08-31",
+      "titlePlain": "2026-08-31",
+      "summary": "",
+      "highlights": [
+        "T-0162: English-mode milestones now contains zero Hangul across stored, environment, and explicit locale paths while preserving Korean and locale-independent JSON contracts. The 39-command aggregate leakage ratchet tightens exactly from 38 to 34 lines. External Codex review findings are covered by UTC-midnight-safe ETA comparison and real CLI coverage of the 500+ terminal branch."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.181",
       "date": "2026-08-30",
