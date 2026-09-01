@@ -1,8 +1,8 @@
 {
-  "generated": "2026-08-31",
+  "generated": "2026-09-01",
   "source": "leerness-pkg",
   "measured": {
-    "version": "1.36.183",
+    "version": "1.36.184",
     "runtimeDeps": 0,
     "mcpTools": 89,
     "mcpCoreTools": 20,
