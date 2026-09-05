@@ -1,8 +1,8 @@
 {
   "generated": "2026-09-05",
-  "source": "leerness-pkg",
+  "source": "t0165-convergence",
   "measured": {
-    "version": "1.36.185",
+    "version": "1.36.186",
     "runtimeDeps": 0,
     "mcpTools": 98,
     "mcpCoreTools": 20,

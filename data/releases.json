@@ -1,7 +1,22 @@
 {
   "generated": "2026-09-05",
-  "count": 706,
+  "count": 707,
   "releases": [
+    {
+      "version": "1.36.186",
+      "date": "2026-09-05",
+      "title": "2026-09-05",
+      "titlePlain": "2026-09-05",
+      "summary": "",
+      "highlights": [
+        "T-0174: add read-only five-scope state inspection with worktree/project isolation and honest legacy inventory; reuse workspace snapshots, skip unused npm skill discovery and bookkeeping, preserve all existing state."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.185",
       "date": "2026-09-04",
