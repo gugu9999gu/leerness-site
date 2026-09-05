@@ -1,7 +1,22 @@
 {
-  "generated": "2026-09-01",
-  "count": 705,
+  "generated": "2026-09-05",
+  "count": 706,
   "releases": [
+    {
+      "version": "1.36.185",
+      "date": "2026-09-04",
+      "title": "2026-09-04",
+      "titlePlain": "2026-09-04",
+      "summary": "",
+      "highlights": [
+        "T-0165/T-0166/T-0167/T-0171/T-0172: adds honest provider-capacity observation, exact-file TTL leases, strict Role/Agent/Routing v2 schemas, a fail-closed legacy role-store loader, and availability-aware role fallback with revision-bound execution provenance. Compatibility fields remain explicit, high-risk reviewer independence requires concrete model identities, corrupt state is preserved without provider execution, and all new surfaces are covered by adversarial regression probes."
+      ],
+      "videoHighlights": [],
+      "category": "fix",
+      "categoryKo": "수정",
+      "categoryEn": "Fix",
+      "important": false
+    },
     {
       "version": "1.36.184",
       "date": "2026-09-01",
