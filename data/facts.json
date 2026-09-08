@@ -10,7 +10,16 @@
   "unmeasured": [
     {
       "key": "selftestCases",
-      "reason": "Unexpected end of JSON input"
+      "reason": "selftest measurement: timeout",
+      "observation": {
+        "status": null,
+        "signal": "SIGTERM",
+        "errorCode": "ETIMEDOUT",
+        "elapsedMs": 180025.543,
+        "stdoutBytes": 0,
+        "stderrBytes": 0,
+        "reasonCode": "timeout"
+      }
     }
   ]
 }

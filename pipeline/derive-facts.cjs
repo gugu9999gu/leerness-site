@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
+const { readSelftestMetric } = require('./selftest-metric.cjs');
 
 const here = __dirname;
 const argv = process.argv.slice(2);
@@ -29,7 +30,8 @@ const record = (key, fn) => {
     if (v === undefined || v === null || Number.isNaN(v)) throw new Error('빈 값');
     facts.measured[key] = v;
   } catch (e) {
-    facts.unmeasured.push({ key, reason: String(e && e.message || e).slice(0, 200) });
+    facts.unmeasured.push({ key, reason: String(e && e.message || e).slice(0, 200),
+      ...(e && e.observation ? { observation: e.observation } : {}) });
   }
 };
 
@@ -55,14 +57,9 @@ record('mcpCoreTools', () => {
   return core.length;
 });
 // selftest 케이스 수 — CLI 를 실제로 돌려서 얻는다(소스 카운트 추정 금지)
-record('selftestCases', () => {
-  const r = cp.spawnSync(process.execPath, [path.join(pkgDir, 'bin', 'leerness.js'), 'selftest', '--json'],
-    { encoding: 'utf8', timeout: 180000, maxBuffer: 32 * 1024 * 1024 });
-  const j = JSON.parse(r.stdout);
-  const n = j.total != null ? j.total : (Array.isArray(j.cases) ? j.cases.length : null);
-  if (!n) throw new Error('selftest --json 에 total 없음');
-  return n;
-});
+record('selftestCases', () => readSelftestMetric(() =>
+  cp.spawnSync(process.execPath, [path.join(pkgDir, 'bin', 'leerness.js'), 'selftest', '--json'],
+    { encoding: 'utf8', timeout: 180000, maxBuffer: 32 * 1024 * 1024 })));
 
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 fs.writeFileSync(outPath, JSON.stringify(facts, null, 2) + '\n');

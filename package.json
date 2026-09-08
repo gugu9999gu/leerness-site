@@ -10,6 +10,7 @@
     "auth:youtube": "node pipeline/auth-youtube.cjs",
     "site:dev": "astro dev",
     "facts": "node pipeline/derive-facts.cjs",
+    "test:facts": "node pipeline/derive-facts.test.cjs",
     "check:claims": "node pipeline/check-claims.cjs",
     "site:build": "node pipeline/parse-changelog.cjs && node pipeline/derive-facts.cjs && node pipeline/check-claims.cjs && astro build",
     "site:deploy": "wrangler pages deploy dist --project-name leerness-site --branch=main --commit-dirty=true",
