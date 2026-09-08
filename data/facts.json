@@ -2,7 +2,7 @@
   "generated": "2026-09-08",
   "source": "t0165-convergence",
   "measured": {
-    "version": "1.36.187",
+    "version": "1.36.188",
     "runtimeDeps": 0,
     "mcpTools": 98,
     "mcpCoreTools": 20
@@ -15,7 +15,7 @@
         "status": null,
         "signal": "SIGTERM",
         "errorCode": "ETIMEDOUT",
-        "elapsedMs": 180025.543,
+        "elapsedMs": 180013.947,
         "stdoutBytes": 0,
         "stderrBytes": 0,
         "reasonCode": "timeout"
